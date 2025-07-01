@@ -1,0 +1,17 @@
+# LaTeX intermediate files
+*.aux
+*.log
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.out
+
+# Compiled PDF (uncomment if you don't want PDFs in git)
+# *.pdf

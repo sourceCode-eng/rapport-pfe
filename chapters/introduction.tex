@@ -1,0 +1,51 @@
+Texts can be \textit{italics} and \textbf{bold}. Figures can be referenced (see Figure \ref{fig:javalogo} for an example). References can be cited; they are defined in the \textit{references.bib} file.\cite{example-reference} 
+
+The \textit{Bibliography}, \textit{List of Figures} and \textit{List of Tables} are all automatically generated and references will be updated automatically.
+
+If you've defined a citation but are not referencing it, it will not appear in the \textit{Bibliography}.
+
+This is a list
+\begin{itemize}
+    \item item a
+    \item item b
+    \item ...
+\end{itemize}
+
+This is an enumerated list:
+\begin{enumerate}
+    \item item x
+    \item item y
+    \item ...
+\end{enumerate}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.5\textwidth]{figures/java.png}
+    \caption{\textit{An image of Java logo.}}
+    \label{fig:javalogo}
+\end{figure}
+
+A table with three columns can be seen in Table \ref{tab:data_table}.
+\begin{longtable}{|p{0,5cm}|p{10cm}|p{3cm}|}
+	\caption{\it{A table of some data}}
+	\label{tab:data_table}\\ \hline
+	\textbf{Nr} &  \textbf{Interests} & \textbf{Importance}  \\
+	\hline
+	\endfirsthead
+	\multicolumn{3}{l}%
+	{\tablename\ \thetable\ -- \textit{Continues...}} \\
+	\hline
+	\textbf{Nr} &  \textbf{Interests} & \textbf{Importance}  \\
+	\hline
+	\endhead
+	\hline \multicolumn{3}{l}{\textit{Continues...}} \\
+	\endfoot
+	\hline
+	\endlastfoot
+1 & Big Data & High\\ \hline
+2 & Data industry & Middle\\ \hline
+3 & Artificial Intelligence & Low\\ \hline
+
+\end{longtable}
+
+We can use variables set in the \textit{main.tex} file to render values like our title (\doctitle) or supervisor names (\textbf{Supervisor}: \supervisor, \textbf{Co-supervisor}: \cosupervisor{}).
