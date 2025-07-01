@@ -1,0 +1,92 @@
+# Page de garde
+# Dédicaces
+# Remerciements
+# Sommaire
+# Liste des figures
+# Liste des tableaux
+# Liste des acronymes, notation, glossaire, etc.
+introduction generale:
+  - introduction
+  - presentation de l'organisme d'acceuil
+    - domaine d'activité
+    - Organisation interne
+    - Produits et services de l'entreprise
+    - Services informatiques et outils internes
+      - les services informatiques
+      - les outils internes
+  - objectifs du memoire || les besoins de l'entreprise
+    - itroduction
+    - cas et exemples
+    - les besoins fonctionnels
+    - les besoins non fonctionnels
+le contenu technique:
+  - concepts genereaux
+    - gestion des secrets
+    - gestion de configuration     
+    - iac
+    - cicd
+    - devops
+    - conteneurisation
+    - orchestration
+    - monitoring et observabilité
+    - stockage distribué
+    - gestion des logs
+    - reverse proxy
+    - gestion de pare feu
+    - convention de commits
+  - les outils et les solutions
+    - proxmox
+    - terraform
+    - cloud init
+    - vault
+    - consul
+    - ansible
+    - kubernetes
+    - kustomize
+    - helm
+    - longhorn
+    - grafana
+    - prometheus
+    - loki
+    - tempo
+    - argo cd
+    - metallb
+    - gitlab ci
+    - nginx 
+    - commitlint
+    - husky
+    - semantic release
+  - les projets informatiques de la societe
+    - introduction
+    - oneex front
+    - oneex back
+    - oneex scanner
+    - oneex scanapp
+    - oneex csharp
+  - le projet
+    - introduction
+    - objectifs du projet
+    - architecture du projet
+        - infrastructure as code avec terraform
+        - configuration automatique avec ansible
+        - gitops avec argo cd
+        - monitoring et observabilité avec grafana, prometheus, loki et tempo
+        - stockage distribué avec longhorn
+        - gestion des secrets avec vault
+        - mise en place de services internes
+        - securite et gestion de pare feu a travers pfsense
+        - mise en place des sercvices de test et et staging
+        - mise en place des de la ci/cd avec gitlab ci dans les projets en developpement
+        - mise en place des servoces de production pour les clients
+conclusion:
+  - conclusion generale
+  # - remerciements
+  # - Les limites du projet
+  # - Les améliorations possibles
+  # - Les enseignements personnels
+  # - annexes
+  #   - glossaire
+  #   - bibliographie
+  #   - liens utiles
+  #   - ressources en ligne
+  #   - outils et logiciels recommandés
