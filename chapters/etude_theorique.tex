@@ -2,165 +2,164 @@
 
 \subsection{Gestion des secrets}
 
-% Définir ce qu'est la gestion des secrets.
-% Expliquer les enjeux (clés API, mots de passe, tokens).
+La gestion des secrets consiste à centraliser, stocker et distribuer de manière sécurisée les informations sensibles telles que les mots de passe, les clés API, les certificats et les tokens d’authentification. Elle permet de réduire les risques de compromission liés aux erreurs humaines, aux partages non contrôlés et au stockage non chiffré de ces données. Des solutions comme HashiCorp Vault répondent à ces enjeux en proposant un stockage chiffré et des mécanismes de contrôle d’accès fin.
 
 \subsection{Gestion de configuration}
 
-% Présenter les principes de la gestion centralisée et versionnée des configurations.
+La gestion de configuration vise à décrire, versionner et appliquer automatiquement les paramètres nécessaires au bon fonctionnement des systèmes et des applications. Elle favorise la cohérence entre les environnements (développement, test, production) et la traçabilité des modifications. Ansible est un outil de référence pour automatiser ces tâches via des playbooks déclaratifs.
 
 \subsection{Infrastructure as Code (IaC)}
 
-% Expliquer le concept, ses avantages, les approches déclarative vs impérative.
+L’Infrastructure as Code est une approche qui consiste à définir l’infrastructure (réseaux, machines virtuelles, ressources cloud) sous forme de code versionné. Elle permet d’automatiser la création et la mise à jour des environnements, de gagner en rapidité et de réduire les erreurs. Deux approches principales existent : la déclarative, qui décrit l’état souhaité (ex. Terraform), et l’impérative, qui décrit les étapes nécessaires.
 
 \subsection{Continuous Integration et Continuous Deployment (CI/CD)}
 
-% Définir CI/CD, ses objectifs et ses apports.
+La CI/CD regroupe l’intégration continue (CI) et le déploiement continu (CD). La CI vise à automatiser la compilation et les tests à chaque changement de code, garantissant la qualité du logiciel. La CD va plus loin en automatisant la livraison jusqu’en production. Ces pratiques favorisent l’agilité et réduisent le temps entre le développement et la mise en production.
 
 \subsection{DevOps}
 
-% Présenter les principes DevOps, culture et collaboration.
+DevOps est un mouvement culturel et organisationnel qui rapproche les équipes de développement et d’exploitation. Il encourage la collaboration, l’automatisation et la responsabilité partagée sur l’ensemble du cycle de vie applicatif. L’objectif est d’améliorer la qualité, la rapidité et la fiabilité des mises en production.
 
 \subsection{Conteneurisation}
 
-% Expliquer les conteneurs (Docker) et pourquoi on les utilise.
+La conteneurisation consiste à empaqueter une application avec toutes ses dépendances dans un conteneur léger et portable. Docker est la technologie la plus répandue. Elle simplifie le déploiement et assure la reproductibilité des environnements, quel que soit l’hôte.
 
 \subsection{Orchestration}
 
-% Présenter Kubernetes et les systèmes d’orchestration.
+L’orchestration permet de gérer automatiquement le cycle de vie des conteneurs sur un cluster de machines. Kubernetes est devenu la référence en la matière. Il offre des fonctionnalités de déploiement, de montée en charge, de tolérance aux pannes et de mise à jour continue.
 
 \subsection{Monitoring et observabilité}
 
-% Définir ces notions et leur importance.
+Le monitoring désigne la collecte de métriques et de logs sur les systèmes et applications. L’observabilité élargit cette notion en permettant de comprendre le comportement interne d’un système à partir de ses sorties. Des outils comme Prometheus, Grafana, Loki et Tempo contribuent à assurer la visibilité et la traçabilité nécessaires pour détecter et corriger rapidement les incidents.
 
 \subsection{Stockage distribué}
 
-% Présenter les besoins en stockage et les solutions.
+Le stockage distribué permet de rendre les données disponibles de manière redondante et tolérante aux pannes. Dans un environnement Kubernetes, des solutions comme Longhorn apportent un stockage persistant hautement disponible.
 
 \subsection{Gestion des logs}
 
-% Expliquer centralisation et analyse des logs.
+La gestion centralisée des logs facilite l’analyse des événements applicatifs et systèmes. Des solutions comme la stack Grafana Loki collectent, stockent et permettent de requêter les logs de manière unifiée.
 
 \subsection{Reverse proxy}
 
-% Définir et donner des exemples (NGINX, Traefik).
+Un reverse proxy est un serveur qui reçoit les requêtes des clients et les redirige vers les serveurs applicatifs. Il joue un rôle essentiel dans la répartition de charge, le chiffrement TLS et la sécurité. NGINX et Traefik sont des reverse proxies couramment utilisés.
 
 \subsection{Gestion de pare-feu}
 
-% Présenter les principes de filtrage réseau.
+La gestion des pare-feux consiste à contrôler les flux réseau entrants et sortants afin de protéger l’infrastructure contre les attaques. Elle implique la définition de règles de filtrage, de NAT et d’accès aux services.
 
 \subsection{Convention de commits}
 
-% Expliquer l’intérêt des conventions (Conventional Commits).
+Les conventions de commits comme Conventional Commits définissent une structure standardisée des messages de commit. Elles facilitent la compréhension des changements, l’automatisation des changelogs et les processus de versioning sémantique.
 
 \section{Les outils et les solutions}
 
 \subsection{Proxmox}
 
-% Présentation rapide de Proxmox.
+Proxmox est une plateforme de virtualisation open source permettant de gérer des machines virtuelles et des conteneurs. Elle est utilisée comme socle d’infrastructure.
 
 \subsection{Terraform}
 
-% Présentation et avantages.
+Terraform est un outil d’Infrastructure as Code qui permet de décrire l’infrastructure dans un langage déclaratif et de l’appliquer automatiquement.
 
 \subsection{Cloud-init}
 
-% Présentation et rôle dans l'automatisation.
+Cloud-init est un utilitaire qui configure automatiquement les machines lors de leur démarrage, notamment le réseau, les utilisateurs et les clés SSH.
 
 \subsection{Vault}
 
-% Présentation et intérêt.
+Vault est une solution de gestion des secrets qui offre un stockage chiffré et des mécanismes de contrôle d’accès aux informations sensibles.
 
 \subsection{Consul}
 
-% Présentation.
+Consul fournit des fonctionnalités de service discovery, de configuration distribuée et de supervision des services.
 
 \subsection{Ansible}
 
-% Présentation et utilisation.
+Ansible est un outil de gestion de configuration et d’automatisation qui permet de déployer et configurer des applications via des playbooks.
 
 \subsection{Kubernetes}
 
-% Présentation.
+Kubernetes est une plateforme d’orchestration des conteneurs qui automatise le déploiement, la mise à l’échelle et la gestion des applications conteneurisées.
 
 \subsection{Kustomize}
 
-% Présentation.
+Kustomize est un outil natif Kubernetes permettant de gérer des configurations complexes par superposition de patches.
 
 \subsection{Helm}
 
-% Présentation.
+Helm est un gestionnaire de packages Kubernetes qui simplifie le déploiement d’applications à l’aide de charts préconfigurés.
 
 \subsection{Longhorn}
 
-% Présentation.
+Longhorn est une solution de stockage distribué qui fournit du stockage persistant pour les clusters Kubernetes.
 
 \subsection{Grafana}
 
-% Présentation.
+Grafana est une solution de visualisation de métriques qui permet de créer des tableaux de bord dynamiques.
 
 \subsection{Prometheus}
 
-% Présentation.
+Prometheus est un système de monitoring et de collecte de métriques utilisé pour superviser l’infrastructure et les applications.
 
 \subsection{Loki}
 
-% Présentation.
+Loki est un outil de centralisation des logs optimisé pour une intégration avec Grafana.
 
 \subsection{Tempo}
 
-% Présentation.
+Tempo est un système de traçabilité des requêtes distribué qui facilite l’analyse des performances applicatives.
 
 \subsection{Argo CD}
 
-% Présentation.
+Argo CD est un outil de GitOps qui synchronise les déploiements Kubernetes avec le contenu d’un dépôt Git.
 
 \subsection{MetalLB}
 
-% Présentation.
+MetalLB apporte la gestion des adresses IP flottantes et du Load Balancing dans des clusters Kubernetes en mode bare-metal.
 
 \subsection{GitLab CI}
 
-% Présentation.
+GitLab CI est un système d’intégration et de déploiement continus qui automatise les pipelines de build et de test.
 
 \subsection{NGINX}
 
-% Présentation.
+NGINX est un reverse proxy et serveur HTTP performant qui sert de point d’entrée aux applications.
 
 \subsection{Commitlint}
 
-% Présentation.
+Commitlint valide les messages de commit en s’assurant qu’ils respectent une convention donnée.
 
 \subsection{Husky}
 
-% Présentation.
+Husky permet d’exécuter des hooks Git (par exemple le lint) avant les commits ou les pushs.
 
 \subsection{Semantic Release}
 
-% Présentation.
+Semantic Release automatise la gestion des versions et la publication des packages en fonction des commits.
 
 \section{Les projets informatiques de la société}
 
 \subsection{Introduction}
 
-% Présenter la place des projets informatiques dans l'entreprise.
+L’entreprise Oneex développe plusieurs projets informatiques stratégiques qui répondent à différents besoins métiers et techniques.
 
 \subsection{Oneex Front}
 
-% Décrire ce projet brièvement.
+Application frontend permettant la gestion des opérations, l’affichage des données et l’interaction avec les utilisateurs finaux.
 
 \subsection{Oneex Back}
 
-% Décrire ce projet brièvement.
+Backend exposant les API et orchestrant les processus métiers critiques.
 
 \subsection{Oneex Scanner}
 
-% Décrire ce projet brièvement.
+Solution logicielle dédiée à l’acquisition et à l’analyse des documents d’identité.
 
 \subsection{Oneex ScanApp}
 
-% Décrire ce projet brièvement.
+Application mobile ou desktop facilitant le scan et la vérification en temps réel des documents.
 
 \subsection{Oneex CSharp}
 
-% Décrire ce projet brièvement.
+Projet spécifique développé en C\# destiné à répondre à des besoins d’intégration ou d’outillage interne.
