@@ -77,11 +77,15 @@
 
 % begin document
 \begin{document}
-
+\pagenumbering{roman}
 % misc
 \input{misc/misc_main}
 
+
 % chapters
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 \input{chapters/chapters_main.tex}
 
 % references
