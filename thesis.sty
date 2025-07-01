@@ -36,26 +36,38 @@
 \setlength{\parindent}{0cm}                         %
 \usepackage{setspace}                               %
 \onehalfspacing                                     %
-\setlength{\parskip}{\baselineskip}                 %
+\setlength{\parskip}{6pt}                           %
 \newcounter{ltrow}                                  %
 \usepackage{listings}                               %
 \usepackage{needspace}                              % To keep text together when needed use, %\needspace{6em}
 \usepackage[hang,flushmargin]{footmisc} 
 
 \usepackage{hyphenat}
-\usepackage{titlesec}                                                                           % Title formatting
-% \titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter.}{1em}{}                         %
-\titleformat{\chapter}{\normalfont\bfseries\fontsize{16}{19}}{\thechapter.}{1em}{}
-\titleformat{\section}{\normalfont\bfseries\fontsize{14}{17}}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{15}}{\thesubsection}{1em}{}
-% \titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}                       %
-\titlespacing*{\chapter}{0pt}{0pt}{0pt}                        %
-\titlespacing*{\section}{0pt}{0pt}{0pt}                                                         %
-\titlespacing*{\subsection}{0pt}{0pt}{0pt}                                                      %
-\titlespacing*{\subsubsection}{0pt}{0pt}{-10pt}                                                 %
-\titleformat{\section}[hang]{\normalfont\large\bf}{\thesection}{1em}{}[]                        %
-\titleformat{\subsection}[hang]{\normalfont\large\bf}{\thesubsection}{1em}{}[]                  %
-\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bf}{\thesubsubsection}{1em}{}[]       %
+
+% Format des titres
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\bfseries\LARGE}
+  {\thechapter.}{1em}{}
+
+\titleformat{\section}
+  {\normalfont\bfseries\Large}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\large}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsubsection}{1em}{}
+
+\titlespacing*{\chapter}{0pt}{20pt plus 2pt minus 2pt}{10pt}
+\titlespacing*{\section}{0pt}{12pt plus 2pt minus 2pt}{6pt}
+\titlespacing*{\subsection}{0pt}{10pt plus 2pt minus 2pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 2pt}{2pt}
+
 
 \usepackage{enumitem}                                       % Sets list spacing
 \setlist[itemize]{noitemsep, topsep=0pt}                    %
@@ -78,3 +90,14 @@
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % for sections and etc
 
 \usepackage{subcaption}
+
+
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[R]{\thepage}
+}

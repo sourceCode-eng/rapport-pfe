@@ -1,40 +1,38 @@
-\include{misc/titlepage}
-
 \setcounter{page}{0}
-\pagenumbering{arabic}   %from here on, start the 'real' page numbering, from 1, with normal digits
+\pagenumbering{roman}   %from here on, start the 'real' page numbering, from 1, with normal digits
 
 \normalsize
 
-\chapter*{\centerline{Author's Declaration of Originality}}\label{chapter:declaration}
-\input{misc/authordeclaration.tex}
-\pagebreak
 
-\chapter*{\centerline{Dedication}}\label{chapter:dedication}
+
+\chapter*{\centerline{Dédicace}}\label{chapter:dedication}
 \input{misc/dedication}
 \pagebreak
 
-\chapter*{\centerline{Acknowledgments}}\label{chapter:acknowledgments}
+\chapter*{\centerline{Remerciements}}\label{chapter:acknowledgments}
 \input{misc/acknowledgments}
 \pagebreak
 
-\chapter*{\centerline{Abstract}}\label{chapter:abstract}
+\chapter*{\centerline{Résumé}}\label{chapter:abstract}
 \input{misc/abstract}
 \pagebreak
 
-\chapter*{\centerline{List of Abbreviations and Terms}}\label{chapter:terms}
-\input{misc/terms_abbreviations.tex}
-\pagebreak
+% \chapter*{\centerline{Liste des abréviations et des termes}}\label{chapter:terms}
+% \input{misc/terms_abbreviations.tex}
+% \pagebreak
 
 \phantomsection
-\setcounter{tocdepth}{2}    % Sets maximum depth of Table Of Contents
-\renewcommand{\contentsname}{Table of Contents}
+\setcounter{tocdepth}{2}    
+\renewcommand{\contentsname}{Table des matières}
 \tableofcontents
 
 \clearpage \phantomsection
+\renewcommand{\listfigurename}{Liste des figures}
 \setcounter{figure}{0}
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
 
 \clearpage \phantomsection
+\renewcommand{\listtablename}{Liste des tableaux}
 \addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
