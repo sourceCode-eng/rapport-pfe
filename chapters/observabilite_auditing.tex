@@ -2,10 +2,10 @@
 
 Grafana est une solution open source de visualisation et d’exploration de données, largement utilisée pour la supervision des infrastructures, le monitoring applicatif et l’analyse d’indicateurs métiers. Elle permet de créer des tableaux de bord interactifs et personnalisables qui agrègent des données provenant de multiples sources (Prometheus, InfluxDB, Elasticsearch, Loki, MySQL, etc.). Grâce à son approche modulaire et à sa richesse fonctionnelle, Grafana s’est imposé comme un standard de facto dans l’écosystème cloud-native et DevOps.
 
- %point de vue metier
- Grafana répond à plusieurs enjeux stratégiques  : renforcer la visibilité sur les systèmes critiques, réduire le temps de résolution des incidents, et améliorer la qualité des services. En centralisant la visualisation et l’analyse des métriques, logs et traces, Grafana facilite la prise de décision et contribue à l’amélioration continue des processus opérationnels. Son interface conviviale et ses capacités de partage simplifient la collaboration entre équipes techniques et parties prenantes.
+%point de vue metier
+Grafana répond à plusieurs enjeux stratégiques  : renforcer la visibilité sur les systèmes critiques, réduire le temps de résolution des incidents, et améliorer la qualité des services. En centralisant la visualisation et l’analyse des métriques, logs et traces, Grafana facilite la prise de décision et contribue à l’amélioration continue des processus opérationnels. Son interface conviviale et ses capacités de partage simplifient la collaboration entre équipes techniques et parties prenantes.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Grafana repose sur plusieurs composants essentiels  :
 \begin{itemize}
 	\item \textbf{Les datasources}  : connecteurs vers des bases de données et des systèmes de monitoring (Prometheus, Graphite, ElasticSearch, CloudWatch, etc.).
@@ -51,10 +51,10 @@ En synthèse, Grafana est une brique centrale des stratégies d’observabilité
 
 Prometheus est une solution open source de monitoring et d’alerte initialement développée par SoundCloud, puis incubée par la Cloud Native Computing Foundation (CNCF). Il est devenu l’un des piliers des architectures cloud-native grâce à sa capacité à collecter, stocker et interroger des métriques temporelles de manière performante. Prometheus est particulièrement reconnu pour son modèle de données multidimensionnel, son langage de requête puissant (PromQL) et sa facilité d’intégration avec Kubernetes.
 
- %point de vue metier
- Prometheus répond à plusieurs enjeux essentiels  : renforcer la visibilité sur les systèmes critiques, anticiper les incidents par une surveillance proactive et réduire le temps moyen de résolution des problèmes (MTTR). Il contribue à l’amélioration continue des performances applicatives et à la qualité de service délivrée aux utilisateurs. Grâce à sa modularité, Prometheus s’adapte à des environnements variés (infrastructures cloud, conteneurs, clusters Kubernetes, applications legacy).
+%point de vue metier
+Prometheus répond à plusieurs enjeux essentiels  : renforcer la visibilité sur les systèmes critiques, anticiper les incidents par une surveillance proactive et réduire le temps moyen de résolution des problèmes (MTTR). Il contribue à l’amélioration continue des performances applicatives et à la qualité de service délivrée aux utilisateurs. Grâce à sa modularité, Prometheus s’adapte à des environnements variés (infrastructures cloud, conteneurs, clusters Kubernetes, applications legacy).
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Prometheus repose sur plusieurs composants clés  :
 \begin{itemize}
 	\item \textbf{Le serveur Prometheus}  : responsable de la collecte des métriques via le protocole HTTP/HTTPS (pull model) et du stockage local des séries temporelles.
@@ -100,10 +100,10 @@ En synthèse, Prometheus est un outil incontournable des stratégies de monitori
 
 Loki est une solution open source développée par Grafana Labs pour la centralisation et l’analyse des logs. Conçu pour s’intégrer étroitement avec Prometheus, Grafana et l’écosystème cloud-native, Loki adopte une approche innovante  : il indexe uniquement les labels (métadonnées) et non le contenu complet des logs. Cette caractéristique en fait une solution plus légère, plus scalable et plus économique que les systèmes traditionnels d’indexation complète (par exemple Elasticsearch).
 
- %point de vue metier
- Loki répond à plusieurs enjeux stratégiques  : renforcer la visibilité sur les applications et les infrastructures, accélérer les diagnostics d’incidents et réduire le coût du stockage et du traitement des logs. Il permet aux équipes SRE, DevOps et de support de disposer d’un outil cohérent avec leur stack de monitoring et d’observabilité, facilitant la corrélation entre métriques, logs et alertes.
+%point de vue metier
+Loki répond à plusieurs enjeux stratégiques  : renforcer la visibilité sur les applications et les infrastructures, accélérer les diagnostics d’incidents et réduire le coût du stockage et du traitement des logs. Il permet aux équipes SRE, DevOps et de support de disposer d’un outil cohérent avec leur stack de monitoring et d’observabilité, facilitant la corrélation entre métriques, logs et alertes.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Loki repose sur plusieurs concepts clés  :
 \begin{itemize}
 	\item \textbf{Les labels}  : clés et valeurs attachées aux streams de logs (par exemple `app="nginx"`), utilisés comme index.
@@ -144,15 +144,14 @@ En synthèse, Loki est un composant central de la stack d’observabilité cloud
 	\item CNCF Loki Project – \url{https://www.cncf.io/projects/loki/}
 \end{itemize}
 
-
 \subsection{Tempo}
 
 Tempo est une solution open source de traçage distribué développée par Grafana Labs. Elle permet de collecter, stocker et interroger des traces issues d’applications distribuées, sans nécessiter d’indexation complexe. Conçu pour compléter Prometheus et Loki, Tempo s’intègre naturellement dans la stack d’observabilité cloud-native. Grâce à son architecture optimisée, il offre un stockage massif et économique des traces, tout en simplifiant la corrélation avec les métriques et les logs.
 
- %point de vue metier
- Tempo répond à plusieurs enjeux stratégiques  : comprendre la performance des applications microservices, diagnostiquer les latences et les erreurs en production, et améliorer l’expérience utilisateur. En facilitant l’analyse des parcours complets des requêtes, Tempo contribue à réduire le temps moyen de résolution des incidents (MTTR) et à optimiser la qualité de service.
+%point de vue metier
+Tempo répond à plusieurs enjeux stratégiques  : comprendre la performance des applications microservices, diagnostiquer les latences et les erreurs en production, et améliorer l’expérience utilisateur. En facilitant l’analyse des parcours complets des requêtes, Tempo contribue à réduire le temps moyen de résolution des incidents (MTTR) et à optimiser la qualité de service.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Tempo s’appuie sur plusieurs concepts essentiels  :
 \begin{itemize}
 	\item \textbf{Les traces}  : enregistrements d’un ensemble de spans représentant les étapes d’une requête distribuée.
@@ -193,15 +192,14 @@ En synthèse, Tempo est un pilier des architectures d’observabilité modernes.
 	\item Grafana Labs Blog – \url{https://grafana.com/blog/}
 \end{itemize}
 
-
 \subsection{OpenTelemetry}
 
 OpenTelemetry est une suite open source de spécifications, d’outils et de SDK destinée à la collecte, au traitement et à l’exportation des signaux d’observabilité  : métriques, logs et traces. Né de la fusion des projets OpenTracing et OpenCensus, OpenTelemetry est aujourd’hui un projet de la Cloud Native Computing Foundation (CNCF) et constitue le standard de facto pour instrumenter les applications modernes, qu’elles soient monolithiques ou microservices.
 
- %point de vue metier
- OpenTelemetry répond à des enjeux stratégiques majeurs  : renforcer la visibilité sur les systèmes distribués, anticiper les problèmes de performance, améliorer l’expérience utilisateur et faciliter la transformation digitale. En proposant un cadre unifié et standardisé, OpenTelemetry contribue à réduire la complexité opérationnelle et à accélérer la mise en place de stratégies d’observabilité efficaces.
+%point de vue metier
+OpenTelemetry répond à des enjeux stratégiques majeurs  : renforcer la visibilité sur les systèmes distribués, anticiper les problèmes de performance, améliorer l’expérience utilisateur et faciliter la transformation digitale. En proposant un cadre unifié et standardisé, OpenTelemetry contribue à réduire la complexité opérationnelle et à accélérer la mise en place de stratégies d’observabilité efficaces.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , OpenTelemetry repose sur plusieurs composants essentiels  :
 \begin{itemize}
 	\item \textbf{Les SDK}  : bibliothèques spécifiques aux langages (Java, Go, Python, etc.) qui instrumentent automatiquement ou manuellement les applications.

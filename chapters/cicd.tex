@@ -2,10 +2,10 @@
 
 GitLab CI (Continuous Integration) est un système d’intégration et de livraison continues intégré nativement dans GitLab, une plateforme DevOps complète de gestion du cycle de vie applicatif. Il permet d’automatiser la construction, les tests, la validation, le packaging et le déploiement des applications en s’appuyant sur des pipelines définis de manière déclarative. GitLab CI est aujourd’hui largement utilisé dans les organisations souhaitant industrialiser leurs workflows de développement et renforcer la qualité logicielle.
 
- %point de vue metier
- GitLab CI répond à plusieurs enjeux stratégiques  : accélérer le time-to-market, réduire les erreurs humaines, renforcer la traçabilité des changements et améliorer la collaboration entre équipes. Grâce à sa proximité avec le dépôt Git, il apporte une cohérence totale entre le code source, l’historique des commits et les pipelines d’automatisation. Il contribue ainsi à la modernisation et à la professionnalisation des processus de développement.
+%point de vue metier
+GitLab CI répond à plusieurs enjeux stratégiques  : accélérer le time-to-market, réduire les erreurs humaines, renforcer la traçabilité des changements et améliorer la collaboration entre équipes. Grâce à sa proximité avec le dépôt Git, il apporte une cohérence totale entre le code source, l’historique des commits et les pipelines d’automatisation. Il contribue ainsi à la modernisation et à la professionnalisation des processus de développement.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , GitLab CI repose sur plusieurs concepts essentiels  :
 \begin{itemize}
 	\item \textbf{Le fichier \texttt{.gitlab-ci.yml}}  : fichier de configuration déclaratif placé à la racine du dépôt, qui décrit les jobs et les étapes du pipeline.
@@ -52,10 +52,10 @@ En synthèse, GitLab CI est une solution stratégique pour automatiser l’inté
 
 Commitlint est un outil open source qui permet de vérifier que les messages de commit respectent un format prédéfini. Il est particulièrement utilisé dans les workflows Git modernes pour renforcer la cohérence des messages de commit, faciliter la génération automatique de changelogs et standardiser la documentation des évolutions logicielles. Commitlint est souvent intégré à des processus de validation automatisés grâce aux hooks Git (par exemple avec Husky) ou aux pipelines CI/CD.
 
- %point de vue metier
- Commitlint répond à plusieurs enjeux stratégiques  : améliorer la lisibilité de l’historique des changements, garantir une traçabilité complète des évolutions, renforcer la qualité documentaire et faciliter les audits. La standardisation des messages de commit contribue à instaurer une culture de rigueur et de professionnalisation au sein des équipes de développement.
+%point de vue metier
+Commitlint répond à plusieurs enjeux stratégiques  : améliorer la lisibilité de l’historique des changements, garantir une traçabilité complète des évolutions, renforcer la qualité documentaire et faciliter les audits. La standardisation des messages de commit contribue à instaurer une culture de rigueur et de professionnalisation au sein des équipes de développement.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Commitlint s’appuie sur plusieurs concepts essentiels  :
 \begin{itemize}
 	\item \textbf{Les règles de validation}  : définissent le format attendu des commits (par exemple, le standard Conventional Commits).
@@ -105,15 +105,14 @@ En synthèse, Commitlint est une brique essentielle pour industrialiser et profe
 	\item GitHub Commitlint Repository – \url{https://github.com/conventional-changelog/commitlint}
 \end{itemize}
 
-
 \subsection{Husky}
 
 Husky est un outil open source permettant de gérer et d’exécuter des hooks Git de manière simple et centralisée dans les projets logiciels. Il facilite l’automatisation de tâches de validation et de mise en conformité lors des événements Git, tels que les commits, les pushs ou les merges. Grâce à sa configuration déclarative, Husky contribue à instaurer des pratiques DevOps rigoureuses et à renforcer la qualité du code tout au long du cycle de développement.
 
- %point de vue metier
- Husky répond à plusieurs enjeux stratégiques  : réduire les erreurs humaines, homogénéiser les workflows entre équipes, accélérer le feedback lors des validations et améliorer la traçabilité des changements. Il constitue un levier essentiel de professionnalisation, car il garantit que les standards de qualité (tests, linting, conventions de commit) sont systématiquement respectés avant d’intégrer le code au référentiel principal.
+%point de vue metier
+Husky répond à plusieurs enjeux stratégiques  : réduire les erreurs humaines, homogénéiser les workflows entre équipes, accélérer le feedback lors des validations et améliorer la traçabilité des changements. Il constitue un levier essentiel de professionnalisation, car il garantit que les standards de qualité (tests, linting, conventions de commit) sont systématiquement respectés avant d’intégrer le code au référentiel principal.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Husky repose sur plusieurs concepts clés  :
 \begin{itemize}
 	\item \textbf{Les hooks Git}  : scripts déclenchés automatiquement par Git à différents moments du cycle de vie (par exemple \texttt{pre-commit}, \texttt{commit-msg}, \texttt{pre-push}).
@@ -158,15 +157,14 @@ En synthèse, Husky est un composant essentiel pour fiabiliser et automatiser le
 	\item Prettier Documentation – \url{https://prettier.io/docs/en/}
 \end{itemize}
 
-
 \subsection{Semantic Release}
 
 Semantic Release est un outil open source qui automatise le versionnement et la publication des packages logiciels en s’appuyant sur les messages de commit et le principe du versionnement sémantique (Semantic Versioning). Il supprime le besoin de mise à jour manuelle du numéro de version et de rédaction des changelogs, contribuant ainsi à la fiabilisation et à l’industrialisation des processus de release.
 
- %point de vue metier
- Semantic Release répond à plusieurs enjeux stratégiques  : réduire les erreurs humaines dans les versions publiées, accélérer le cycle de livraison, renforcer la traçabilité des évolutions et homogénéiser les workflows de publication entre équipes. En automatisant intégralement la release, il permet aux développeurs de se concentrer sur la qualité fonctionnelle plutôt que sur les tâches administratives.
+%point de vue metier
+Semantic Release répond à plusieurs enjeux stratégiques  : réduire les erreurs humaines dans les versions publiées, accélérer le cycle de livraison, renforcer la traçabilité des évolutions et homogénéiser les workflows de publication entre équipes. En automatisant intégralement la release, il permet aux développeurs de se concentrer sur la qualité fonctionnelle plutôt que sur les tâches administratives.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Semantic Release repose sur plusieurs concepts clés  :
 \begin{itemize}
 	\item \textbf{Les conventions de commit}  : le projet s’appuie sur des formats structurés (par exemple Conventional Commits) pour déduire automatiquement l’impact des changements (correctifs, nouvelles fonctionnalités, breaking changes).

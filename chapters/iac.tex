@@ -14,12 +14,12 @@ Proxmox répond à plusieurs enjeux stratégiques : rationalisation des ressourc
 
 D’un point de vue technique, Proxmox repose sur plusieurs composantes clés :
 \begin{itemize}
-    \item \textbf{KVM (Kernel-based Virtual Machine)} : moteur de virtualisation complète.
-    \item \textbf{LXC (Linux Containers)} : conteneurisation système légère.
-    \item \textbf{Ceph Storage} : stockage distribué intégré et hautement disponible.
-    \item \textbf{Cluster Management} : fédération et basculement automatique.
-    \item \textbf{Interface Web et API REST} : administration centralisée.
-    \item \textbf{Sauvegardes et snapshots} : gestion de la résilience.
+	\item \textbf{KVM (Kernel-based Virtual Machine)} : moteur de virtualisation complète.
+	\item \textbf{LXC (Linux Containers)} : conteneurisation système légère.
+	\item \textbf{Ceph Storage} : stockage distribué intégré et hautement disponible.
+	\item \textbf{Cluster Management} : fédération et basculement automatique.
+	\item \textbf{Interface Web et API REST} : administration centralisée.
+	\item \textbf{Sauvegardes et snapshots} : gestion de la résilience.
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : déploiement d’un cluster de trois nœuds Proxmox avec stockage Ceph pour héberger des machines virtuelles critiques en haute disponibilité.
@@ -30,11 +30,11 @@ Terraform est un outil open source d’Infrastructure as Code développé par Ha
 
 Terraform répond à plusieurs enjeux : accélération du provisioning, fiabilisation des configurations et maîtrise des environnements. Il repose sur des concepts clés :
 \begin{itemize}
-    \item \textbf{Fichiers de configuration (HCL)} : description de l’état souhaité.
-    \item \textbf{Providers} : modules d’interface avec les APIs.
-    \item \textbf{State file} : enregistrement des ressources créées.
-    \item \textbf{Plan d’exécution} et \textbf{apply} : gestion des changements.
-    \item \textbf{Modules et workspaces} : factorisation et isolation.
+	\item \textbf{Fichiers de configuration (HCL)} : description de l’état souhaité.
+	\item \textbf{Providers} : modules d’interface avec les APIs.
+	\item \textbf{State file} : enregistrement des ressources créées.
+	\item \textbf{Plan d’exécution} et \textbf{apply} : gestion des changements.
+	\item \textbf{Modules et workspaces} : factorisation et isolation.
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : provisionner un cluster Kubernetes sur Proxmox avec un réseau et des volumes configurés.
@@ -43,9 +43,9 @@ Terraform répond à plusieurs enjeux : accélération du provisioning, fiabilis
 
 Cloud-init est un outil d’initialisation automatique des machines virtuelles lors du premier démarrage. Il est supporté par la plupart des plateformes cloud et hyperviseurs, et permet :
 \begin{itemize}
-    \item La configuration réseau.
-    \item La création d’utilisateurs et de clés SSH.
-    \item L’installation de paquets et le lancement de scripts.
+	\item La configuration réseau.
+	\item La création d’utilisateurs et de clés SSH.
+	\item L’installation de paquets et le lancement de scripts.
 \end{itemize}
 
 Cloud-init contribue à standardiser les environnements et réduire les délais de mise en service.
@@ -56,10 +56,10 @@ Cloud-init contribue à standardiser les environnements et réduire les délais 
 
 Ansible est un outil open source d’automatisation et de configuration des systèmes, basé sur un langage déclaratif YAML et une architecture agentless (connexion SSH). Il permet de :
 \begin{itemize}
-    \item Définir des playbooks réutilisables.
-    \item Orchestrer la configuration de plusieurs hôtes.
-    \item Gérer des inventaires et des variables.
-    \item Assurer la traçabilité des opérations.
+	\item Définir des playbooks réutilisables.
+	\item Orchestrer la configuration de plusieurs hôtes.
+	\item Gérer des inventaires et des variables.
+	\item Assurer la traçabilité des opérations.
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : configurer des serveurs applicatifs, installer les dépendances et sécuriser les accès.
@@ -68,10 +68,10 @@ Ansible est un outil open source d’automatisation et de configuration des syst
 
 Vault est un gestionnaire de secrets développé par HashiCorp. Il centralise le stockage, la rotation et l’audit des informations sensibles. Les fonctionnalités principales incluent :
 \begin{itemize}
-    \item Chiffrement au repos et en transit.
-    \item Génération dynamique de credentials.
-    \item Contrôle d’accès fin (ACL).
-    \item Rotation automatique des secrets.
+	\item Chiffrement au repos et en transit.
+	\item Génération dynamique de credentials.
+	\item Contrôle d’accès fin (ACL).
+	\item Rotation automatique des secrets.
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : stockage sécurisé des tokens Kubernetes et des mots de passe base de données.
@@ -80,10 +80,10 @@ Vault est un gestionnaire de secrets développé par HashiCorp. Il centralise le
 
 Consul complète Vault en apportant :
 \begin{itemize}
-    \item La découverte automatique des services.
-    \item La supervision de leur état.
-    \item Le stockage clé-valeur des configurations.
-    \item Le service mesh sécurisé.
+	\item La découverte automatique des services.
+	\item La supervision de leur état.
+	\item Le stockage clé-valeur des configurations.
+	\item Le service mesh sécurisé.
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : synchroniser dynamiquement les configurations applicatives avec Consul Template.
@@ -100,17 +100,17 @@ Consul complète Vault en apportant :
 
 pfSense est une solution open source de pare-feu et de routage. Elle permet :
 \begin{itemize}
-    \item La définition de règles de filtrage réseau.
-    \item La gestion de VPN et la segmentation des VLAN.
-    \item La supervision du trafic.
+	\item La définition de règles de filtrage réseau.
+	\item La gestion de VPN et la segmentation des VLAN.
+	\item La supervision du trafic.
 \end{itemize}
 \subsection{reseau de k8s}
 \subsection{MetalLB}
 
 MetalLB est un Load Balancer pour Kubernetes on-premise :
 \begin{itemize}
-    \item Attribution d’adresses IP virtuelles.
-    \item Distribution du trafic vers les pods.
+	\item Attribution d’adresses IP virtuelles.
+	\item Distribution du trafic vers les pods.
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : exposer des services applicatifs Kubernetes en haute disponibilité.

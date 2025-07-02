@@ -3,10 +3,10 @@
 
 Argo CD est un outil open source de déploiement continu (CD) natif Kubernetes, conçu pour mettre en œuvre les pratiques GitOps. Il permet de synchroniser l’état désiré des applications, défini dans un dépôt Git, avec l’état effectif du cluster Kubernetes. En automatisant la gestion et le déploiement des manifestes, Argo CD apporte cohérence, traçabilité et résilience aux environnements cloud-native.
 
- %point de vue metier
- Argo CD répond à plusieurs enjeux stratégiques  : fiabiliser les déploiements, réduire le temps de mise en production, renforcer la traçabilité et limiter les erreurs humaines. Il offre un modèle déclaratif et auditable, conforme aux exigences de sécurité et de conformité des organisations modernes. En industrialisant le GitOps, Argo CD contribue à accélérer l’innovation tout en garantissant la stabilité des systèmes.
+%point de vue metier
+Argo CD répond à plusieurs enjeux stratégiques  : fiabiliser les déploiements, réduire le temps de mise en production, renforcer la traçabilité et limiter les erreurs humaines. Il offre un modèle déclaratif et auditable, conforme aux exigences de sécurité et de conformité des organisations modernes. En industrialisant le GitOps, Argo CD contribue à accélérer l’innovation tout en garantissant la stabilité des systèmes.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , Argo CD s’appuie sur plusieurs composants clés  :
 \begin{itemize}
 	\item \textbf{Le dépôt Git}  : source unique de vérité contenant les manifestes Kubernetes (YAML) ou les définitions Kustomize/Helm.
@@ -52,10 +52,10 @@ En synthèse, Argo CD est une solution stratégique pour l’automatisation et l
 
 MetalLB est un contrôleur open source qui permet d’apporter des capacités de Load Balancing de type L2/L3 à un cluster Kubernetes installé dans un environnement on-premise ou sur une infrastructure dépourvue de load balancer natif. En offrant une solution simple et efficace pour gérer les adresses IP externes, MetalLB comble une lacune importante des clusters bare-metal en production.
 
- %point de vue metier
- MetalLB répond à plusieurs enjeux  : rendre les services Kubernetes accessibles de manière fiable, offrir une expérience équivalente à celle des clouds publics, et garantir la continuité de service en cas de défaillance d’un nœud. Il permet aux organisations d’exploiter Kubernetes dans leurs datacenters ou clouds privés tout en bénéficiant des standards d’exposition réseau attendus par les utilisateurs et les clients.
+%point de vue metier
+MetalLB répond à plusieurs enjeux  : rendre les services Kubernetes accessibles de manière fiable, offrir une expérience équivalente à celle des clouds publics, et garantir la continuité de service en cas de défaillance d’un nœud. Il permet aux organisations d’exploiter Kubernetes dans leurs datacenters ou clouds privés tout en bénéficiant des standards d’exposition réseau attendus par les utilisateurs et les clients.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , MetalLB fonctionne selon deux modes principaux :
 \begin{itemize}
 	\item \textbf{Le mode Layer 2}  : chaque nœud participant annonce l’IP publique via ARP (IPv4) ou NDP (IPv6). Ce mode est simple à déployer et ne nécessite pas de routeur compatible BGP.
@@ -93,16 +93,14 @@ En synthèse, MetalLB est une brique essentielle pour rendre Kubernetes opérati
 	\item Kubernetes Bare Metal – \url{https://kubernetes.io/docs/setup/production-environment/turnkey/}
 \end{itemize}
 
-
-
 \subsection{NGINX}
 
 NGINX est un serveur web open source reconnu pour ses performances élevées, sa faible consommation de ressources et sa polyvalence. Initialement conçu comme un serveur HTTP haute performance et un reverse proxy, NGINX est devenu une plateforme complète capable d’assurer des rôles variés  : load balancer, cache HTTP, proxy TLS/SSL, terminator TLS, et serveur d’applications via FastCGI, SCGI ou uWSGI.
 
- %point de vue metier
- NGINX répond à des enjeux stratégiques  : améliorer la rapidité et la fiabilité des applications web, optimiser les coûts d’infrastructure et assurer une expérience utilisateur optimale. Grâce à sa capacité à servir des milliers de connexions simultanées avec une faible empreinte mémoire, il est adopté aussi bien par les start-ups que par les grandes entreprises. Il joue également un rôle clé dans la sécurisation des services exposés sur Internet.
+%point de vue metier
+NGINX répond à des enjeux stratégiques  : améliorer la rapidité et la fiabilité des applications web, optimiser les coûts d’infrastructure et assurer une expérience utilisateur optimale. Grâce à sa capacité à servir des milliers de connexions simultanées avec une faible empreinte mémoire, il est adopté aussi bien par les start-ups que par les grandes entreprises. Il joue également un rôle clé dans la sécurisation des services exposés sur Internet.
 
- %point de vue logique et technique
+%point de vue logique et technique
 , NGINX s’appuie sur une architecture événementielle asynchrone qui lui permet de traiter un grand nombre de requêtes concurrentes sans blocage. Ses fonctionnalités couvrent notamment  :
 \begin{itemize}
 	\item \textbf{Reverse proxy}  : réception des requêtes HTTP(S) et distribution vers les serveurs applicatifs backend.
