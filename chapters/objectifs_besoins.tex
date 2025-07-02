@@ -28,7 +28,11 @@ Les besoins fonctionnels définissent les fonctionnalités attendues de la solut
     \item \textbf{Supervision et alertes} : intégration de Prometheus et Grafana pour la collecte et l'affichage des métriques.
     \item \textbf{Gestion sécurisée des secrets} : déploiement de HashiCorp Vault afin de stocker et distribuer les informations sensibles.
     \item \textbf{Mise en place d'environnements distincts} : séparation claire entre les environnements de test, de pré-production et de production.
+    \item \textbf{Audits automatiques de conformité} : génération régulière de rapports d'audit afin de vérifier l'intégrité des configurations et la conformité aux standards de sécurité.
+    \item \textbf{Détection précoce des erreurs} : mise en place de mécanismes permettant d'identifier rapidement les anomalies et les dysfonctionnements avant leur impact en production.
+    \item \textbf{Correction automatique des erreurs et des crashs} : déploiement de processus d'auto-remédiation permettant de restaurer les services en cas d'incident.
 \end{itemize}
+
 
 \section{Les besoins non fonctionnels}
 
@@ -40,6 +44,8 @@ Les besoins non fonctionnels définissent les critères de qualité que la solut
     \item \textbf{Scalabilité} : permettre l'évolution de l'infrastructure en fonction de la croissance de l'activité et de l'augmentation du nombre de clients.
     \item \textbf{Maintenabilité} : faciliter les mises à jour, les correctifs et l'évolution des configurations.
     \item \textbf{Traçabilité et auditabilité} : conserver l'historique des changements et des déploiements.
+    \item \textbf{Conformité réglementaire} : respecter les normes en vigueur (RGPD, ISO 27001, etc.) et les exigences spécifiques du secteur d'activité.
+    \item \textbf{Performance} : garantir des temps de réponse optimaux pour les services critiques, même en période de forte charge.
     \item \textbf{Réduction du temps de mise en production} : diminuer les délais de déploiement des nouvelles fonctionnalités.
     \item \textbf{Source unique de vérité (Single Source of Truth)} : centraliser et versionner l’ensemble des configurations, de la documentation et des états d’infrastructure dans un référentiel unique et fiable.
 \end{itemize}
