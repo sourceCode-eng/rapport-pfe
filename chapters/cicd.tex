@@ -1,0 +1,207 @@
+\subsection{GitLab CI}
+
+GitLab CI (Continuous Integration) est un système d’intégration et de livraison continues intégré nativement dans GitLab, une plateforme DevOps complète de gestion du cycle de vie applicatif. Il permet d’automatiser la construction, les tests, la validation, le packaging et le déploiement des applications en s’appuyant sur des pipelines définis de manière déclarative. GitLab CI est aujourd’hui largement utilisé dans les organisations souhaitant industrialiser leurs workflows de développement et renforcer la qualité logicielle.
+
+ %point de vue metier
+ GitLab CI répond à plusieurs enjeux stratégiques  : accélérer le time-to-market, réduire les erreurs humaines, renforcer la traçabilité des changements et améliorer la collaboration entre équipes. Grâce à sa proximité avec le dépôt Git, il apporte une cohérence totale entre le code source, l’historique des commits et les pipelines d’automatisation. Il contribue ainsi à la modernisation et à la professionnalisation des processus de développement.
+
+ %point de vue logique et technique
+, GitLab CI repose sur plusieurs concepts essentiels  :
+\begin{itemize}
+	\item \textbf{Le fichier \texttt{.gitlab-ci.yml}}  : fichier de configuration déclaratif placé à la racine du dépôt, qui décrit les jobs et les étapes du pipeline.
+	\item \textbf{Les jobs}  : unités atomiques qui exécutent des scripts ou des commandes (build, test, deploy).
+	\item \textbf{Les stages}  : regroupements logiques des jobs (par exemple, build, test, deploy) exécutés séquentiellement ou en parallèle.
+	\item \textbf{Les runners}  : exécutants (machines ou conteneurs) qui traitent les jobs. Ils peuvent être partagés, spécifiques ou autoscalés.
+	\item \textbf{Les variables}  : valeurs dynamiques injectées dans les pipelines (clés, secrets, paramètres d’environnement).
+	\item \textbf{Les artefacts}  : fichiers générés par les jobs et transmis entre étapes.
+\end{itemize}
+
+GitLab CI prend en charge de nombreuses fonctionnalités avancées  : intégration Kubernetes, déclencheurs manuels (manual actions), pipelines multi-projets, stratégies de déploiement progressif et vérification des politiques de sécurité.
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Compiler automatiquement une application dès la création d’une merge request.
+	\item Exécuter des tests unitaires et fonctionnels dans un pipeline parallèle.
+	\item Construire et publier des images Docker sur GitLab Container Registry.
+	\item Déployer des applications sur Kubernetes via Helm ou kubectl.
+	\item Générer et publier automatiquement la documentation technique.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Intégration native avec GitLab et l’ensemble du cycle de vie DevOps.
+	\item Modèle déclaratif simple et lisible.
+	\item Traçabilité et auditabilité complète des pipelines.
+	\item Compatibilité avec les conteneurs et les environnements Kubernetes.
+	\item Gestion sécurisée des secrets et des variables sensibles.
+	\item Large écosystème de templates, exemples et intégrations communautaires.
+\end{itemize}
+
+En synthèse, GitLab CI est une solution stratégique pour automatiser l’intégration et la livraison continues. Il permet aux équipes de gagner en efficacité opérationnelle, d’améliorer la qualité logicielle et d’accélérer la mise en production des innovations.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item GitLab CI Documentation – \url{https://docs.gitlab.com/ee/ci/}
+	\item GitLab CI YAML Reference – \url{https://docs.gitlab.com/ee/ci/yaml/}
+	\item GitLab Runners – \url{https://docs.gitlab.com/runner/}
+	\item GitLab Kubernetes Integration – \url{https://docs.gitlab.com/ee/user/project/clusters/}
+	\item GitLab Auto DevOps – \url{https://docs.gitlab.com/ee/topics/autodevops/}
+\end{itemize}
+
+\subsection{Commitlint}
+
+Commitlint est un outil open source qui permet de vérifier que les messages de commit respectent un format prédéfini. Il est particulièrement utilisé dans les workflows Git modernes pour renforcer la cohérence des messages de commit, faciliter la génération automatique de changelogs et standardiser la documentation des évolutions logicielles. Commitlint est souvent intégré à des processus de validation automatisés grâce aux hooks Git (par exemple avec Husky) ou aux pipelines CI/CD.
+
+ %point de vue metier
+ Commitlint répond à plusieurs enjeux stratégiques  : améliorer la lisibilité de l’historique des changements, garantir une traçabilité complète des évolutions, renforcer la qualité documentaire et faciliter les audits. La standardisation des messages de commit contribue à instaurer une culture de rigueur et de professionnalisation au sein des équipes de développement.
+
+ %point de vue logique et technique
+, Commitlint s’appuie sur plusieurs concepts essentiels  :
+\begin{itemize}
+	\item \textbf{Les règles de validation}  : définissent le format attendu des commits (par exemple, le standard Conventional Commits).
+	\item \textbf{Le parser}  : analyse le message de commit et vérifie qu’il correspond au schéma spécifié.
+	\item \textbf{La configuration}  : fichier \texttt{commitlint.config.js} où l’on définit les règles, les exceptions et les presets.
+	\item \textbf{L’intégration avec Husky}  : permet de déclencher la vérification lors du hook \texttt{commit-msg}.
+\end{itemize}
+
+Le standard le plus répandu est \textbf{Conventional Commits}, qui impose un format structuré  :
+\begin{verbatim}
+<type>(<scope>): <subject>
+
+Exemple :
+feat(auth): add JWT authentication
+fix(api): handle null pointer exception
+docs(readme): update installation instructions
+\end{verbatim}
+
+Ce format facilite l’automatisation des versions sémantiques (Semantic Versioning) et la génération des changelogs.
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Empêcher la validation d’un commit si le message ne commence pas par un type valide (ex.: feat, fix, chore).
+	\item Bloquer les commits dont le titre dépasse une longueur maximale.
+	\item Valider automatiquement tous les messages de commit dans un pipeline CI/CD.
+	\item Générer des changelogs structurés à partir des commits normalisés.
+	\item Appliquer un format de commit homogène sur plusieurs équipes et projets.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Standardisation et lisibilité accrue des messages de commit.
+	\item Réduction des erreurs et des incohérences documentaires.
+	\item Automatisation des processus de release et de génération de changelogs.
+	\item Compatibilité avec les pratiques GitOps et CI/CD.
+	\item Facilité d’intégration avec Husky et d’autres outils de hooks Git.
+\end{itemize}
+
+En synthèse, Commitlint est une brique essentielle pour industrialiser et professionnaliser la gestion des versions et la documentation des projets logiciels. Il contribue à instaurer une culture DevOps rigoureuse et à améliorer la traçabilité du cycle de développement.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item Commitlint Documentation – \url{https://commitlint.js.org/}
+	\item Conventional Commits – \url{https://www.conventionalcommits.org/}
+	\item Husky Documentation – \url{https://typicode.github.io/husky/}
+	\item Semantic Versioning – \url{https://semver.org/}
+	\item GitHub Commitlint Repository – \url{https://github.com/conventional-changelog/commitlint}
+\end{itemize}
+
+
+\subsection{Husky}
+
+Husky est un outil open source permettant de gérer et d’exécuter des hooks Git de manière simple et centralisée dans les projets logiciels. Il facilite l’automatisation de tâches de validation et de mise en conformité lors des événements Git, tels que les commits, les pushs ou les merges. Grâce à sa configuration déclarative, Husky contribue à instaurer des pratiques DevOps rigoureuses et à renforcer la qualité du code tout au long du cycle de développement.
+
+ %point de vue metier
+ Husky répond à plusieurs enjeux stratégiques  : réduire les erreurs humaines, homogénéiser les workflows entre équipes, accélérer le feedback lors des validations et améliorer la traçabilité des changements. Il constitue un levier essentiel de professionnalisation, car il garantit que les standards de qualité (tests, linting, conventions de commit) sont systématiquement respectés avant d’intégrer le code au référentiel principal.
+
+ %point de vue logique et technique
+, Husky repose sur plusieurs concepts clés  :
+\begin{itemize}
+	\item \textbf{Les hooks Git}  : scripts déclenchés automatiquement par Git à différents moments du cycle de vie (par exemple \texttt{pre-commit}, \texttt{commit-msg}, \texttt{pre-push}).
+	\item \textbf{La configuration}  : Husky utilise des commandes déclarées dans le fichier \texttt{package.json} ou dans des fichiers dédiés (\texttt{.husky/pre-commit}).
+	\item \textbf{Les intégrations}  : Husky fonctionne avec de nombreux outils tels que ESLint, Prettier, Commitlint ou les tests unitaires.
+	\item \textbf{Le workflow Node.js}  : bien qu’installé via npm ou Yarn, Husky est indépendant du langage utilisé dans le projet.
+\end{itemize}
+
+Les hooks les plus fréquemment utilisés sont  :
+\begin{itemize}
+	\item \texttt{pre-commit}  : exécute des validations avant l’enregistrement d’un commit (linting, tests).
+	\item \texttt{commit-msg}  : vérifie que le message de commit respecte une convention donnée.
+	\item \texttt{pre-push}  : lance des vérifications avant l’envoi du code sur le dépôt distant.
+\end{itemize}
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Lancer ESLint automatiquement sur les fichiers modifiés avant chaque commit.
+	\item Exécuter Commitlint pour garantir que les messages de commit respectent Conventional Commits.
+	\item Vérifier que les tests unitaires passent avant chaque push.
+	\item Appliquer Prettier pour uniformiser le formatage du code source.
+	\item Bloquer la création de commits vides ou sans description.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Standardisation des processus de validation dans toute l’équipe.
+	\item Réduction des erreurs humaines et des régressions en amont des CI/CD.
+	\item Facilité de mise en œuvre et de configuration.
+	\item Compatibilité avec de nombreux outils de qualité logicielle.
+	\item Exécution rapide et locale, sans dépendre de l’environnement distant.
+\end{itemize}
+
+En synthèse, Husky est un composant essentiel pour fiabiliser et automatiser les workflows de validation des projets modernes. Il contribue à instaurer une culture DevOps orientée qualité et à renforcer la cohérence entre les contributeurs.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item Husky Documentation – \url{https://typicode.github.io/husky/}
+	\item Git Hooks Documentation – \url{https://git-scm.com/docs/githooks}
+	\item Commitlint Documentation – \url{https://commitlint.js.org/}
+	\item ESLint Documentation – \url{https://eslint.org/docs/latest/}
+	\item Prettier Documentation – \url{https://prettier.io/docs/en/}
+\end{itemize}
+
+
+\subsection{Semantic Release}
+
+Semantic Release est un outil open source qui automatise le versionnement et la publication des packages logiciels en s’appuyant sur les messages de commit et le principe du versionnement sémantique (Semantic Versioning). Il supprime le besoin de mise à jour manuelle du numéro de version et de rédaction des changelogs, contribuant ainsi à la fiabilisation et à l’industrialisation des processus de release.
+
+ %point de vue metier
+ Semantic Release répond à plusieurs enjeux stratégiques  : réduire les erreurs humaines dans les versions publiées, accélérer le cycle de livraison, renforcer la traçabilité des évolutions et homogénéiser les workflows de publication entre équipes. En automatisant intégralement la release, il permet aux développeurs de se concentrer sur la qualité fonctionnelle plutôt que sur les tâches administratives.
+
+ %point de vue logique et technique
+, Semantic Release repose sur plusieurs concepts clés  :
+\begin{itemize}
+	\item \textbf{Les conventions de commit}  : le projet s’appuie sur des formats structurés (par exemple Conventional Commits) pour déduire automatiquement l’impact des changements (correctifs, nouvelles fonctionnalités, breaking changes).
+	\item \textbf{Le calcul automatique de la version}  : en fonction des types de commits depuis la dernière release, Semantic Release incrémente la version majeure, mineure ou corrective.
+	\item \textbf{La génération du changelog}  : compilation automatique des changements pertinents dans un format lisible.
+	\item \textbf{La publication}  : déploiement automatisé vers les registres de packages (npm, Maven, Docker Hub) et création des tags Git correspondants.
+\end{itemize}
+
+Semantic Release s’intègre naturellement dans des pipelines CI/CD (GitHub Actions, GitLab CI, CircleCI), garantissant que chaque merge dans la branche principale déclenche la création d’une nouvelle version stable.
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Publier automatiquement un package npm lorsque de nouvelles fonctionnalités sont mergées.
+	\item Générer un changelog détaillé à partir des commits, sans intervention manuelle.
+	\item Tagger les versions dans Git et créer des releases GitHub avec les notes correspondantes.
+	\item Déclencher un pipeline de build Docker et pousser l’image versionnée sur un registre.
+	\item Refuser les releases en cas de non-respect des conventions de commit.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Automatisation complète et fiabilisée du cycle de versionnement et de publication.
+	\item Réduction drastique des erreurs humaines et des oublis dans la gestion des versions.
+	\item Traçabilité et transparence accrues grâce aux changelogs générés automatiquement.
+	\item Compatibilité avec de nombreux systèmes CI/CD et écosystèmes de packaging.
+	\item Homogénéité des pratiques de release entre les projets et les équipes.
+\end{itemize}
+
+En synthèse, Semantic Release est une solution stratégique pour les organisations souhaitant industrialiser et sécuriser leur processus de publication. Il apporte une cohérence et une rapidité qui renforcent la qualité et la crédibilité des livraisons logicielles.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item Semantic Release Documentation – \url{https://semantic-release.gitbook.io/}
+	\item Conventional Commits – \url{https://www.conventionalcommits.org/}
+	\item Semantic Versioning – \url{https://semver.org/}
+	\item GitHub Actions Documentation – \url{https://docs.github.com/en/actions}
+	\item npm Publishing Guide – \url{https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages}
+\end{itemize}

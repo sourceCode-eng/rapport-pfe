@@ -1,0 +1,153 @@
+\section{Presentation des outils GitOps}
+\subsection{Argo CD}
+
+Argo CD est un outil open source de déploiement continu (CD) natif Kubernetes, conçu pour mettre en œuvre les pratiques GitOps. Il permet de synchroniser l’état désiré des applications, défini dans un dépôt Git, avec l’état effectif du cluster Kubernetes. En automatisant la gestion et le déploiement des manifestes, Argo CD apporte cohérence, traçabilité et résilience aux environnements cloud-native.
+
+ %point de vue metier
+ Argo CD répond à plusieurs enjeux stratégiques  : fiabiliser les déploiements, réduire le temps de mise en production, renforcer la traçabilité et limiter les erreurs humaines. Il offre un modèle déclaratif et auditable, conforme aux exigences de sécurité et de conformité des organisations modernes. En industrialisant le GitOps, Argo CD contribue à accélérer l’innovation tout en garantissant la stabilité des systèmes.
+
+ %point de vue logique et technique
+, Argo CD s’appuie sur plusieurs composants clés  :
+\begin{itemize}
+	\item \textbf{Le dépôt Git}  : source unique de vérité contenant les manifestes Kubernetes (YAML) ou les définitions Kustomize/Helm.
+	\item \textbf{Le contrôleur Argo CD}  : composant qui surveille les différences entre l’état souhaité (Git) et l’état réel du cluster.
+	\item \textbf{L’API Server et l’interface Web}  : couche d’administration et de visualisation centralisée des applications et des synchronisations.
+	\item \textbf{Les applications}  : objets Kubernetes représentant l’état désiré d’un ensemble de ressources.
+	\item \textbf{Les stratégies de synchronisation}  : modes automatique ou manuel permettant de contrôler les mises à jour.
+\end{itemize}
+
+Argo CD offre un modèle de sécurité avancé, intégrant la gestion fine des permissions (RBAC), le support du SSO (OAuth2, OIDC), le chiffrement des secrets et des validations automatiques des changements.
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Déployer automatiquement une application Helm versionnée depuis un dépôt Git centralisé.
+	\item Gérer des environnements multiples (dev, staging, production) avec des dossiers ou des branches distinctes.
+	\item Appliquer des politiques de synchronisation automatique avec validation de signature Git.
+	\item Visualiser les différences entre l’état courant et l’état cible et lancer un déploiement manuel.
+	\item Auditer l’historique des déploiements et des changements appliqués au cluster.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Mise en œuvre native du GitOps et centralisation de la configuration déclarative.
+	\item Traçabilité et auditabilité complètes des changements.
+	\item Intégration fluide avec Helm, Kustomize, Jsonnet et plain YAML.
+	\item Réduction du risque d’erreurs grâce au contrôle automatique des dérives d’état.
+	\item Interface Web ergonomique et API REST.
+	\item Sécurité renforcée avec RBAC et chiffrement des secrets.
+\end{itemize}
+
+En synthèse, Argo CD est une solution stratégique pour l’automatisation et la fiabilisation des déploiements Kubernetes. Il contribue à instaurer des workflows GitOps robustes, cohérents et évolutifs, adaptés aux exigences opérationnelles des entreprises modernes.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item Argo CD Documentation – \url{https://argo-cd.readthedocs.io/}
+	\item Argo CD GitHub Repository – \url{https://github.com/argoproj/argo-cd}
+	\item GitOps Principles – \url{https://www.gitops.tech/}
+	\item CNCF Argo Project – \url{https://www.cncf.io/projects/argo/}
+	\item Helm Documentation – \url{https://helm.sh/docs/}
+\end{itemize}
+
+\subsection{MetalLB}
+
+MetalLB est un contrôleur open source qui permet d’apporter des capacités de Load Balancing de type L2/L3 à un cluster Kubernetes installé dans un environnement on-premise ou sur une infrastructure dépourvue de load balancer natif. En offrant une solution simple et efficace pour gérer les adresses IP externes, MetalLB comble une lacune importante des clusters bare-metal en production.
+
+ %point de vue metier
+ MetalLB répond à plusieurs enjeux  : rendre les services Kubernetes accessibles de manière fiable, offrir une expérience équivalente à celle des clouds publics, et garantir la continuité de service en cas de défaillance d’un nœud. Il permet aux organisations d’exploiter Kubernetes dans leurs datacenters ou clouds privés tout en bénéficiant des standards d’exposition réseau attendus par les utilisateurs et les clients.
+
+ %point de vue logique et technique
+, MetalLB fonctionne selon deux modes principaux :
+\begin{itemize}
+	\item \textbf{Le mode Layer 2}  : chaque nœud participant annonce l’IP publique via ARP (IPv4) ou NDP (IPv6). Ce mode est simple à déployer et ne nécessite pas de routeur compatible BGP.
+	\item \textbf{Le mode BGP}  : MetalLB établit une session BGP avec les routeurs de l’infrastructure pour annoncer dynamiquement les plages IP attribuées aux services.
+\end{itemize}
+
+MetalLB s’intègre nativement au modèle Kubernetes via l’objet \texttt{Service} de type LoadBalancer, permettant aux workloads d’exposer des ports vers l’extérieur sans nécessiter de composants supplémentaires côté application.
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Attribuer automatiquement une IP publique à un service NGINX déployé sur Kubernetes on-premise.
+	\item Utiliser le mode BGP pour une intégration avancée avec le routeur du datacenter.
+	\item Mettre en place une plage IP dédiée aux services LoadBalancer et contrôler leur allocation via un ConfigMap.
+	\item Fournir des adresses IP statiques pour des applications critiques nécessitant des endpoints fixes.
+	\item Simplifier l’exposition des APIs internes et des dashboards à des clients internes ou externes.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Offre des capacités de Load Balancing natives à Kubernetes sans infrastructure cloud.
+	\item Déploiement simple et flexible (mode L2 ou BGP).
+	\item Compatibilité totale avec l’API Kubernetes standard (Service type LoadBalancer).
+	\item Haute disponibilité et résilience grâce à la gestion automatique des annonces réseau.
+	\item Solution open source mature et largement adoptée.
+\end{itemize}
+
+En synthèse, MetalLB est une brique essentielle pour rendre Kubernetes opérationnel en production dans des environnements bare-metal et hybrides. Il permet aux organisations de standardiser l’exposition des services tout en préservant leur autonomie vis-à-vis des fournisseurs cloud.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item MetalLB Documentation – \url{https://metallb.universe.tf/}
+	\item MetalLB GitHub Repository – \url{https://github.com/metallb/metallb}
+	\item Kubernetes Services Documentation – \url{https://kubernetes.io/docs/concepts/services-networking/service/}
+	\item BGP Overview – \url{https://www.networklessons.com/bgp/bgp-basics/}
+	\item Kubernetes Bare Metal – \url{https://kubernetes.io/docs/setup/production-environment/turnkey/}
+\end{itemize}
+
+
+
+\subsection{NGINX}
+
+NGINX est un serveur web open source reconnu pour ses performances élevées, sa faible consommation de ressources et sa polyvalence. Initialement conçu comme un serveur HTTP haute performance et un reverse proxy, NGINX est devenu une plateforme complète capable d’assurer des rôles variés  : load balancer, cache HTTP, proxy TLS/SSL, terminator TLS, et serveur d’applications via FastCGI, SCGI ou uWSGI.
+
+ %point de vue metier
+ NGINX répond à des enjeux stratégiques  : améliorer la rapidité et la fiabilité des applications web, optimiser les coûts d’infrastructure et assurer une expérience utilisateur optimale. Grâce à sa capacité à servir des milliers de connexions simultanées avec une faible empreinte mémoire, il est adopté aussi bien par les start-ups que par les grandes entreprises. Il joue également un rôle clé dans la sécurisation des services exposés sur Internet.
+
+ %point de vue logique et technique
+, NGINX s’appuie sur une architecture événementielle asynchrone qui lui permet de traiter un grand nombre de requêtes concurrentes sans blocage. Ses fonctionnalités couvrent notamment  :
+\begin{itemize}
+	\item \textbf{Reverse proxy}  : réception des requêtes HTTP(S) et distribution vers les serveurs applicatifs backend.
+	\item \textbf{Load balancing}  : répartition du trafic selon des stratégies (round-robin, least connections, IP hash).
+	\item \textbf{Caching}  : mise en cache des contenus statiques et dynamiques pour réduire la charge des serveurs backend.
+	\item \textbf{TLS termination}  : déchiffrement des connexions HTTPS.
+	\item \textbf{Serveur statique}  : hébergement direct de contenus (HTML, CSS, JS, images).
+	\item \textbf{Rewrite et redirection}  : réécriture des URLs et redirections conditionnelles.
+\end{itemize}
+
+NGINX peut être utilisé seul ou intégré dans des architectures plus complexes, notamment en combinaison avec Kubernetes (Ingress Controller) et des plateformes cloud.
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Servir un site web statique et proxyfier les appels d’API vers un backend Node.js.
+	\item Répartir les requêtes HTTP entre plusieurs instances d’application avec un algorithme round-robin.
+	\item Terminer les connexions TLS et rediriger automatiquement le trafic HTTP vers HTTPS.
+	\item Mettre en cache les réponses d’un serveur applicatif pour améliorer la rapidité des pages.
+	\item Utiliser NGINX Ingress Controller dans Kubernetes pour exposer des services internes via un point d’accès unique.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Performance élevée et faible consommation mémoire.
+	\item Architecture asynchrone adaptée aux charges importantes.
+	\item Polyvalence (reverse proxy, load balancer, cache, serveur statique).
+	\item Large compatibilité avec les standards HTTP et TLS.
+	\item Intégration fluide avec Kubernetes et l’écosystème cloud-native.
+	\item Solution open source mature, soutenue par une large communauté.
+\end{itemize}
+
+En synthèse, NGINX est une brique technologique incontournable des infrastructures web modernes. Il offre une combinaison unique de performance, de fiabilité et de flexibilité, adaptée aux besoins des applications critiques et distribuées.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item NGINX Documentation – \url{https://nginx.org/en/docs/}
+	\item NGINX GitHub Repository – \url{https://github.com/nginx/nginx}
+	\item NGINX Ingress Controller – \url{https://kubernetes.github.io/ingress-nginx/}
+	\item Garrett, C. (2017). \textit{NGINX Cookbook}. O’Reilly Media.
+	\item NGINX Blog – \url{https://www.nginx.com/blog/}
+\end{itemize}
+
+\section{Mise en œuvre du modèle GitOps}
+\subsection{Preparation des manifestes des outils internes}
+\subsection{Installation d'Argo CD}
+\subsection{Configuration de l'authentification}
+\subsection{Configuration des synchronisations}
+\subsection{Preparation des manifestes des applications developpées par oneex pour des environnements differents}

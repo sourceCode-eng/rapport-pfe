@@ -1,0 +1,152 @@
+\section{Introduction}
+
+Dans un environnement où les systèmes d'information deviennent de plus en plus complexes et interconnectés, la maîtrise de l'infrastructure et des processus de déploiement est un enjeu majeur. Ce mémoire s'inscrit dans cette dynamique, avec pour objectif principal de concevoir et mettre en place une solution automatisée et sécurisée permettant de déployer, superviser et maintenir l'infrastructure technique de l'entreprise Oneex. 
+
+Le projet vise à répondre aux besoins opérationnels croissants, à réduire les erreurs manuelles et à garantir un haut niveau de qualité de service, tout en respectant les contraintes de sécurité et de conformité réglementaire.
+
+\section{Cas et exemples}
+
+Plusieurs situations rencontrées chez Oneex ont mis en évidence la nécessité d'une solution d'automatisation et de gestion centralisée de l'infrastructure. Parmi les cas récurrents :
+
+\begin{itemize}
+    \item \textbf{Problèmes de cohérence des environnements} : la configuration manuelle des serveurs engendrait des divergences entre les environnements de développement, de test et de production.
+    \item \textbf{Difficultés de gestion des secrets} : le stockage et le partage des identifiants, clés d'API et certificats étaient réalisés de façon disparate, augmentant les risques de fuite.
+    \item \textbf{Manque de visibilité} : l'absence d'outils de supervision unifiés complexifiait le suivi de l'état des services et la détection des incidents.
+    \item \textbf{Temps de déploiement élevé} : chaque mise en place d'une infrastructure nécessitait plusieurs jours de préparation et de validation.
+\end{itemize}
+
+Ces constats ont motivé la définition d'un projet structuré et ambitieux, articulé autour de l'automatisation, de la sécurité et de l'observabilité.
+
+\section{Les besoins fonctionnels}
+
+Les besoins fonctionnels définissent les fonctionnalités attendues de la solution mise en œuvre. Ils se déclinent comme suit :
+
+\begin{itemize}
+    \item \textbf{Automatisation du provisioning} : création et configuration des machines virtuelles via des outils d'Infrastructure as Code (Terraform).
+    \item \textbf{Gestion centralisée des configurations} : mise en place d'Ansible pour orchestrer l'installation des paquets et le paramétrage des systèmes.
+    \item \textbf{Déploiement applicatif automatisé} : utilisation d'un processus GitOps avec Argo CD pour garantir la cohérence des déploiements.
+    \item \textbf{Supervision et alertes} : intégration de Prometheus et Grafana pour la collecte et l'affichage des métriques.
+    \item \textbf{Gestion sécurisée des secrets} : déploiement de HashiCorp Vault afin de stocker et distribuer les informations sensibles.
+    \item \textbf{Mise en place d'environnements distincts} : séparation claire entre les environnements de test, de pré-production et de production.
+    \item \textbf{Audits automatiques de conformité} : génération régulière de rapports d'audit afin de vérifier l'intégrité des configurations et la conformité aux standards de sécurité.
+    \item \textbf{Détection précoce des erreurs} : mise en place de mécanismes permettant d'identifier rapidement les anomalies et les dysfonctionnements avant leur impact en production.
+    \item \textbf{Correction automatique des erreurs et des crashs} : déploiement de processus d'auto-remédiation permettant de restaurer les services en cas d'incident.
+\end{itemize}
+
+
+\section{Les besoins non fonctionnels}
+
+Les besoins non fonctionnels définissent les critères de qualité que la solution doit respecter :
+
+\begin{itemize}
+    \item \textbf{Haute disponibilité} : assurer une disponibilité supérieure à 99,9\% des services critiques.
+    \item \textbf{Sécurité renforcée} : garantir la protection des données sensibles et la conformité aux standards de sécurité.
+    \item \textbf{Scalabilité} : permettre l'évolution de l'infrastructure en fonction de la croissance de l'activité et de l'augmentation du nombre de clients.
+    \item \textbf{Maintenabilité} : faciliter les mises à jour, les correctifs et l'évolution des configurations.
+    \item \textbf{Traçabilité et auditabilité} : conserver l'historique des changements et des déploiements.
+    \item \textbf{Conformité réglementaire} : respecter les normes en vigueur (RGPD, ISO 27001, etc.) et les exigences spécifiques du secteur d'activité.
+    \item \textbf{Performance} : garantir des temps de réponse optimaux pour les services critiques, même en période de forte charge.
+    \item \textbf{Réduction du temps de mise en production} : diminuer les délais de déploiement des nouvelles fonctionnalités.
+    \item \textbf{Source unique de vérité (Single Source of Truth)} : centraliser et versionner l’ensemble des configurations, de la documentation et des états d’infrastructure dans un référentiel unique et fiable.
+\end{itemize}
+
+% \section{Le deroulement du projet}
+
+% Le projet de mise en place d'une infrastructure automatisée s'est déroulé sur plusieurs mois, en parallèle des activités opérationnelles de l'entreprise. Il s'inscrivait dans une démarche progressive, visant à moderniser les outils et à fiabiliser les processus de déploiement et d'exploitation. Plusieurs contraintes ont dû être prises en compte, notamment la compatibilité avec l'existant, la disponibilité continue des services et la nécessité d'assurer un haut niveau de sécurité. Le planning général a été structuré en phases : conception, mise en œuvre, validation et transfert de compétences.
+
+% \section{Objectifs du projet}
+
+% Les objectifs principaux du projet étaient les suivants :
+
+% \begin{itemize}
+%   \item Automatiser le provisioning de l'infrastructure afin de réduire les délais de déploiement.
+%   \item Centraliser et sécuriser la gestion des configurations et des secrets.
+%   \item Améliorer la supervision et l'observabilité des services.
+%   \item Mettre en place une approche GitOps pour les déploiements applicatifs.
+%   \item Renforcer la sécurité des accès et des flux réseau.
+%   \item Disposer d'environnements distincts (test, staging, production) alignés sur les bonnes pratiques DevOps.
+% \end{itemize}
+
+% Ces objectifs contribuent à la fiabilisation des opérations et à la création d'une base technique évolutive et maintenable.
+
+\section{Architecture du projet}
+
+L'architecture globale repose sur une infrastructure virtualisée sous Proxmox, pilotée par Terraform et configurée par Ansible. Kubernetes assure l'orchestration des conteneurs, tandis que des solutions complémentaires (Vault, Grafana, Prometheus, Loki, Tempo, Longhorn, Argo CD) viennent couvrir les besoins en sécurité, stockage et supervision.
+
+% Si souhaité, tu peux ajouter un schéma ici :
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.9\textwidth]{figures/architecture.png}
+%    \caption{Schéma d'architecture globale}
+%\end{figure}
+
+\subsection{Infrastructure as Code avec Terraform}
+
+Terraform a été utilisé pour décrire et provisionner toute l'infrastructure. Les ressources suivantes ont été créées de façon automatisée :
+
+\begin{itemize}
+  \item Les machines virtuelles sous Proxmox (masters et workers Kubernetes, serveurs utilitaires).
+  \item Les réseaux virtuels et les volumes de stockage.
+  \item Les configurations initiales des systèmes (cloud-init).
+\end{itemize}
+
+Les modules Terraform ont été organisés de manière modulaire afin de pouvoir réutiliser et adapter la configuration facilement.
+
+\subsection{Configuration automatique avec Ansible}
+
+Ansible a permis de configurer les serveurs après leur création. Des rôles dédiés ont été développés pour :
+
+\begin{itemize}
+  \item Installer Kubernetes (RKE2) sur les nœuds.
+  \item Déployer les outils de monitoring.
+  \item Configurer Vault et Consul.
+  \item Appliquer les règles de sécurité et les configurations système.
+\end{itemize}
+
+Cette approche garantit une configuration homogène et reproductible.
+
+\subsection{GitOps avec Argo CD}
+
+Argo CD a été mis en place pour gérer les déploiements applicatifs de manière GitOps. Chaque modification des manifestes Kubernetes dans le dépôt Git est automatiquement synchronisée avec le cluster. Cette pratique permet de disposer d’un historique complet des changements et de simplifier les rollbacks en cas de problème.
+
+\subsection{Monitoring et observabilité avec Grafana, Prometheus, Loki et Tempo}
+
+Le monitoring s’appuie sur Prometheus pour la collecte des métriques et Grafana pour la visualisation. Loki centralise les logs applicatifs et systèmes, tandis que Tempo gère les traces distribuées. L’ensemble forme une stack cohérente permettant d’assurer la supervision et le diagnostic des incidents.
+
+\subsection{Stockage distribué avec Longhorn}
+
+Longhorn a été déployé comme solution de stockage distribué pour Kubernetes. Il fournit un stockage persistant, tolérant aux pannes, avec des fonctionnalités de snapshot et de restauration.
+
+\subsection{Gestion des secrets avec Vault}
+
+Vault est utilisé comme coffre-fort centralisé pour la gestion des secrets. Il permet de stocker et de distribuer les mots de passe, tokens et certificats de manière sécurisée. Des politiques de contrôle d’accès ont été configurées pour limiter l’exposition des informations sensibles.
+
+\subsection{Mise en place de services internes}
+
+Plusieurs services internes ont été installés pour répondre aux besoins quotidiens des équipes :
+
+\begin{itemize}
+  \item GitLab pour la gestion des dépôts et de l’intégration continue.
+  \item Harbor comme registre privé de conteneurs.
+  \item YouTrack pour le suivi des tâches et incidents.
+  \item Nextcloud pour le partage sécurisé de fichiers.
+\end{itemize}
+
+Ces outils sont hébergés dans l’infrastructure Kubernetes.
+
+\subsection{Sécurité et gestion de pare-feu avec pfSense}
+
+La sécurité périmétrique repose sur un pare-feu pfSense. Des règles de filtrage ont été définies pour contrôler les flux entrants et sortants, ainsi qu’un VPN pour les accès administratifs. Des mesures de surveillance des connexions ont également été mises en place.
+
+\subsection{Mise en place des services de test et de staging}
+
+Des environnements spécifiques ont été créés pour permettre la validation des développements avant leur mise en production. Ces environnements reprennent l’architecture de production, facilitant les tests de montée en charge et les scénarios de validation.
+
+\subsection{Mise en place de la CI/CD avec GitLab CI}
+
+GitLab CI a été configuré pour automatiser les étapes de build, test et déploiement des applications. Des pipelines ont été créés pour assurer la qualité du code et le déploiement vers les environnements Kubernetes.
+
+\subsection{Mise en place des services de production pour les clients}
+
+Enfin, les environnements de production ont été finalisés et validés en respectant les exigences de performance et de sécurité. La mise en service a inclus la configuration des sauvegardes, la documentation des procédures et la formation des utilisateurs.
+
