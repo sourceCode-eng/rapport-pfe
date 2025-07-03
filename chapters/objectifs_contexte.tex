@@ -198,142 +198,343 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 
 \section{Architecture du projet}
 
-L'architecture globale repose sur une infrastructure virtualisée sous Proxmox, pilotée par Terraform et configurée par Ansible. Kubernetes assure l'orchestration des conteneurs, tandis que des solutions complémentaires (Vault, Grafana, Prometheus, Loki, Tempo, Longhorn, Argo CD) viennent couvrir les besoins en sécurité, stockage et supervision.
+L'architecture globale du projet repose sur une approche moderne, modulaire et automatisée, intégrant les principes de l'Infrastructure as Code, du GitOps, de la conteneurisation et de l'observabilité. Elle a été conçue pour répondre aux exigences de performance, de sécurité, de scalabilité et de maintenabilité.
 
-	% Si souhaité, tu peux ajouter un schéma ici :
-	%\begin{figure}[H]
-	%    \centering
-	%    \includegraphics[width=0.9\textwidth]{figures/architecture.png}
-	%    \caption{Schéma d'architecture globale}
-	%\end{figure}
+% Figure principale d'architecture globale
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/architecture-globale.png}
+	\caption{Schéma d'architecture globale}
+\end{figure}
+% COMMENTAIRE:
+% Ce schéma doit représenter une vue d'ensemble de l'infrastructure.
+% Éléments attendus :
+% - Couches horizontales : Infrastructure physique (Proxmox), Infrastructure as Code (Terraform, Ansible), Kubernetes, Observabilité, Sécurité, CI/CD, Services internes.
+% - Flèches montrant les interactions.
+% - Icônes des principaux outils (Kubernetes logo, Git, Vault, etc.).
+% PROMPT IA :
+% "Detailed architecture diagram showing a virtualized infrastructure with Proxmox hypervisors, Terraform and Ansible automation layers, Kubernetes orchestration, monitoring stack (Grafana, Prometheus, Loki, Tempo), Vault for secrets management, GitLab for CI/CD, pfSense firewall, and internal services like Harbor and Nextcloud. Use labeled boxes and arrows to illustrate flows."
 
-	{Infrastructure as Code avec Terraform}
+Cette section détaille les principaux composants et leur articulation.
 
-Terraform a été utilisé pour décrire et provisionner toute l'infrastructure. Les ressources suivantes ont été créées de façon automatisée :
+\subsection{Infrastructure virtualisée et provisioning automatisé}
 
+L'infrastructure physique est virtualisée au moyen d'une plateforme Proxmox. La création des ressources a été entièrement automatisée via une démarche Infrastructure as Code.
+
+\subsubsection*{Infrastructure as Code avec Terraform}
+
+Terraform a permis de décrire et de provisionner l'ensemble des ressources suivantes de façon déclarative et reproductible :
 \begin{itemize}
-	\item Les machines virtuelles sous Proxmox (masters et workers Kubernetes, serveurs utilitaires).
-	\item Les réseaux virtuels et les volumes de stockage.
-	\item Les configurations initiales des systèmes (cloud-init).
+	\item Les machines virtuelles dédiées aux nœuds Kubernetes (masters et workers) et aux services utilitaires.
+	\item Les réseaux virtuels, sous-réseaux et interfaces.
+	\item Les volumes de stockage attachés aux instances.
+	\item Les configurations initiales via cloud-init.
 \end{itemize}
 
-Les modules Terraform ont été organisés de manière modulaire afin de pouvoir réutiliser et adapter la configuration facilement.
+Les modules Terraform ont été organisés par domaines fonctionnels afin de favoriser leur réutilisation et leur évolutivité.
 
-	{Configuration automatique avec Ansible}
+% Schéma Terraform provisioning
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/terraform-provisioning.png}
+	\caption{Schéma du processus de provisioning automatisé avec Terraform}
+\end{figure}
+% COMMENTAIRE:
+% Schéma en 3 étapes :
+% 1. Définition des modules Terraform.
+% 2. Execution Terraform Apply -> Création des VMs Proxmox.
+% 3. Résultat : Infrastructure provisionnée.
+% Icônes : Fichiers HCL, terminal, Proxmox nodes.
+% PROMPT IA :
+% "Step-by-step diagram showing Terraform provisioning: modules definition in HCL files, Terraform Apply process creating virtual machines in Proxmox cluster, final state with configured VMs. Include labels and arrows."
 
-Ansible a permis de configurer les serveurs après leur création. Des rôles dédiés ont été développés pour :
+\subsubsection*{Configuration automatisée avec Ansible}
 
+Après la création des ressources, Ansible assure la configuration des serveurs :
 \begin{itemize}
-	\item Installer Kubernetes (RKE2) sur les nœuds.
-	\item Déployer les outils de monitoring.
-	\item Configurer Vault et Consul.
-	\item Appliquer les règles de sécurité et les configurations système.
+	\item Installation et configuration du cluster Kubernetes.
+	\item Déploiement des composants de monitoring et de sécurité.
+	\item Configuration des services réseau et des paramètres système.
+	\item Application des règles de sécurité renforcées.
 \end{itemize}
 
-Cette approche garantit une configuration homogène et reproductible.
+Cette étape garantit l’homogénéité et la reproductibilité des environnements.
 
-	{GitOps avec Argo CD}
+% Schéma Ansible configuration
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/ansible-configuration.png}
+	\caption{Processus d'automatisation de la configuration avec Ansible}
+\end{figure}
+% COMMENTAIRE:
+% Schéma illustrant :
+% - Ansible Control Node.
+% - Playbooks et rôles.
+% - Exécution SSH sur les machines provisionnées.
+% - Résultat : VMs configurées (Kubernetes, monitoring, sécurité).
+% PROMPT IA :
+% "Illustration showing Ansible Control Node running playbooks and roles over SSH to multiple virtual machines, configuring Kubernetes, monitoring tools, and security settings. Use clear arrows and labels."
 
-Argo CD a été mis en place pour gérer les déploiements applicatifs de manière GitOps. Chaque modification des manifestes Kubernetes dans le dépôt Git est automatiquement synchronisée avec le cluster. Cette pratique permet de disposer d’un historique complet des changements et de simplifier les rollbacks en cas de problème.
+\subsection{Orchestration et déploiement applicatif}
 
-{Monitoring et observabilité avec Grafana, Prometheus, Loki et Tempo}
+\subsubsection*{Cluster Kubernetes}
 
-Le monitoring s’appuie sur Prometheus pour la collecte des métriques et Grafana pour la visualisation. Loki centralise les logs applicatifs et systèmes, tandis que Tempo gère les traces distribuées. L’ensemble forme une stack cohérente permettant d’assurer la supervision et le diagnostic des incidents.
-
-	{Stockage distribué avec Longhorn}
-
-Longhorn a été déployé comme solution de stockage distribué pour Kubernetes. Il fournit un stockage persistant, tolérant aux pannes, avec des fonctionnalités de snapshot et de restauration.
-
-	{Gestion des secrets avec Vault}
-
-Vault est utilisé comme coffre-fort centralisé pour la gestion des secrets. Il permet de stocker et de distribuer les mots de passe, tokens et certificats de manière sécurisée. Des politiques de contrôle d’accès ont été configurées pour limiter l’exposition des informations sensibles.
-
-	{Mise en place de services internes}
-
-Plusieurs services internes ont été installés pour répondre aux besoins quotidiens des équipes :
-
+Kubernetes est le cœur de l’architecture d’orchestration. Il assure la gestion :
 \begin{itemize}
-	\item GitLab pour la gestion des dépôts et de l’intégration continue.
-	\item Harbor comme registre privé de conteneurs.
-	\item YouTrack pour le suivi des tâches et incidents.
-	\item Nextcloud pour le partage sécurisé de fichiers.
+	\item Du cycle de vie des conteneurs applicatifs.
+	\item De l’équilibrage de charge et du scaling horizontal.
+	\item De l’isolation des workloads.
 \end{itemize}
 
-Ces outils sont hébergés dans l’infrastructure Kubernetes.
+\subsubsection*{Déploiement GitOps avec Argo CD}
 
-	{Sécurité et gestion de pare-feu avec pfSense}
+Argo CD implémente une stratégie GitOps permettant :
+\begin{itemize}
+	\item Le déclenchement automatique des déploiements depuis un dépôt Git.
+	\item La synchronisation continue des manifestes Kubernetes.
+	\item La traçabilité complète des changements et la simplification des rollbacks.
+\end{itemize}
 
-La sécurité périmétrique repose sur un pare-feu pfSense. Des règles de filtrage ont été définies pour contrôler les flux entrants et sortants, ainsi qu’un VPN pour les accès administratifs. Des mesures de surveillance des connexions ont également été mises en place.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/gitops-argo-cd.png}
+	\caption{Flux GitOps des déploiements avec Argo CD}
+\end{figure}
+% COMMENTAIRE:
+% Schéma montrant :
+% - Développeur poussant des manifests dans Git.
+% - Argo CD détecte les changements.
+% - Synchronisation automatique avec Kubernetes cluster.
+% - Flèches indiquant le flux.
+% PROMPT IA :
+% "GitOps workflow diagram showing a developer committing Kubernetes manifests to a Git repository, Argo CD detecting changes and synchronizing them to the Kubernetes cluster automatically. Include icons and clear arrows."
 
-	{Mise en place des services de test et de staging}
+\subsection{Observabilité et monitoring}
 
-Des environnements spécifiques ont été créés pour permettre la validation des développements avant leur mise en production. Ces environnements reprennent l’architecture de production, facilitant les tests de montée en charge et les scénarios de validation.
+La supervision s'appuie sur un ensemble d’outils intégrés :
 
-	{Mise en place de la CI/CD avec GitLab CI}
+\begin{itemize}
+	\item \textbf{Prometheus} pour la collecte des métriques et des alertes.
+	\item \textbf{Grafana} pour la visualisation des indicateurs.
+	\item \textbf{Loki} pour la centralisation des logs applicatifs et système.
+	\item \textbf{Tempo} pour la gestion des traces distribuées.
+\end{itemize}
 
-GitLab CI a été configuré pour automatiser les étapes de build, test et déploiement des applications. Des pipelines ont été créés pour assurer la qualité du code et le déploiement vers les environnements Kubernetes.
+Cette stack assure une observabilité complète et un diagnostic précis en cas d’incident.
 
-	{Mise en place des services de production pour les clients}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/observabilite-stack.png}
+	\caption{Architecture de la stack d'observabilité}
+\end{figure}
+% COMMENTAIRE:
+% Diagramme avec :
+% - Prometheus (metrics collection)
+% - Grafana (dashboards)
+% - Loki (logs)
+% - Tempo (traces)
+% - Kubernetes Nodes comme sources de données
+% PROMPT IA :
+% "Architecture diagram of observability stack including Prometheus for metrics, Grafana for visualization, Loki for log aggregation, and Tempo for tracing, all connected to Kubernetes nodes as data sources. Use labeled arrows."
 
-Enfin, les environnements de production ont été finalisés et validés en respectant les exigences de performance et de sécurité. La mise en service a inclus la configuration des sauvegardes, la documentation des procédures et la formation des utilisateurs.
+\subsection{Stockage distribué et persistance des données}
+
+Le stockage persistant est assuré par Longhorn, qui fournit :
+\begin{itemize}
+	\item Des volumes répliqués tolérants aux pannes.
+	\item Des snapshots automatisés et des fonctionnalités de restauration.
+	\item Une intégration transparente avec Kubernetes.
+\end{itemize}
+
+\subsection{Gestion sécurisée des secrets}
+
+Vault joue le rôle de coffre-fort centralisé :
+\begin{itemize}
+	\item Stockage chiffré des mots de passe, certificats et tokens.
+	\item Génération dynamique de secrets temporaires.
+	\item Politiques d’accès granulaires pour limiter les droits.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/observabilite-stack.png}
+	\caption{Flux de gestion sécurisée des secrets avec Vault}
+\end{figure}
+% COMMENTAIRE:
+% Schéma montrant :
+% - Applications demandant des secrets.
+% - Vault générant des tokens temporaires.
+% - Flux chiffrés.
+% PROMPT IA :
+% "Secrets management diagram showing applications requesting secrets from Vault, Vault generating short-lived tokens and delivering encrypted credentials, with arrows indicating secure flows."
+
+\subsection{Sécurité réseau et accès administratifs}
+
+La sécurité périmétrique est confiée à un pare-feu pfSense :
+\begin{itemize}
+	\item Contrôle des flux entrants et sortants via des règles spécifiques.
+	\item Mise en place d’un VPN pour les accès administratifs.
+	\item Surveillance active des connexions.
+\end{itemize}
+
+% Schéma pfSense
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/pfsense-securite.png}
+	\caption{Architecture de sécurité réseau avec pfSense}
+\end{figure}
+% COMMENTAIRE:
+% Schéma avec :
+% - pfSense Firewall.
+% - Zones réseau (LAN, DMZ, WAN).
+% - VPN tunnel pour administrateurs.
+% - Règles filtrant les flux.
+% PROMPT IA :
+% "Network security diagram showing pfSense firewall with LAN, DMZ, and WAN zones, VPN tunnel for administrators, and rules controlling inbound and outbound traffic. Use clear labels."
+
+\subsection{Services internes pour le cycle de vie applicatif}
+
+Pour répondre aux besoins opérationnels des équipes, plusieurs services internes ont été déployés :
+\begin{itemize}
+	\item \textbf{GitLab} pour la gestion des dépôts, la CI/CD et la revue de code.
+	\item \textbf{Harbor} comme registre privé de conteneurs.
+	\item \textbf{YouTrack} pour le suivi des incidents et la gestion des tâches.
+	\item \textbf{Nextcloud} pour le partage et l’archivage des documents.
+\end{itemize}
+
+Ces outils sont hébergés sur Kubernetes afin d’assurer leur haute disponibilité.
+
+% Schéma services internes
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/services-internes.png}
+	\caption{Panorama des services internes}
+\end{figure}
+% COMMENTAIRE:
+% Diagramme montrant :
+% - GitLab (CI/CD)
+% - Harbor (container registry)
+% - YouTrack (issue tracking)
+% - Nextcloud (file sharing)
+% - Tous hébergés sur Kubernetes.
+% PROMPT IA :
+% "Diagram showing internal services deployed on Kubernetes: GitLab for CI/CD, Harbor for container registry, YouTrack for issue tracking, Nextcloud for file sharing. Connect all components to Kubernetes nodes."
+
+\subsection{Environnements de test et de production}
+
+\begin{itemize}
+	\item Des environnements de \textbf{test} et de \textbf{staging} reprenant la même architecture que la production ont été mis en place afin de valider les développements et les mises à jour.
+	\item Les environnements de \textbf{production} ont été configurés avec des sauvegardes automatiques et des mesures renforcées de sécurité et de supervision.
+\end{itemize}
+
+\subsection{Intégration et automatisation des déploiements}
+
+\textbf{GitLab CI} assure l'automatisation du cycle de vie applicatif :
+\begin{itemize}
+	\item Construction des images conteneurs.
+	\item Exécution des tests automatisés.
+	\item Déploiement vers les environnements Kubernetes.
+\end{itemize}
+
+% Schéma GitLab CI
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/gitlab-ci.png}
+	\caption{Processus d'intégration et de déploiement continu}
+\end{figure}
+% COMMENTAIRE:
+% Schéma illustrant :
+% - Développeur poussant du code.
+% - Pipeline GitLab CI (stages : build, test, deploy).
+% - Déploiement automatique sur Kubernetes.
+% PROMPT IA :
+% "CI/CD pipeline diagram showing a developer committing code to GitLab, triggering build, test, and deploy stages, with the application deployed to Kubernetes cluster. Use clear stages and arrows."
+
+\subsection*{Synthèse}
+
+L’architecture ainsi décrite allie modularité, automatisation et sécurité. Chaque composant contribue à la robustesse de la solution, tout en facilitant son évolutivité et sa maintenance.
+
+% Schéma synthèse globale
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/synthese-architecture.png}
+	\caption{Vue d’ensemble synthétique de l’architecture}
+\end{figure}
+% COMMENTAIRE:
+% Schéma final résumant toutes les couches :
+% - Provisioning (Terraform, Ansible)
+% - Orchestration (Kubernetes)
+% - Observabilité
+% - Sécurité
+% - CI/CD
+% - Services internes
+% PROMPT IA :
+% "Comprehensive architecture diagram summarizing provisioning (Terraform, Ansible), orchestration with Kubernetes, observability stack, security with Vault and pfSense, CI/CD with GitLab, and internal services. Use layers and clear labels."
 
 \section{Conclusion}
-Ce projet de mise en place d'une infrastructure automatisée et sécurisée pour Oneex a permis de répondre aux enjeux opérationnels et stratégiques de l'entreprise. En intégrant des outils modernes et des pratiques DevOps, il a été possible d'améliorer la fiabilité, la sécurité et la rapidité des déploiements.
-L'architecture mise en place offre une base solide pour l'évolution future des services, tout en
-assurant une gestion centralisée et sécurisée des configurations et des secrets. Les équipes disposent désormais d'un environnement cohérent, scalable et maintenable, capable de s'adapter aux besoins croissants de l'entreprise.
-Ce mémoire présente les différentes étapes de conception et de mise en œuvre de cette solution, ainsi que
-les résultats obtenus. Il met en lumière l'importance de l'automatisation, de la sécurité et de l'observabilité dans la gestion des infrastructures modernes, et ouvre la voie à de futures améliorations et innovations au sein de Oneex.
-Ce projet s'inscrit dans une démarche continue d'amélioration et d'optimisation des processus
-et expliquer la securité par design vs la securité par obscurité. Il est essentiel de continuer à investir dans la formation des équipes, l'évolution des outils et la mise en place de bonnes pratiques pour garantir la pérennité et la sécurité de l'infrastructure.
-\subsection{Perspectives d'évolution}
 
-L’approche \textbf{Infra\_v2} ouvre la voie à plusieurs évolutions futures permettant d’améliorer encore la performance, la fiabilité et la maintenabilité des systèmes :
+Ce projet de mise en place d'une infrastructure automatisée et sécurisée pour Oneex a permis de répondre à des enjeux à la fois opérationnels et stratégiques. En s’appuyant sur des outils modernes et des pratiques DevOps éprouvées, il a été possible d’améliorer significativement la fiabilité, la sécurité et la rapidité des déploiements.
 
+L’architecture mise en œuvre offre une base solide et évolutive pour le développement futur des services, tout en assurant une gestion centralisée et sécurisée des configurations et des secrets. Les équipes disposent désormais d’un environnement cohérent, scalable et maintenable, capable de s’adapter aux besoins croissants de l’entreprise.
+
+Ce mémoire a présenté de manière détaillée les différentes étapes de conception et de réalisation de cette solution, ainsi que les résultats obtenus. Il met en lumière l’importance de l’automatisation, de la sécurité et de l’observabilité dans la gestion d’infrastructures modernes, et souligne la nécessité d’adopter une approche proactive en matière de gouvernance technique.
+
+Il convient de rappeler la distinction entre deux approches fondamentales en matière de sécurité :
 \begin{itemize}
-	\item \textbf{Renforcement de l’automatisation} : intégrer davantage de processus automatisés (tests d’intégration, vérifications de sécurité, audits de conformité) dans les pipelines CI/CD.
-
-	\item \textbf{Observabilité avancée} : enrichir la télémétrie avec OpenTelemetry afin de collecter traces, métriques et logs de manière unifiée, facilitant le diagnostic en temps réel.
-
-	\item \textbf{Scalabilité horizontale} : étendre la capacité de la plateforme Kubernetes en ajoutant dynamiquement des nœuds selon la charge.
-
-	\item \textbf{Sécurité renforcée} : généraliser le chiffrement des communications internes, la rotation automatique des secrets et le principe de moindre privilège.
-
-	\item \textbf{Standardisation des workflows} : promouvoir l’utilisation systématique de GitOps pour toutes les équipes afin de garantir une cohérence des pratiques de déploiement.
-
-	\item \textbf{Optimisation des coûts} : introduire des mécanismes de scaling automatique et de surveillance des ressources afin de réduire les coûts d’infrastructure.
+	\item \textbf{La sécurité par design} (\emph{security by design}) consiste à intégrer les mécanismes de protection dès la conception des systèmes, en anticipant les menaces et en appliquant systématiquement des principes comme le moindre privilège, la segmentation et la défense en profondeur.
+	\item \textbf{La sécurité par obscurité} (\emph{security by obscurity}) repose uniquement sur la dissimulation des détails techniques (par exemple, masquer les configurations ou ne pas documenter les processus). Bien qu’elle puisse constituer une mesure complémentaire, elle ne peut en aucun cas se substituer à une politique de sécurité robuste et vérifiable.
 \end{itemize}
 
-Ces perspectives s’inscrivent dans une démarche d’amélioration continue visant à industrialiser et fiabiliser la gestion des environnements techniques.
+Enfin, il est essentiel de continuer à investir dans la formation des équipes, l’évolution des outils et la diffusion des bonnes pratiques pour garantir la pérennité et la sécurité de l’infrastructure.
 
-\subsection{Les points forts et faibles du point de vue technique et organisationnel}
+\subsection{Perspectives d’évolution}
 
-\textbf{Points forts techniques :}
+L’initiative \textbf{Infra\_v2} ouvre la voie à plusieurs axes d’amélioration visant à renforcer la performance, la fiabilité et l’efficience des systèmes :
+
 \begin{itemize}
-	\item Infrastructure déclarative et versionnée, facilitant la reproductibilité et la traçabilité des changements.
+	\item \textbf{Renforcement de l’automatisation} : intégrer de nouveaux processus automatisés, notamment les tests d’intégration, les vérifications de sécurité et les audits de conformité directement dans les pipelines CI/CD.
+	\item \textbf{Observabilité avancée} : déployer une solution de télémétrie unifiée (par exemple OpenTelemetry) afin de collecter métriques, logs et traces dans un format standardisé, facilitant l’analyse et le diagnostic en temps réel.
+	\item \textbf{Scalabilité horizontale} : permettre l’ajout dynamique de nœuds Kubernetes en fonction de la charge et de l’évolution des besoins applicatifs.
+	\item \textbf{Sécurité renforcée} : généraliser le chiffrement des communications internes, la rotation automatique des secrets et l’application stricte du principe du moindre privilège.
+	\item \textbf{Standardisation des workflows} : promouvoir l’adoption systématique des principes GitOps et l’harmonisation des pratiques de déploiement au sein de toutes les équipes.
+	\item \textbf{Optimisation des coûts} : mettre en place des mécanismes de scaling automatique et d’analyse des consommations pour ajuster les ressources en fonction de l’activité et réduire les coûts d’infrastructure.
+\end{itemize}
+
+Ces perspectives s’inscrivent dans une démarche continue d’amélioration et d’industrialisation des processus techniques.
+
+\subsection{Bilan technique et organisationnel}
+
+L’expérience acquise dans ce projet a permis de mettre en évidence plusieurs points forts et points faibles, tant sur le plan technique qu’organisationnel.
+
+\paragraph{Points forts techniques}
+\begin{itemize}
+	\item Infrastructure déclarative et versionnée, garantissant la reproductibilité et la traçabilité des configurations.
 	\item Automatisation complète du cycle de vie des environnements (provisionnement, configuration, déploiement).
-	\item Haute disponibilité native grâce à Kubernetes et au découplage des composants.
-	\item Facilité de rollback rapide en cas d’erreur.
-	\item Intégration transparente de la gestion des secrets via Vault.
+	\item Haute disponibilité native grâce à l’orchestration Kubernetes et au découplage des composants.
+	\item Possibilité de rollback rapide et maîtrisé en cas d’incident.
+	\item Intégration transparente d’un système centralisé de gestion des secrets.
 \end{itemize}
 
-\textbf{Points faibles techniques :}
+\paragraph{Points faibles techniques}
 \begin{itemize}
-	\item Courbe d’apprentissage élevée pour maîtriser l’ensemble des outils (Terraform, Ansible, Kubernetes, ArgoCD).
-	\item Complexité accrue du système global nécessitant une veille technologique régulière.
-	\item Dépendance à l’intégrité des outils d’orchestration (un dysfonctionnement de GitOps ou de l’API Kubernetes peut impacter la disponibilité).
+	\item Courbe d’apprentissage élevée pour la maîtrise et l’exploitation de l’ensemble des outils.
+	\item Complexité accrue nécessitant une veille technologique constante et un maintien de compétences soutenu.
+	\item Dépendance forte à l’intégrité des systèmes d’orchestration (GitOps, API Kubernetes), dont une indisponibilité peut impacter la production.
 \end{itemize}
 
-\textbf{Points forts organisationnels :}
+\paragraph{Points forts organisationnels}
 \begin{itemize}
-	\item Processus standardisés réduisant les erreurs humaines.
-	\item Visibilité complète des configurations via Git.
-	\item Meilleure collaboration entre les équipes grâce à une approche déclarative et transparente.
-	\item Accélération des cycles de déploiement.
+	\item Processus standardisés réduisant le risque d’erreurs humaines et améliorant la qualité globale des déploiements.
+	\item Visibilité et transparence des configurations grâce au versionnement et à la centralisation.
+	\item Accélération notable des cycles de livraison et meilleure réactivité des équipes.
+	\item Renforcement de la collaboration inter-équipes via des workflows communs et partagés.
 \end{itemize}
 
-\textbf{Points faibles organisationnels :}
+\paragraph{Points faibles organisationnels}
 \begin{itemize}
-	\item Nécessité d’une conduite du changement importante pour faire adopter les nouveaux outils.
-	\item Risque de silos de compétences si la montée en compétence n’est pas homogène au sein des équipes.
-	\item Temps initial d’implémentation élevé pour mettre en place les pipelines et standardiser les pratiques.
+	\item Nécessité d’une conduite du changement approfondie pour faire adopter les nouveaux outils et méthodologies.
+	\item Risque de silos de compétences si la montée en compétence n’est pas homogène.
+	\item Temps initial d’implémentation important pour structurer et standardiser l’ensemble des pipelines et des pratiques.
 \end{itemize}
+
+En synthèse, cette démarche constitue un socle technologique solide et évolutif, posant les bases d’un système plus résilient et sécurisé. Elle ouvre de nombreuses opportunités d’optimisation et d’innovation à moyen terme.
