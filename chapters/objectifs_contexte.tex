@@ -72,14 +72,14 @@ Les besoins non fonctionnels définissent les critères de qualité que la solut
 
 L'architecture globale repose sur une infrastructure virtualisée sous Proxmox, pilotée par Terraform et configurée par Ansible. Kubernetes assure l'orchestration des conteneurs, tandis que des solutions complémentaires (Vault, Grafana, Prometheus, Loki, Tempo, Longhorn, Argo CD) viennent couvrir les besoins en sécurité, stockage et supervision.
 
-% Si souhaité, tu peux ajouter un schéma ici :
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.9\textwidth]{figures/architecture.png}
-%    \caption{Schéma d'architecture globale}
-%\end{figure}
+	% Si souhaité, tu peux ajouter un schéma ici :
+	%\begin{figure}[H]
+	%    \centering
+	%    \includegraphics[width=0.9\textwidth]{figures/architecture.png}
+	%    \caption{Schéma d'architecture globale}
+	%\end{figure}
 
-\subsection{Infrastructure as Code avec Terraform}
+	{Infrastructure as Code avec Terraform}
 
 Terraform a été utilisé pour décrire et provisionner toute l'infrastructure. Les ressources suivantes ont été créées de façon automatisée :
 
@@ -91,7 +91,7 @@ Terraform a été utilisé pour décrire et provisionner toute l'infrastructure.
 
 Les modules Terraform ont été organisés de manière modulaire afin de pouvoir réutiliser et adapter la configuration facilement.
 
-\subsection{Configuration automatique avec Ansible}
+	{Configuration automatique avec Ansible}
 
 Ansible a permis de configurer les serveurs après leur création. Des rôles dédiés ont été développés pour :
 
@@ -104,23 +104,23 @@ Ansible a permis de configurer les serveurs après leur création. Des rôles d�
 
 Cette approche garantit une configuration homogène et reproductible.
 
-\subsection{GitOps avec Argo CD}
+	{GitOps avec Argo CD}
 
 Argo CD a été mis en place pour gérer les déploiements applicatifs de manière GitOps. Chaque modification des manifestes Kubernetes dans le dépôt Git est automatiquement synchronisée avec le cluster. Cette pratique permet de disposer d’un historique complet des changements et de simplifier les rollbacks en cas de problème.
 
-\subsection{Monitoring et observabilité avec Grafana, Prometheus, Loki et Tempo}
+{Monitoring et observabilité avec Grafana, Prometheus, Loki et Tempo}
 
 Le monitoring s’appuie sur Prometheus pour la collecte des métriques et Grafana pour la visualisation. Loki centralise les logs applicatifs et systèmes, tandis que Tempo gère les traces distribuées. L’ensemble forme une stack cohérente permettant d’assurer la supervision et le diagnostic des incidents.
 
-\subsection{Stockage distribué avec Longhorn}
+	{Stockage distribué avec Longhorn}
 
 Longhorn a été déployé comme solution de stockage distribué pour Kubernetes. Il fournit un stockage persistant, tolérant aux pannes, avec des fonctionnalités de snapshot et de restauration.
 
-\subsection{Gestion des secrets avec Vault}
+	{Gestion des secrets avec Vault}
 
 Vault est utilisé comme coffre-fort centralisé pour la gestion des secrets. Il permet de stocker et de distribuer les mots de passe, tokens et certificats de manière sécurisée. Des politiques de contrôle d’accès ont été configurées pour limiter l’exposition des informations sensibles.
 
-\subsection{Mise en place de services internes}
+	{Mise en place de services internes}
 
 Plusieurs services internes ont été installés pour répondre aux besoins quotidiens des équipes :
 
@@ -133,19 +133,221 @@ Plusieurs services internes ont été installés pour répondre aux besoins quot
 
 Ces outils sont hébergés dans l’infrastructure Kubernetes.
 
-\subsection{Sécurité et gestion de pare-feu avec pfSense}
+	{Sécurité et gestion de pare-feu avec pfSense}
 
 La sécurité périmétrique repose sur un pare-feu pfSense. Des règles de filtrage ont été définies pour contrôler les flux entrants et sortants, ainsi qu’un VPN pour les accès administratifs. Des mesures de surveillance des connexions ont également été mises en place.
 
-\subsection{Mise en place des services de test et de staging}
+	{Mise en place des services de test et de staging}
 
 Des environnements spécifiques ont été créés pour permettre la validation des développements avant leur mise en production. Ces environnements reprennent l’architecture de production, facilitant les tests de montée en charge et les scénarios de validation.
 
-\subsection{Mise en place de la CI/CD avec GitLab CI}
+	{Mise en place de la CI/CD avec GitLab CI}
 
 GitLab CI a été configuré pour automatiser les étapes de build, test et déploiement des applications. Des pipelines ont été créés pour assurer la qualité du code et le déploiement vers les environnements Kubernetes.
 
-\subsection{Mise en place des services de production pour les clients}
+	{Mise en place des services de production pour les clients}
 
 Enfin, les environnements de production ont été finalisés et validés en respectant les exigences de performance et de sécurité. La mise en service a inclus la configuration des sauvegardes, la documentation des procédures et la formation des utilisateurs.
+\section{Etude de cas et exemples}
+\subsection{Cas d’Usage Concrets}
 
+\paragraph{Exemple 1 -- Création d’un environnement complet}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item Création manuelle de trois machines virtuelles via Proxmox.
+	\item Configuration réseau effectuée à la main.
+	\item Copie et injection d’une clé SSH via \texttt{ssh-copy-id}.
+	\item Lancement manuel d’un script d’installation.
+	\item En cas d’erreur, reprise complète du processus.
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item \texttt{terraform apply} crée automatiquement les machines virtuelles.
+	\item Les clés et variables sensibles sont récupérées via Vault.
+	\item Ansible configure l’ensemble : utilisateurs, sécurité, Kubernetes.
+	\item Le déploiement est garanti identique à chaque exécution.
+\end{itemize}
+
+\paragraph{Exemple 2 -- Ajout d’une nouvelle application}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item Récupération du code sur une machine virtuelle.
+	\item Installation manuelle des dépendances.
+	\item Configuration du reverse proxy en éditant un fichier Nginx.
+	\item Gestion manuelle des secrets.
+	\item Vérification manuelle du démarrage du service.
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item Définition d’un manifest Kubernetes ou d’un chart Helm.
+	\item Commit dans le dépôt Git.
+	\item ArgoCD détecte automatiquement le changement et effectue le déploiement.
+	\item Les secrets sont injectés depuis Vault.
+	\item La configuration est traçable, versionnée et cohérente.
+\end{itemize}
+
+\paragraph{Exemple 3 -- Visualisation et inspection}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item Connexion SSH sur la machine virtuelle.
+	\item Parcours des fichiers de configuration.
+	\item Recherche des journaux système.
+	\item Vérification manuelle de l’état des services et de leur historique.
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item Consultation du dépôt Git du projet.
+	\item Inspection des manifests versionnés Kubernetes.
+	\item Vérification de l’historique des commits.
+	\item Observation en temps réel de la synchronisation via ArgoCD.
+\end{itemize}
+
+\paragraph{Exemple 4 -- Panne d’une machine virtuelle critique}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item En cas de saturation de la mémoire ou du disque, le service devient indisponible.
+	\item Exemple réel : saturation disque sur la machine GitLab ayant bloqué l’équipe.
+	\item Conséquences : interruption de la productivité, impact sur l’image, perte de confiance.
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item Les workloads sont conteneurisés et distribués sur plusieurs nœuds Kubernetes.
+	\item Si un nœud échoue, Kubernetes redémarre automatiquement les pods sur d’autres nœuds.
+	\item La disponibilité est maintenue sans intervention urgente.
+\end{itemize}
+
+\paragraph{Exemple 5 -- Gestion de stacks hétérogènes}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item Multiplicité des environnements techniques :
+	      \begin{itemize}
+		      \item Docker
+		      \item Python et \texttt{pip}
+		      \item Services installés via \texttt{apt}
+	      \end{itemize}
+	\item La connaissance des procédures est dispersée entre différents intervenants.
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item Chaque application dispose d’un manifest Kubernetes ou d’un chart Helm.
+	\item Les dépendances sont déclarées et isolées dans des conteneurs.
+	\item Le déploiement est homogène et automatisé via GitOps.
+	\item Plus besoin de maîtriser des commandes spécifiques à chaque stack.
+\end{itemize}
+
+\paragraph{Exemple 6 -- Retour en arrière après une erreur}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item Identification manuelle de l’erreur.
+	\item Correction parfois empirique.
+	\item Restauration longue (rollback manuel, restauration de snapshot).
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item \texttt{git revert} permet de revenir à un état stable.
+	\item ArgoCD synchronise automatiquement l’environnement.
+	\item Le retour arrière est rapide et traçable.
+\end{itemize}
+
+\paragraph{Exemple 7 -- Mise à jour sans interruption de service}
+
+\textbf{Approche classique :}
+\begin{itemize}
+	\item Mise à jour en place avec risque d’indisponibilité.
+	\item Obligation de programmer une plage de maintenance.
+\end{itemize}
+
+\textbf{Approche Infra\_v2 :}
+\begin{itemize}
+	\item Kubernetes réalise des \emph{rolling updates}.
+	\item Les pods sont remplacés progressivement.
+	\item Pas d’interruption visible pour les utilisateurs.
+	\item Rollback automatique en cas de problème.
+\end{itemize}
+
+\subsection*{Résumé des bénéfices}
+
+Ces exemples démontrent l’intérêt de l’approche \textbf{Infra\_v2}, qui apporte des avantages significatifs :
+
+\begin{itemize}
+	\item Automatisation et reproductibilité totales.
+	\item Sécurité centralisée des secrets.
+	\item Déploiement et rollback versionnés, contrôlés et traçables.
+	\item Résilience et haute disponibilité natives.
+	\item Réduction drastique des erreurs humaines.
+	\item Visibilité accrue sur l’état des applications et de l’infrastructure.
+	\item Scalabilité et maintenance simplifiées.
+\end{itemize}
+
+\section{Conclusion}
+Ce projet de mise en place d'une infrastructure automatisée et sécurisée pour Oneex a permis de répondre aux enjeux opérationnels et stratégiques de l'entreprise. En intégrant des outils modernes et des pratiques DevOps, il a été possible d'améliorer la fiabilité, la sécurité et la rapidité des déploiements.
+L'architecture mise en place offre une base solide pour l'évolution future des services, tout en
+assurant une gestion centralisée et sécurisée des configurations et des secrets. Les équipes disposent désormais d'un environnement cohérent, scalable et maintenable, capable de s'adapter aux besoins croissants de l'entreprise.
+Ce mémoire présente les différentes étapes de conception et de mise en œuvre de cette solution, ainsi que
+les résultats obtenus. Il met en lumière l'importance de l'automatisation, de la sécurité et de l'observabilité dans la gestion des infrastructures modernes, et ouvre la voie à de futures améliorations et innovations au sein de Oneex.
+Ce projet s'inscrit dans une démarche continue d'amélioration et d'optimisation des processus
+et expliquer la securité par design vs la securité par obscurité. Il est essentiel de continuer à investir dans la formation des équipes, l'évolution des outils et la mise en place de bonnes pratiques pour garantir la pérennité et la sécurité de l'infrastructure.
+\subsection{Perspectives d'évolution}
+
+L’approche \textbf{Infra\_v2} ouvre la voie à plusieurs évolutions futures permettant d’améliorer encore la performance, la fiabilité et la maintenabilité des systèmes :
+
+\begin{itemize}
+	\item \textbf{Renforcement de l’automatisation} : intégrer davantage de processus automatisés (tests d’intégration, vérifications de sécurité, audits de conformité) dans les pipelines CI/CD.
+
+	\item \textbf{Observabilité avancée} : enrichir la télémétrie avec OpenTelemetry afin de collecter traces, métriques et logs de manière unifiée, facilitant le diagnostic en temps réel.
+
+	\item \textbf{Scalabilité horizontale} : étendre la capacité de la plateforme Kubernetes en ajoutant dynamiquement des nœuds selon la charge.
+
+	\item \textbf{Sécurité renforcée} : généraliser le chiffrement des communications internes, la rotation automatique des secrets et le principe de moindre privilège.
+
+	\item \textbf{Standardisation des workflows} : promouvoir l’utilisation systématique de GitOps pour toutes les équipes afin de garantir une cohérence des pratiques de déploiement.
+
+	\item \textbf{Optimisation des coûts} : introduire des mécanismes de scaling automatique et de surveillance des ressources afin de réduire les coûts d’infrastructure.
+\end{itemize}
+
+Ces perspectives s’inscrivent dans une démarche d’amélioration continue visant à industrialiser et fiabiliser la gestion des environnements techniques.
+
+\subsection{Les points forts et faibles du point de vue technique et organisationnel}
+
+\textbf{Points forts techniques :}
+\begin{itemize}
+	\item Infrastructure déclarative et versionnée, facilitant la reproductibilité et la traçabilité des changements.
+	\item Automatisation complète du cycle de vie des environnements (provisionnement, configuration, déploiement).
+	\item Haute disponibilité native grâce à Kubernetes et au découplage des composants.
+	\item Facilité de rollback rapide en cas d’erreur.
+	\item Intégration transparente de la gestion des secrets via Vault.
+\end{itemize}
+
+\textbf{Points faibles techniques :}
+\begin{itemize}
+	\item Courbe d’apprentissage élevée pour maîtriser l’ensemble des outils (Terraform, Ansible, Kubernetes, ArgoCD).
+	\item Complexité accrue du système global nécessitant une veille technologique régulière.
+	\item Dépendance à l’intégrité des outils d’orchestration (un dysfonctionnement de GitOps ou de l’API Kubernetes peut impacter la disponibilité).
+\end{itemize}
+
+\textbf{Points forts organisationnels :}
+\begin{itemize}
+	\item Processus standardisés réduisant les erreurs humaines.
+	\item Visibilité complète des configurations via Git.
+	\item Meilleure collaboration entre les équipes grâce à une approche déclarative et transparente.
+	\item Accélération des cycles de déploiement.
+\end{itemize}
+
+\textbf{Points faibles organisationnels :}
+\begin{itemize}
+	\item Nécessité d’une conduite du changement importante pour faire adopter les nouveaux outils.
+	\item Risque de silos de compétences si la montée en compétence n’est pas homogène au sein des équipes.
+	\item Temps initial d’implémentation élevé pour mettre en place les pipelines et standardiser les pratiques.
+\end{itemize}

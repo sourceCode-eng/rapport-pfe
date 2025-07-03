@@ -1,3 +1,4 @@
+\section{les outils utilisés}
 \subsection{GitLab CI}
 
 GitLab CI (Continuous Integration) est un système d’intégration et de livraison continues intégré nativement dans GitLab, une plateforme DevOps complète de gestion du cycle de vie applicatif. Il permet d’automatiser la construction, les tests, la validation, le packaging et le déploiement des applications en s’appuyant sur des pipelines définis de manière déclarative. GitLab CI est aujourd’hui largement utilisé dans les organisations souhaitant industrialiser leurs workflows de développement et renforcer la qualité logicielle.
@@ -203,3 +204,132 @@ En synthèse, Semantic Release est une solution stratégique pour les organisati
 	\item GitHub Actions Documentation – \url{https://docs.github.com/en/actions}
 	\item npm Publishing Guide – \url{https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages}
 \end{itemize}
+\section{Les conventions de commits}
+
+Les conventions de commits désignent l’ensemble des règles et des bonnes pratiques qui encadrent la rédaction des messages de commit dans un système de gestion de versions (comme Git). Elles visent à standardiser la documentation des changements, à faciliter la compréhension de l’historique d’un projet et à automatiser certaines tâches (génération de changelogs, déclenchement de pipelines CI/CD, versionnement sémantique). Leur adoption contribue à renforcer la qualité des projets logiciels et la collaboration entre les équipes.
+
+%point de vue metier
+les conventions de commits permettent de valoriser la traçabilité et la lisibilité du code. Elles facilitent la revue des changements lors des audits, améliorent la communication entre développeurs et garantissent que l’évolution du produit est documentée de façon claire et structurée. Elles sont également un levier de professionnalisation et de crédibilité vis-à-vis des partenaires et des clients, qui attendent des processus de développement rigoureux et transparents.
+
+%point de vue logique et technique
+, plusieurs standards de conventions ont émergé, notamment :
+\begin{itemize}
+	\item \textbf{Conventional Commits} : une spécification populaire qui définit un format structuré basé sur des préfixes et des catégories. Exemple :
+	      \begin{verbatim}
+    feat(auth): add JWT authentication
+    fix(api): correct error handling in user service
+    docs(readme): update installation instructions
+	      \end{verbatim}
+	\item \textbf{Semantic Versioning} : combiné aux conventions de commits, il permet de déclencher automatiquement les incréments de version (MAJOR, MINOR, PATCH) selon la nature des changements.
+	\item \textbf{Gitmoji} : l’usage d’emojis standardisés pour symboliser visuellement le type de modification :
+	      \begin{verbatim}
+    eat: add search functionality
+    fix: resolve crash on startup
+    docs: improve API documentation
+	      \end{verbatim}
+\end{itemize}
+
+Les conventions de commits permettent d’automatiser des processus critiques :
+\begin{itemize}
+	\item Génération de changelogs clairs à partir des messages structurés.
+	\item Déclenchement de pipelines CI/CD conditionnés à certains types de changements.
+	\item Application automatique de politiques de versionnement.
+	\item Vérification des formats de message via des hooks Git (ex. Commitlint).
+\end{itemize}
+
+\textbf{Exemples et cas d’usage} :
+\begin{itemize}
+	\item Utiliser la convention Conventional Commits pour tous les projets d’un département afin de générer automatiquement la documentation des versions.
+	\item Configurer un pipeline CI/CD qui refuse les commits non conformes au format attendu.
+	\item Associer des préfixes (feat, fix, chore) aux incréments automatiques de version selon Semantic Versioning.
+	\item Appliquer des tags de breaking change via l’indication \texttt{BREAKING CHANGE} dans le corps du commit.
+\end{itemize}
+
+\textbf{Avantages principaux} :
+\begin{itemize}
+	\item Lisibilité et compréhension accrues de l’historique des changements.
+	\item Automatisation de la génération des notes de version et du versionnement.
+	\item Réduction des erreurs humaines grâce aux validations automatiques.
+	\item Amélioration de la collaboration et de la revue de code.
+	\item Renforcement de la transparence et de la traçabilité du cycle de développement.
+\end{itemize}
+
+En synthèse, l’adoption de conventions de commits structurées ne constitue pas uniquement une formalité : elle participe pleinement à l’industrialisation et à la qualité des processus de développement logiciel. Elle s’inscrit dans une démarche globale d’automatisation, de traçabilité et de professionnalisation des projets.
+
+\textbf{Références suggérées} :
+\begin{itemize}
+	\item Conventional Commits Specification – \url{https://www.conventionalcommits.org/}
+	\item Semantic Versioning – \url{https://semver.org/}
+	\item Gitmoji – \url{https://gitmoji.dev/}
+	\item Pro Git Book – \url{https://git-scm.com/book/en/v2}
+	\item Gousios, G., Spinellis, D. (2012). GIT-EVOLVE: A Software Evolution Tool Based on Git.
+\end{itemize}
+
+\section{Mise en place des pipelines CI/CD}
+
+La mise en place d’une chaîne CI/CD (Continuous Integration / Continuous Deployment) constitue un levier essentiel pour automatiser la construction, le test et le déploiement des applications.
+Ce processus contribue à réduire les délais de mise en production, à limiter les erreurs humaines et à fiabiliser les évolutions logicielles.
+
+\subsection{Conteneurisation des applications}
+
+La première étape du pipeline CI/CD consiste à conteneuriser les applications développées.
+Pour ce faire, des fichiers \texttt{Dockerfile} ont été créés pour chaque projet, décrivant :
+\begin{itemize}
+	\item Le système de base à utiliser (par exemple \texttt{python:3.10-slim}, \texttt{node:lts}).
+	\item L’installation des dépendances applicatives via \texttt{pip}, \texttt{npm} ou autres gestionnaires de paquets.
+	\item La copie du code source et des fichiers de configuration.
+	\item La définition du point d’entrée de l’application (\texttt{ENTRYPOINT}).
+\end{itemize}
+
+Cette approche garantit que chaque build produit une image identique, facilement transportable et exécutable dans tout environnement Kubernetes.
+
+\subsection{Tagging des images}
+
+Le versionnement des images conteneurisées est essentiel pour assurer la traçabilité des déploiements.
+Les pipelines CI/CD ont été configurés pour appliquer un schéma de tagging cohérent :
+\begin{itemize}
+	\item Utilisation d’un tag unique basé sur le hash du commit Git.
+	\item Création d’un tag lisible incluant le numéro de version et la branche (par exemple \texttt{v1.2.3-main}).
+	\item Marquage automatique de l’image la plus récente comme \texttt{latest} pour simplifier les tests.
+\end{itemize}
+
+Ces conventions permettent de relier chaque déploiement Kubernetes à l’image exacte qui a été produite par la pipeline.
+
+\subsection{Configuration de l’authentification}
+
+La sécurité des échanges entre les outils CI/CD et le registre d’images est un point critique.
+Plusieurs mesures ont été prises :
+\begin{itemize}
+	\item Création de comptes de service dédiés avec des droits restreints.
+	\item Génération de tokens d’accès utilisés par les runners CI pour authentifier les pushes vers le registre.
+	\item Stockage sécurisé des identifiants et des tokens dans Vault ou les variables protégées du système CI (par exemple GitLab CI/CD variables).
+\end{itemize}
+
+Ces précautions garantissent que seuls les processus autorisés peuvent publier ou récupérer des images.
+
+\subsection{Préparation des tâches des pipelines}
+
+Les tâches élémentaires des pipelines CI/CD ont été définies de manière modulaire.
+Elles incluent notamment :
+\begin{itemize}
+	\item La phase de compilation et de tests unitaires.
+	\item La construction des images Docker.
+	\item Le scan de sécurité (par exemple avec Trivy) pour détecter les vulnérabilités connues.
+	\item La validation syntaxique des manifests Kubernetes (linting).
+	\item La mise en cache des dépendances pour accélérer les builds.
+\end{itemize}
+
+Chaque tâche est décrite dans un fichier YAML de pipeline et peut être exécutée indépendamment, favorisant la réutilisation entre projets.
+
+\subsection{Préparation des pipelines}
+
+Enfin, les pipelines complets ont été structurés et versionnés dans les dépôts Git des applications.
+Ces pipelines définissent :
+\begin{itemize}
+	\item Les déclencheurs automatiques (push sur la branche principale, création d’une release, merge request).
+	\item Les variables d’environnement spécifiques à chaque environnement cible (dev, recette, production).
+	\item Les étapes de build, de test, de publication et de déploiement continu.
+	\item Les conditions de déclenchement manuel ou automatique de certaines étapes sensibles (par exemple le déploiement en production).
+\end{itemize}
+
+L’ensemble du processus CI/CD permet ainsi de passer d’un simple commit de code source jusqu’à la mise à jour des pods Kubernetes de façon totalement automatisée et traçable.

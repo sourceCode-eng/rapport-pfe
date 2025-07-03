@@ -144,7 +144,8 @@ Les bases de données sont hébergées sur des serveurs dédiés et sécurisés,
 \subsubsection{infrastructures internes}
 
 Afin de garentir un controle total et une idependence aux fournisseurs de cloud, Oneex a opté pour une infrastructure IAAS (Infrastructure as a Service) hébergée dans des serveurs dont proxmox est installé et utilisé pour gerer toutes les ressources. Cette infrastructure est composée de serveurs physiques et virtuels, permettant de déployer les applications et services nécessaires à l’activité de l’entreprise.
-
+Oneex prefere aussi garder toutes les machines virtuelles dans un sous reseau privé interne a proxmox , en exposant les services a travers un reverse proxy Nginx.
+Pour toute communication inter-proxmox entre les machines virtuelles, Oneex utilise un VPN IP-Sec réseau interne dédié, garantissant ainsi la sécurité et la performance des échanges.
 \section{Les projets informatiques de la société}
 
 \subsection{Introduction}

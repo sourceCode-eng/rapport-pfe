@@ -73,6 +73,11 @@ Vault est un gestionnaire de secrets développé par HashiCorp. Il centralise le
 	\item Contrôle d’accès fin (ACL).
 	\item Rotation automatique des secrets.
 \end{itemize}
+a ajouter les concepts de base de vault
+le seal et unseal , le design de sécurité, les backends de stockage, les policies, les secrets engines, les auth methods
+la distribution de clés seal pour un poweroff switch au pire des cas
+
+les bonnes pratiques de sécurité , et mentionner que s'il est mal utilisé vault peut devenir un point de défaillance
 
 \textbf{Exemple d’utilisation} : stockage sécurisé des tokens Kubernetes et des mots de passe base de données.
 
@@ -89,12 +94,85 @@ Consul complète Vault en apportant :
 \textbf{Exemple d’utilisation} : synchroniser dynamiquement les configurations applicatives avec Consul Template.
 
 \section{Mise en place des concepts de l'infrastructure en code}
-\subsection{Preparation des secrets avec Vault}
-\subsection{creation de templates de machines virtuelles}
-\subsection{creation des machines virtuelles a travers Terraform}
-\subsection{preparation automatique des inventaires}
-\subsection{configuration automatique des machines virtuelles avec Ansible}
-\section{Outils de reseau exposition des services et sécurité}
+
+La mise en œuvre d'une infrastructure déclarative repose sur une combinaison d'outils spécialisés qui permettent d'automatiser l'ensemble du cycle de vie des environnements techniques. Cette approche favorise la cohérence, la traçabilité et la reproductibilité des déploiements.
+Les sections suivantes décrivent les principales étapes mises en place dans le projet.
+
+\subsection{Préparation des secrets avec Vault}
+
+Dans une architecture moderne, la gestion sécurisée des informations sensibles (mots de passe, clés d'API, certificats) est un enjeu majeur.
+Pour répondre à cette problématique, l'outil HashiCorp Vault a été utilisé comme coffre-fort centralisé.
+
+Vault a été configuré en mode \textit{server} avec un stockage interne et une politique de chiffrement des données au repos. Les secrets sont créés et organisés dans des chemins logiques (\texttt{secret/}, \texttt{kv/}) permettant de les isoler par projet ou par environnement (développement, production).
+
+L'accès à Vault est contrôlé par des policies granulaires, et l'authentification des outils d'automatisation (Terraform, Ansible) s'effectue via des tokens dynamiques ou l'approche AppRole.
+Cette centralisation simplifie la rotation des secrets et réduit les risques liés aux configurations manuelles.
+
+\subsection{Création de templates de machines virtuelles}
+
+Afin de garantir l'uniformité des systèmes de base, des templates de machines virtuelles ont été préparés sur Proxmox.
+Ces templates incluent :
+\begin{itemize}
+	\item Le système d'exploitation minimal (par exemple Debian ou Ubuntu LTS).
+	\item Les mises à jour de sécurité appliquées.
+	\item Les dépendances de base (cloud-init, agents QEMU).
+	\item La configuration des clés SSH nécessaires à l'automatisation.
+\end{itemize}
+
+L'utilisation de ces modèles préconfigurés permet de créer rapidement de nouvelles instances sans avoir à répéter les étapes de préparation initiale.
+Cette approche contribue à standardiser le socle technique et à réduire le temps de provisionnement.
+
+\subsection{Création des machines virtuelles à travers Terraform}
+
+La création automatisée des machines virtuelles est orchestrée par Terraform.
+Les ressources sont décrites sous forme de fichiers HCL (\textit{HashiCorp Configuration Language}) qui précisent :
+\begin{itemize}
+	\item La taille et le nombre de vCPU et de mémoire.
+	\item Le réseau et les interfaces associées.
+	\item Le disque principal et son format.
+	\item Le template de base à cloner.
+\end{itemize}
+
+L'exécution de \texttt{terraform apply} permet de matérialiser l'infrastructure déclarée.
+Cette étape est également responsable de l'injection initiale des métadonnées (par exemple, le nom de l'instance, l'identifiant d'environnement).
+Grâce à Terraform, la création des VMs est reproductible et contrôlée dans le temps.
+
+\subsection{Préparation automatique des inventaires}
+
+Après le provisionnement des ressources, la préparation des inventaires est essentielle pour permettre à Ansible de prendre le relais.
+Pour ce faire, un script d'automatisation collecte dynamiquement les informations des machines créées (adresses IP, identifiants, groupes logiques) et génère un inventaire au format YAML compatible avec Ansible.
+
+Cette génération automatisée évite les erreurs liées aux manipulations manuelles et garantit que l'inventaire reflète toujours l'état réel de l'infrastructure.
+L'inventaire est versionné dans un dépôt Git, renforçant la traçabilité des évolutions.
+
+\subsection{Configuration automatique des machines virtuelles avec Ansible}
+
+Une fois les inventaires préparés, Ansible est utilisé pour configurer les machines virtuelles de manière déclarative.
+Les rôles et playbooks appliquent notamment :
+\begin{itemize}
+	\item La création des utilisateurs et des groupes.
+	\item La configuration du pare-feu et des règles de sécurité.
+	\item L'installation des paquets requis.
+	\item Le déploiement des configurations d’applications et des services système.
+\end{itemize}
+
+L'exécution d'Ansible est idempotente, garantissant que les machines convergent toujours vers l'état souhaité, quelle que soit leur configuration initiale.
+Les variables sensibles sont injectées de manière sécurisée via Vault.
+
+\section{Outils de réseau, exposition des services et sécurité}
+
+Le bon fonctionnement d'une infrastructure passe par une gestion rigoureuse du réseau et une exposition contrôlée des services.
+Dans le projet, plusieurs composants et bonnes pratiques ont été mis en œuvre :
+
+\begin{itemize}
+	\item \textbf{Réseau virtuel et segmentation} : les machines sont placées dans des VLANs distincts afin de séparer les environnements (production, développement) et de limiter les flux inter-zones.
+	\item \textbf{Reverse proxy et ingress} : l’exposition des services HTTP(S) s’effectue via des ingress controllers Kubernetes ou des reverse proxies tels que NGINX. Ces composants assurent le routage, la terminaison TLS et l’équilibrage de charge.
+	\item \textbf{Certificats TLS} : les certificats sont gérés automatiquement grâce à l’intégration de Let’s Encrypt ou Vault PKI, garantissant la sécurité des échanges.
+	\item \textbf{Pare-feu et contrôle des accès} : des règles strictes sont appliquées sur les hôtes et les pods, combinant iptables, security groups et Network Policies Kubernetes.
+	\item \textbf{Monitoring et logs} : la collecte centralisée des logs réseau et la supervision des connexions permettent d’anticiper les incidents et de renforcer la sécurité.
+\end{itemize}
+
+Cette approche cohérente assure une exposition minimale des services au public et une sécurité renforcée tout en maintenant une haute disponibilité.
 
 \subsection{pfSense}
 
@@ -104,7 +182,76 @@ pfSense est une solution open source de pare-feu et de routage. Elle permet :
 	\item La gestion de VPN et la segmentation des VLAN.
 	\item La supervision du trafic.
 \end{itemize}
-\subsection{reseau de k8s}
+\subsection{Réseau de Kubernetes}
+
+Le réseau Kubernetes est un élément fondamental qui permet la communication entre les différents composants du cluster et les applications qui y sont déployées. Il repose sur plusieurs concepts clés visant à simplifier la connectivité et à assurer l’isolation logique des workloads.
+
+\paragraph{Modèle de réseau plat}
+
+Kubernetes adopte un modèle de réseau dit \emph{plat}, dans lequel :
+\begin{itemize}
+	\item Chaque \textbf{pod} reçoit une adresse IP unique.
+	\item Tous les pods peuvent communiquer entre eux, sans traduction d’adresses (NAT).
+	\item Les pods peuvent accéder aux services exposés par d’autres pods, quel que soit le nœud sur lequel ils s’exécutent.
+\end{itemize}
+Ce modèle vise à réduire la complexité des communications et à permettre aux applications de se comporter comme si elles fonctionnaient sur un même réseau local.
+
+\paragraph{CNI (Container Network Interface)}
+
+Pour mettre en œuvre le modèle réseau, Kubernetes s’appuie sur des plugins CNI (Container Network Interface).
+Ces plugins sont responsables de :
+\begin{itemize}
+	\item L’attribution des adresses IP aux pods.
+	\item La configuration des routes réseau.
+	\item L’application des règles de filtrage ou d’isolation.
+\end{itemize}
+Parmi les solutions CNI les plus courantes, on peut citer Calico, Flannel, Cilium et Weave.
+
+\paragraph{Services et ClusterIP}
+
+Kubernetes introduit l’objet \texttt{Service} qui permet d’exposer un groupe de pods sous une adresse IP virtuelle et un nom DNS stable.
+Le type \texttt{ClusterIP} crée un point d’accès interne accessible uniquement depuis le cluster.
+Le routage vers les pods est assuré par le kube-proxy, qui configure des règles iptables ou IPVS selon le mode choisi.
+
+\paragraph{Services NodePort et LoadBalancer}
+
+Pour exposer un service à l’extérieur du cluster :
+\begin{itemize}
+	\item Le type \texttt{NodePort} alloue un port TCP/UDP sur chaque nœud du cluster.
+	\item Le type \texttt{LoadBalancer} s’intègre avec un équilibrage de charge externe (cloud provider) afin de disposer d’une IP publique.
+\end{itemize}
+Ces mécanismes simplifient l’accès aux applications depuis l’extérieur.
+
+\paragraph{Ingress et contrôleurs Ingress}
+
+L’\texttt{Ingress} est une ressource Kubernetes qui permet de définir des règles de routage HTTP(S) plus avancées, par exemple :
+\begin{itemize}
+	\item Routage par nom de domaine.
+	\item Terminaison TLS.
+	\item Redirections et règles de sécurité.
+\end{itemize}
+Un contrôleur Ingress (tel que NGINX Ingress Controller ou Traefik) est déployé pour interpréter et appliquer ces règles.
+
+\paragraph{Network Policies}
+
+Pour renforcer la sécurité, Kubernetes propose les \texttt{NetworkPolicies}, qui définissent des règles de filtrage des flux entre pods :
+\begin{itemize}
+	\item Sélection des pods sources et destinations.
+	\item Protocoles et ports autorisés.
+	\item Isolation stricte par namespace ou par label.
+\end{itemize}
+Les politiques réseau nécessitent un CNI compatible (par exemple Calico).
+
+\paragraph{DNS interne}
+
+Kubernetes fournit un service DNS interne (CoreDNS) qui résout les noms des services et pods :
+\begin{itemize}
+	\item Chaque service est accessible via un nom DNS du type \texttt{myservice.mynamespace.svc.cluster.local}.
+	\item Les applications peuvent utiliser la découverte de services sans configuration externe.
+\end{itemize}
+
+En combinant ces composants, le réseau Kubernetes offre un modèle cohérent, flexible et extensible qui facilite le déploiement d’applications distribuées tout en garantissant la sécurité et l’évolutivité.
+
 \subsection{MetalLB}
 
 MetalLB est un Load Balancer pour Kubernetes on-premise :
@@ -114,10 +261,61 @@ MetalLB est un Load Balancer pour Kubernetes on-premise :
 \end{itemize}
 
 \textbf{Exemple d’utilisation} : exposer des services applicatifs Kubernetes en haute disponibilité.
-\section{Mise en places des services de reseau}
-\subsection{configuration automatique de pfSense avec Ansible}
-\subsection{configuration de nginx avec Ansible}
-\subsection{usage de vault pour la gestion des secrets}
+\section{Mise en place des services de réseau}
+
+Cette partie décrit la mise en œuvre et l’automatisation des services essentiels au bon fonctionnement du réseau et à la sécurisation des flux. Ces services incluent le pare-feu, le reverse proxy ainsi que la gestion centralisée des secrets.
+
+\subsection{Configuration automatique de pfSense avec Ansible}
+
+Le pare-feu pfSense constitue le point d’entrée et de filtrage du trafic réseau. Afin de garantir la reproductibilité de sa configuration et d’éviter les erreurs manuelles, Ansible a été utilisé pour automatiser son déploiement et sa configuration.
+
+Pour cela, des modules spécifiques à pfSense et des collections Ansible dédiées ont été mis en œuvre, permettant notamment :
+\begin{itemize}
+	\item La définition des règles de filtrage (firewall rules) par groupe et par interface.
+	\item La configuration des interfaces réseau et des VLANs.
+	\item L’activation et la configuration du service DHCP.
+	\item La gestion des utilisateurs et des certificats.
+\end{itemize}
+
+Grâce à cette approche, il est possible de versionner les configurations pfSense dans un dépôt Git et de les appliquer de manière cohérente sur plusieurs environnements.
+En cas de restauration après sinistre, la remise en service peut ainsi être réalisée rapidement et de façon fiable.
+
+\subsection{Configuration de NGINX avec Ansible}
+
+NGINX joue un rôle central comme reverse proxy et point d’entrée HTTP(S) des applications.
+La configuration de NGINX a été automatisée avec Ansible afin de :
+\begin{itemize}
+	\item Créer et gérer les fichiers de configuration des sites virtuels (server blocks).
+	\item Générer automatiquement les certificats TLS via Let’s Encrypt.
+	\item Mettre en place les règles de redirection et de réécriture des URLs.
+	\item Définir les paramètres de sécurité (headers HTTP, limitation de débit).
+\end{itemize}
+
+Les rôles Ansible développés permettent de paramétrer NGINX de manière déclarative en fonction des variables d’inventaire et de secrets provenant de Vault.
+Chaque modification de configuration est ainsi versionnée et peut être appliquée de façon idempotente.
+
+\subsection{Usage de Vault pour la gestion des secrets}
+
+La gestion centralisée et sécurisée des secrets est assurée par HashiCorp Vault.
+Vault est utilisé comme source unique de vérité pour stocker et distribuer :
+\begin{itemize}
+	\item Les mots de passe d’accès aux services.
+	\item Les clés API nécessaires aux applications.
+	\item Les certificats TLS privés.
+	\item Les tokens d’authentification.
+\end{itemize}
+
+L’authentification des systèmes à Vault s’effectue via AppRole et tokens dynamiques, ce qui limite le risque de compromission en cas de fuite d’identifiants.
+Ansible est configuré pour interroger Vault à l’exécution des playbooks et récupérer les secrets de manière transparente.
+Cette approche présente plusieurs avantages :
+\begin{itemize}
+	\item Les secrets ne sont jamais stockés en clair dans les dépôts Git.
+	\item La rotation régulière est facilitée.
+	\item Les accès sont tracés et audités.
+\end{itemize}
+
+L’intégration de Vault avec Terraform et Ansible permet ainsi de garantir un niveau de sécurité élevé tout au long du cycle de vie des environnements.
+
 \section{Synthèse}
 
 La combinaison d’outils tels que Proxmox, Terraform, Ansible, Vault et pfSense a permis de construire une infrastructure automatisée, sécurisée et reproductible. Cette approche s’inscrit dans la démarche Infrastructure as Code, garantissant un haut niveau de cohérence et facilitant les évolutions futures.
