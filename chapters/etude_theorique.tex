@@ -1,3 +1,105 @@
+% \section{État de l’art}
+% Dans cette section, nous présentons l’état de l’art relatif à l’automatisation, la supervision et la sécurisation des infrastructures informatiques, en nous appuyant sur les travaux existants, les standards industriels et les bonnes pratiques communément admises dans les environnements DevOps et Cloud-Native. Cette synthèse met en évidence les concepts clés, les outils de référence et les évolutions récentes qui façonnent les architectures modernes.
+
+% \subsection{Infrastructure as Code}
+
+% L’\emph{Infrastructure as Code} (IaC) constitue l’un des fondements de la modernisation des systèmes d’information. Ce paradigme consiste à définir l’infrastructure au moyen de fichiers de configuration déclaratifs ou impératifs, versionnés de manière similaire au code applicatif \cite{Humble2010ContinuousDelivery}.
+
+% Les solutions les plus largement adoptées comprennent Terraform, qui propose un langage déclaratif et un moteur d’exécution basé sur la convergence vers l’état souhaité, et Ansible, qui s’appuie sur des playbooks permettant de spécifier les étapes de configuration. L’IaC présente plusieurs avantages décisifs :
+
+% \begin{itemize}
+% \item la reproductibilité des environnements, facilitant la création d’infrastructures identiques entre développement, test et production ;
+% \item la réduction des erreurs manuelles grâce à l’automatisation complète des processus ;
+% \item la traçabilité et l’auditabilité des modifications par l’intégration avec des systèmes de gestion de versions.
+% \end{itemize}
+
+% Des recommandations spécifiques insistent sur l’importance de modulariser les configurations et d’employer une \emph{source unique de vérité} (Single Source of Truth) afin de renforcer la cohérence et la maintenabilité \cite{HashiCorpTerraformDocs}.
+
+% \subsection{GitOps}
+
+% Le concept de GitOps prolonge l’IaC en définissant Git comme le référentiel central de l’état souhaité de l’infrastructure et des applications \cite{WeaveworksGitOps}. Les modifications du système passent exclusivement par des validations (commits) dans le dépôt Git, lesquelles déclenchent des processus de synchronisation automatique et de déploiement continu.
+
+% Cette approche se caractérise par :
+% \begin{itemize}
+% \item la capacité à restaurer un état antérieur à tout moment (rollback) ;
+% \item l’automatisation de la convergence entre l’état réel et l’état déclaré ;
+% \item une transparence et une traçabilité renforcées des opérations.
+% \end{itemize}
+
+% Des outils comme Argo CD et Flux CD matérialisent cette philosophie en s’intégrant nativement à Kubernetes, permettant une gestion déclarative de bout en bout.
+
+% \subsection{Conteneurisation et orchestration}
+
+% La conteneurisation, popularisée par Docker, a profondément transformé les modèles de déploiement applicatif en introduisant un niveau d’isolation et de portabilité supérieur à celui des machines virtuelles classiques \cite{Merkel2014Docker}. Les conteneurs permettent de regrouper une application et ses dépendances au sein d’une unité unique et reproductible.
+
+% L’orchestration des conteneurs est assurée par des plateformes telles que Kubernetes, devenu le standard industriel. Kubernetes offre :
+% \begin{itemize}
+% \item la planification et l’exécution automatique des workloads ;
+% \item la scalabilité horizontale des services ;
+% \item des mécanismes avancés de tolérance aux pannes, de découverte de services et de gestion de configuration.
+% \end{itemize}
+
+% Les bonnes pratiques recommandent de recourir à des images minimalistes, de signer les conteneurs afin de garantir leur intégrité et d’adopter un modèle de sécurité fondé sur la séparation stricte des privilèges et des responsabilités \cite{KubernetesSecurityBestPractices}.
+
+% \subsection{Observabilité et supervision}
+
+% L’observabilité est devenue un pilier indispensable pour opérer des systèmes distribués et dynamiques. Elle repose classiquement sur trois composantes \cite{SREBook} :
+% \begin{itemize}
+% \item les métriques, permettant de quantifier l’état et les performances des composants (Prometheus étant l’outil de référence) ;
+% \item les logs, qui fournissent un historique détaillé des événements (Elastic Stack, Loki) ;
+% \item le tracing distribué, qui relie les requêtes traversant plusieurs services (Jaeger, OpenTelemetry).
+% \end{itemize}
+
+% Ces données sont corrélées et visualisées via des tableaux de bord (Grafana) et intégrées à des systèmes d’alerting proactif afin de garantir la détection précoce des anomalies et de faciliter l’analyse des causes racines.
+
+% \subsection{Sécurité des infrastructures et Zero Trust}
+
+% La sécurité des infrastructures automatisées nécessite une approche holistique et préventive, souvent décrite sous le terme de \emph{security by design}. Parmi les principes structurants figurent :
+% \begin{itemize}
+% \item le chiffrement systématique des données au repos et en transit ;
+% \item l’application du principe du moindre privilège ;
+% \item la gestion centralisée et dynamique des secrets (HashiCorp Vault, AWS Secrets Manager) ;
+% \item la traçabilité exhaustive des accès et des actions administratives.
+% \end{itemize}
+
+% Le modèle \emph{Zero Trust} complète ces mesures en partant du postulat qu’aucune requête ne peut être implicitement considérée comme fiable, même au sein du périmètre interne \cite{NISTZeroTrust}. Cette philosophie conduit à renforcer l’authentification, la segmentation des réseaux et l’analyse comportementale des accès.
+
+% \subsection{Automatisation des pipelines CI/CD}
+
+% La livraison continue (Continuous Integration / Continuous Deployment) constitue un corollaire naturel de l’automatisation des infrastructures. Elle repose sur la définition de pipelines exécutant de manière standardisée :
+% \begin{itemize}
+% \item la compilation et les tests automatisés ;
+% \item l’analyse de la sécurité des dépendances et des configurations ;
+% \item le déploiement progressif vers les environnements cibles.
+% \end{itemize}
+
+% Des outils tels que GitLab CI, Jenkins, CircleCI et GitHub Actions sont largement utilisés. Les bonnes pratiques recommandent l’emploi de pipelines versionnés, de contrôles systématiques de qualité et de stratégies de déploiement progressif (blue-green, canary) \cite{Accelerate2018}.
+
+% \subsection{Résilience et auto-remédiation}
+
+% Enfin, la résilience opérationnelle est une composante incontournable des systèmes modernes. Elle consiste à :
+% \begin{itemize}
+% \item prévoir la redondance des composants critiques ;
+% \item mettre en place des sondes de liveness et readiness pour détecter et isoler les défaillances ;
+% \item automatiser les mécanismes d’auto-remédiation (reprovisionnement, redémarrage) ;
+% \item disposer de plans de reprise testés régulièrement.
+% \end{itemize}
+
+% Les modèles de haute disponibilité décrits dans les bonnes pratiques du cloud public (AWS Well-Architected Framework) servent de référence pour concevoir ces capacités \cite{AWSWellArchitected}.
+
+% \subsection{Synthèse}
+
+% L’état de l’art actuel révèle une convergence des approches autour de plusieurs piliers :
+% \begin{itemize}
+% \item l’automatisation par l’IaC et GitOps ;
+% \item la conteneurisation orchestrée via Kubernetes ;
+% \item l’intégration native de l’observabilité ;
+% \item la sécurité renforcée par le modèle Zero Trust ;
+% \item la standardisation des pipelines CI/CD ;
+% \item la résilience proactive et l’auto-remédiation.
+% \end{itemize}
+% Ces paradigmes, largement éprouvés, constituent le socle des architectures modernes, capables de répondre aux exigences croissantes de performance, de sécurité, de scalabilité et de conformité.
+
 \section{La gestion des secrets}
 
 La gestion des secrets constitue un volet fondamental de la sécurité des systèmes d’information modernes. Elle se définit comme l’ensemble des processus, des outils et des pratiques permettant d’assurer la protection, le stockage sécurisé, la distribution contrôlée et la rotation des informations sensibles nécessaires au fonctionnement des applications et de l’infrastructure. Ces secrets incluent, entre autres, les mots de passe, les clés d’API, les certificats numériques, les jetons d’authentification et les informations de connexion à des services tiers. Leur divulgation accidentelle ou malveillante représente l’une des causes principales de compromission de la sécurité des systèmes et peut avoir des conséquences financières, réglementaires et réputationnelles majeures.

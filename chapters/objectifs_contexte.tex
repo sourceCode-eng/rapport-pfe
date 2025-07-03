@@ -169,6 +169,9 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 	\item \textbf{Maintenabilité} : faciliter l'application des mises à jour logicielles, l'évolution des configurations et l'intégration de nouvelles fonctionnalités, tout en minimisant les interruptions de service.
 
 	\item \textbf{Source unique de vérité (Single Source of Truth)} : centraliser et versionner l'ensemble des configurations, des états d'infrastructure et de la documentation technique dans un référentiel unique, fiable et auditable.
+
+	\item \textbf{Respect du principe DRY (Don’t Repeat Yourself)} : structurer les configurations et les processus de manière modulaire et réutilisable, afin d'éviter les duplications inutiles, de garantir la cohérence et de réduire le risque d'erreurs lors des modifications ou évolutions.
+
 \end{itemize}
 
 \subsection*{Conformité réglementaire et normes applicables}
@@ -198,8 +201,7 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 
 \section{Architecture du projet}
 
-L'architecture globale du projet repose sur une approche moderne, modulaire et automatisée, intégrant les principes de l'Infrastructure as Code, du GitOps, de la conteneurisation et de l'observabilité. Elle a été conçue pour répondre aux exigences de performance, de sécurité, de scalabilité et de maintenabilité.
-
+L'architecture globale du projet repose sur une approche moderne, modulaire et automatisée, intégrant les principes de l'Infrastructure as Code, du GitOps, de la conteneurisation et de l'observabilité. Elle a été conçue pour répondre aux exigences de performance, de sécurité, de scalabilité et de maintenabilité en s'appuyant sur plusieurs principes de l’état de l’art et bonnes pratiques du génie logiciel et de l’ingénierie des plateformes
 % Figure principale d'architecture globale
 \begin{figure}[H]
 	\centering
@@ -214,8 +216,6 @@ L'architecture globale du projet repose sur une approche moderne, modulaire et a
 % - Icônes des principaux outils (Kubernetes logo, Git, Vault, etc.).
 % PROMPT IA :
 % "Detailed architecture diagram showing a virtualized infrastructure with Proxmox hypervisors, Terraform and Ansible automation layers, Kubernetes orchestration, monitoring stack (Grafana, Prometheus, Loki, Tempo), Vault for secrets management, GitLab for CI/CD, pfSense firewall, and internal services like Harbor and Nextcloud. Use labeled boxes and arrows to illustrate flows."
-
-Cette section détaille les principaux composants et leur articulation.
 
 \subsection{Infrastructure virtualisée et provisioning automatisé}
 
@@ -394,7 +394,7 @@ La sécurité périmétrique est confiée à un pare-feu pfSense :
 
 \subsection{Services internes pour le cycle de vie applicatif}
 
-Pour répondre aux besoins opérationnels des équipes, plusieurs services internes ont été déployés :
+Pour répondre aux besoins opérationnels des équipes, plusieurs services internes ont été déployés:
 \begin{itemize}
 	\item \textbf{GitLab} pour la gestion des dépôts, la CI/CD et la revue de code.
 	\item \textbf{Harbor} comme registre privé de conteneurs.
@@ -470,71 +470,3 @@ L’architecture ainsi décrite allie modularité, automatisation et sécurité.
 % - Services internes
 % PROMPT IA :
 % "Comprehensive architecture diagram summarizing provisioning (Terraform, Ansible), orchestration with Kubernetes, observability stack, security with Vault and pfSense, CI/CD with GitLab, and internal services. Use layers and clear labels."
-
-\section{Conclusion}
-
-Ce projet de mise en place d'une infrastructure automatisée et sécurisée pour Oneex a permis de répondre à des enjeux à la fois opérationnels et stratégiques. En s’appuyant sur des outils modernes et des pratiques DevOps éprouvées, il a été possible d’améliorer significativement la fiabilité, la sécurité et la rapidité des déploiements.
-
-L’architecture mise en œuvre offre une base solide et évolutive pour le développement futur des services, tout en assurant une gestion centralisée et sécurisée des configurations et des secrets. Les équipes disposent désormais d’un environnement cohérent, scalable et maintenable, capable de s’adapter aux besoins croissants de l’entreprise.
-
-Ce mémoire a présenté de manière détaillée les différentes étapes de conception et de réalisation de cette solution, ainsi que les résultats obtenus. Il met en lumière l’importance de l’automatisation, de la sécurité et de l’observabilité dans la gestion d’infrastructures modernes, et souligne la nécessité d’adopter une approche proactive en matière de gouvernance technique.
-
-Il convient de rappeler la distinction entre deux approches fondamentales en matière de sécurité :
-\begin{itemize}
-	\item \textbf{La sécurité par design} (\emph{security by design}) consiste à intégrer les mécanismes de protection dès la conception des systèmes, en anticipant les menaces et en appliquant systématiquement des principes comme le moindre privilège, la segmentation et la défense en profondeur.
-	\item \textbf{La sécurité par obscurité} (\emph{security by obscurity}) repose uniquement sur la dissimulation des détails techniques (par exemple, masquer les configurations ou ne pas documenter les processus). Bien qu’elle puisse constituer une mesure complémentaire, elle ne peut en aucun cas se substituer à une politique de sécurité robuste et vérifiable.
-\end{itemize}
-
-Enfin, il est essentiel de continuer à investir dans la formation des équipes, l’évolution des outils et la diffusion des bonnes pratiques pour garantir la pérennité et la sécurité de l’infrastructure.
-
-\subsection{Perspectives d’évolution}
-
-L’initiative \textbf{Infra\_v2} ouvre la voie à plusieurs axes d’amélioration visant à renforcer la performance, la fiabilité et l’efficience des systèmes :
-
-\begin{itemize}
-	\item \textbf{Renforcement de l’automatisation} : intégrer de nouveaux processus automatisés, notamment les tests d’intégration, les vérifications de sécurité et les audits de conformité directement dans les pipelines CI/CD.
-	\item \textbf{Observabilité avancée} : déployer une solution de télémétrie unifiée (par exemple OpenTelemetry) afin de collecter métriques, logs et traces dans un format standardisé, facilitant l’analyse et le diagnostic en temps réel.
-	\item \textbf{Scalabilité horizontale} : permettre l’ajout dynamique de nœuds Kubernetes en fonction de la charge et de l’évolution des besoins applicatifs.
-	\item \textbf{Sécurité renforcée} : généraliser le chiffrement des communications internes, la rotation automatique des secrets et l’application stricte du principe du moindre privilège.
-	\item \textbf{Standardisation des workflows} : promouvoir l’adoption systématique des principes GitOps et l’harmonisation des pratiques de déploiement au sein de toutes les équipes.
-	\item \textbf{Optimisation des coûts} : mettre en place des mécanismes de scaling automatique et d’analyse des consommations pour ajuster les ressources en fonction de l’activité et réduire les coûts d’infrastructure.
-\end{itemize}
-
-Ces perspectives s’inscrivent dans une démarche continue d’amélioration et d’industrialisation des processus techniques.
-
-\subsection{Bilan technique et organisationnel}
-
-L’expérience acquise dans ce projet a permis de mettre en évidence plusieurs points forts et points faibles, tant sur le plan technique qu’organisationnel.
-
-\paragraph{Points forts techniques}
-\begin{itemize}
-	\item Infrastructure déclarative et versionnée, garantissant la reproductibilité et la traçabilité des configurations.
-	\item Automatisation complète du cycle de vie des environnements (provisionnement, configuration, déploiement).
-	\item Haute disponibilité native grâce à l’orchestration Kubernetes et au découplage des composants.
-	\item Possibilité de rollback rapide et maîtrisé en cas d’incident.
-	\item Intégration transparente d’un système centralisé de gestion des secrets.
-\end{itemize}
-
-\paragraph{Points faibles techniques}
-\begin{itemize}
-	\item Courbe d’apprentissage élevée pour la maîtrise et l’exploitation de l’ensemble des outils.
-	\item Complexité accrue nécessitant une veille technologique constante et un maintien de compétences soutenu.
-	\item Dépendance forte à l’intégrité des systèmes d’orchestration (GitOps, API Kubernetes), dont une indisponibilité peut impacter la production.
-\end{itemize}
-
-\paragraph{Points forts organisationnels}
-\begin{itemize}
-	\item Processus standardisés réduisant le risque d’erreurs humaines et améliorant la qualité globale des déploiements.
-	\item Visibilité et transparence des configurations grâce au versionnement et à la centralisation.
-	\item Accélération notable des cycles de livraison et meilleure réactivité des équipes.
-	\item Renforcement de la collaboration inter-équipes via des workflows communs et partagés.
-\end{itemize}
-
-\paragraph{Points faibles organisationnels}
-\begin{itemize}
-	\item Nécessité d’une conduite du changement approfondie pour faire adopter les nouveaux outils et méthodologies.
-	\item Risque de silos de compétences si la montée en compétence n’est pas homogène.
-	\item Temps initial d’implémentation important pour structurer et standardiser l’ensemble des pipelines et des pratiques.
-\end{itemize}
-
-En synthèse, cette démarche constitue un socle technologique solide et évolutif, posant les bases d’un système plus résilient et sécurisé. Elle ouvre de nombreuses opportunités d’optimisation et d’innovation à moyen terme.
