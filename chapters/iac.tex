@@ -1,9 +1,12 @@
 \section{Introduction}
 
-La mise en œuvre d’une infrastructure moderne et résiliente repose sur l’adoption d’approches déclaratives et automatisées, regroupées sous l’appellation \textit{Infrastructure as Code} (IaC). Ce paradigme vise à formaliser la définition et la gestion des ressources matérielles et virtuelles par des fichiers de configuration versionnés. L’objectif est de garantir la reproductibilité, la rapidité et la fiabilité des environnements, tout en assurant la maîtrise des coûts et la conformité aux standards de sécurité.
+\subsection{Introduction}
 
-Ce chapitre décrit les outils et méthodes utilisés pour concevoir et automatiser l’infrastructure du projet, depuis la virtualisation des ressources jusqu’à la configuration des systèmes et la sécurisation des informations sensibles.
+La conception et la mise en œuvre d’une infrastructure moderne reposent aujourd’hui sur l’automatisation complète des processus de création, de configuration et de sécurisation des environnements. Cette approche permet de garantir la cohérence, la traçabilité et la reproductibilité des déploiements tout en réduisant la complexité opérationnelle.
 
+Ce chapitre présente la démarche adoptée pour concevoir et automatiser l’infrastructure du projet, en s’appuyant sur les principes de l’Infrastructure as Code et sur des outils spécialisés. Il expose dans un premier temps les technologies sélectionnées, telles que Proxmox, Terraform, Cloud-init, Ansible, Vault et Consul, qui constituent les fondations techniques de l’architecture. La suite du chapitre décrit la mise en œuvre progressive des différents composants : la gestion des secrets, la création automatisée des machines virtuelles, la préparation des inventaires et la configuration des services.
+
+Enfin, une attention particulière est portée aux aspects réseau et à la sécurisation des flux, avec l’intégration de pare-feu, de mécanismes d’équilibrage de charge et de politiques de segmentation. Cette démarche globale vise à démontrer qu’il est possible de déployer une infrastructure complète et sécurisée de manière déclarative, tout en facilitant son évolutivité et sa maintenance.
 \section{Les outils utilisés pour l’infrastructure as code}
 
 \subsection{Proxmox}
@@ -22,7 +25,7 @@ D’un point de vue technique, Proxmox repose sur plusieurs composantes clés :
 	\item \textbf{Sauvegardes et snapshots} : gestion de la résilience.
 \end{itemize}
 
-\textbf{Exemple d’utilisation} : déploiement d’un cluster de trois nœuds Proxmox avec stockage Ceph pour héberger des machines virtuelles critiques en haute disponibilité.
+\textbf{Cas d’utilisation} : déploiement d’un cluster de trois nœuds Proxmox avec stockage Ceph pour héberger des machines virtuelles critiques en haute disponibilité.
 
 \subsection{Terraform}
 
@@ -37,7 +40,7 @@ Terraform répond à plusieurs enjeux : accélération du provisioning, fiabilis
 	\item \textbf{Modules et workspaces} : factorisation et isolation.
 \end{itemize}
 
-\textbf{Exemple d’utilisation} : provisionner un cluster Kubernetes sur Proxmox avec un réseau et des volumes configurés.
+\textbf{Cas d’utilisation} : provisionner un cluster Kubernetes sur Proxmox avec un réseau et des volumes configurés.
 
 \subsection{Cloud-init}
 
@@ -50,7 +53,7 @@ Cloud-init est un outil d’initialisation automatique des machines virtuelles l
 
 Cloud-init contribue à standardiser les environnements et réduire les délais de mise en service.
 
-\textbf{Exemple d’utilisation} : automatiser l’installation de Docker et la configuration réseau d’une instance Proxmox.
+\textbf{Cas d’utilisation} : automatiser l’installation de Docker et la configuration réseau d’une instance Proxmox.
 
 \subsection{Ansible}
 
@@ -62,36 +65,121 @@ Ansible est un outil open source d’automatisation et de configuration des syst
 	\item Assurer la traçabilité des opérations.
 \end{itemize}
 
-\textbf{Exemple d’utilisation} : configurer des serveurs applicatifs, installer les dépendances et sécuriser les accès.
+\textbf{Cas d’utilisation} : configurer des serveurs applicatifs, installer les dépendances et sécuriser les accès.
 
 \subsection{Vault}
 
-Vault est un gestionnaire de secrets développé par HashiCorp. Il centralise le stockage, la rotation et l’audit des informations sensibles. Les fonctionnalités principales incluent :
+Vault est un gestionnaire de secrets développé par HashiCorp, conçu pour sécuriser, stocker et contrôler l’accès aux informations sensibles telles que les identifiants, les clés d’API ou les certificats. Il centralise le cycle de vie des secrets au sein d’un système unique et auditable, tout en offrant des capacités de distribution dynamique et de rotation automatique.
+
+\textbf{Principales fonctionnalités} :
 \begin{itemize}
-	\item Chiffrement au repos et en transit.
-	\item Génération dynamique de credentials.
-	\item Contrôle d’accès fin (ACL).
-	\item Rotation automatique des secrets.
+	\item Chiffrement systématique des données au repos et en transit.
+	\item Génération dynamique de credentials à durée de vie limitée.
+	\item Contrôle d’accès fin grâce à des politiques (ACL) granulaires.
+	\item Rotation périodique et automatique des secrets.
+	\item Audit complet des opérations et des accès.
 \end{itemize}
-a ajouter les concepts de base de vault
-le seal et unseal , le design de sécurité, les backends de stockage, les policies, les secrets engines, les auth methods
-la distribution de clés seal pour un poweroff switch au pire des cas
 
-les bonnes pratiques de sécurité , et mentionner que s'il est mal utilisé vault peut devenir un point de défaillance
+\paragraph{Concepts de base}
 
-\textbf{Exemple d’utilisation} : stockage sécurisé des tokens Kubernetes et des mots de passe base de données.
+Vault repose sur plusieurs concepts fondamentaux :
 
+\begin{itemize}
+	\item \textbf{Seal et Unseal} : lors de son démarrage, Vault est scellé (sealed). Dans cet état, aucune donnée ne peut être lue ou écrite. Le processus d’unseal consiste à déverrouiller Vault en fournissant une combinaison de clés de déchiffrement (unseal keys) générées lors de l’initialisation. Ce mécanisme s’appuie sur l’algorithme de \emph{Shamir’s Secret Sharing}, qui divise la clé maîtresse en fragments distribués à différents opérateurs. Cela garantit qu’aucun individu ne détient seul la capacité de déverrouiller le système. La nécessité d’unseal manuellement après un redémarrage contribue à limiter l’exposition en cas de compromission physique ou de coupure d’alimentation.
+	\item \textbf{Backends de stockage} : Vault peut s’appuyer sur différents backends de stockage (par exemple Consul, fichiers locaux, Amazon S3) pour persister ses données chiffrées. Le choix du backend influence les performances, la disponibilité et la tolérance aux pannes.
+	\item \textbf{Secrets Engines} : ce sont les composants responsables de la gestion des secrets. Certains engines fournissent du stockage statique (par exemple les clés stockées manuellement), d’autres génèrent des secrets dynamiques à la demande (par exemple des credentials temporaires pour une base de données).
+	\item \textbf{Auth Methods} : ces méthodes définissent comment les utilisateurs ou applications s’authentifient auprès de Vault. Il peut s’agir de tokens statiques, d’authentification AppRole, de certificats TLS ou d’intégrations avec Kubernetes.
+	\item \textbf{Policies} : les politiques d’accès contrôlent avec précision ce que chaque entité est autorisée à faire. Elles définissent les droits de lecture, d’écriture ou de suppression sur des chemins spécifiques.
+\end{itemize}
+
+\paragraph{Design de sécurité}
+
+Vault adopte une approche de sécurité par défaut :
+\begin{itemize}
+	\item Toutes les données sont chiffrées avec une clé maîtresse qui n’est jamais stockée en clair.
+	\item Chaque requête est soumise à une évaluation des politiques d’accès.
+	\item Les secrets peuvent être versionnés et révoqués à tout moment.
+	\item Les logs d’audit permettent de tracer finement chaque opération.
+\end{itemize}
+Ce modèle de sécurité réduit le risque d’exposition accidentelle et renforce la conformité aux exigences réglementaires.
+
+\paragraph{Exemple d’utilisation}
+
+Vault est particulièrement adapté pour :
+\begin{itemize}
+	\item Stocker et distribuer les tokens Kubernetes nécessaires à l’accès au cluster.
+	\item Générer des credentials temporaires pour une base de données PostgreSQL.
+	\item Chiffrer les certificats TLS utilisés par des applications.
+	\item Mettre en place un PKI interne pour l’émission automatique de certificats.
+\end{itemize}
+
+\paragraph{Bonnes pratiques de sécurité}
+
+Pour garantir un niveau de protection élevé, il est recommandé de :
+\begin{itemize}
+	\item Distribuer les clés de scellage (unseal keys) à plusieurs opérateurs de confiance afin de prévenir tout point de défaillance individuel.
+	\item Configurer une rotation périodique des clés maîtresses.
+	\item Limiter strictement l’accès aux méthodes d’authentification les plus sensibles.
+	\item Activer et surveiller systématiquement les logs d’audit.
+	\item S’assurer que le backend de stockage est hautement disponible et correctement sécurisé.
+\end{itemize}
+
+\paragraph{Limitations et vigilance}
+
+Si Vault n’est pas configuré de manière rigoureuse, il peut devenir un point unique de défaillance et un vecteur d’attaque majeur. La compromission d’un nœud ou la perte des clés de déchiffrement peut entraîner une indisponibilité prolongée, voire la perte irrémédiable de certains secrets. Il est donc essentiel d’envisager des scénarios de récupération, tels que la sauvegarde chiffrée des données et la documentation des procédures d’unseal.
 \subsection{Consul}
 
-Consul complète Vault en apportant :
+Consul est une solution de service discovery, de configuration distribuée et de service mesh développée par HashiCorp. Elle permet de centraliser la gestion dynamique des services et de renforcer la cohérence des environnements déployés. Consul apporte plusieurs fonctionnalités complémentaires à Vault et s’intègre naturellement dans les architectures automatisées.
+
+\paragraph{Principales fonctionnalités}
+
+Les principales capacités de Consul sont les suivantes :
 \begin{itemize}
-	\item La découverte automatique des services.
-	\item La supervision de leur état.
-	\item Le stockage clé-valeur des configurations.
-	\item Le service mesh sécurisé.
+	\item \textbf{Découverte automatique des services} : Consul maintient un catalogue des services enregistrés, avec leurs adresses et ports associés, facilitant leur détection et leur utilisation par d’autres composants.
+	\item \textbf{Supervision de l’état des services} : le système exécute des contrôles de santé (health checks) qui permettent de vérifier en continu la disponibilité et le bon fonctionnement des instances.
+	\item \textbf{Stockage clé-valeur} : Consul fournit un KV store distribué, utilisé pour stocker des paramètres de configuration ou des informations dynamiques accessibles par les applications.
+	\item \textbf{Service mesh sécurisé} : grâce à l’intégration avec Envoy, Consul offre un plan de contrôle permettant de chiffrer le trafic inter-services, d’implémenter des politiques d’accès et de réaliser du routage avancé.
 \end{itemize}
 
-\textbf{Exemple d’utilisation} : synchroniser dynamiquement les configurations applicatives avec Consul Template.
+\paragraph{Architecture et composants}
+
+Consul repose sur une architecture distribuée, composée de plusieurs éléments :
+\begin{itemize}
+	\item \textbf{Agents} : chaque nœud du cluster exécute un agent Consul, qui peut être configuré en mode client ou serveur.
+	\item \textbf{Serveurs} : les serveurs Consul assurent la cohérence des données à l’aide d’un consensus basé sur le protocole Raft.
+	\item \textbf{Catalogue de services} : une base de données en temps réel contenant les informations sur tous les services enregistrés et leur état de santé.
+	\item \textbf{KV Store} : un espace de stockage distribué, utilisé pour partager des données de configuration.
+	\item \textbf{Connect} : le composant de service mesh qui gère l’émission de certificats TLS, le chiffrement du trafic et le contrôle des autorisations.
+\end{itemize}
+
+\paragraph{Mécanismes et cas d’usage}
+
+Consul propose plusieurs mécanismes qui répondent à des besoins spécifiques :
+
+\begin{itemize}
+	\item \emph{Service discovery} : lorsqu’un service s’enregistre auprès de Consul, il devient automatiquement visible pour les clients qui peuvent interroger l’API DNS ou HTTP afin de récupérer ses coordonnées.
+	\item \emph{Health checks} : chaque enregistrement de service peut être associé à un ou plusieurs tests de disponibilité. Si un service échoue aux contrôles, il est retiré du catalogue actif.
+	\item \emph{KV Store} : les applications peuvent récupérer dynamiquement des paramètres ou configurations partagées (par exemple des variables d’environnement ou des endpoints).
+	\item \emph{Consul Template} : cet outil surveille le KV store et les catalogues, puis génère automatiquement des fichiers de configuration lorsque des changements surviennent.
+	\item \emph{Service mesh} : Consul Connect émet des certificats mTLS, configure les proxys Envoy et applique des politiques d’accès qui définissent quels services sont autorisés à communiquer.
+\end{itemize}
+
+\textbf{Exemple d’utilisation} : synchroniser dynamiquement les configurations applicatives avec Consul Template, mettre à jour les fichiers de configuration NGINX lorsque de nouveaux services sont enregistrés, ou établir un canal de communication chiffré entre des microservices.
+
+\paragraph{Bonnes pratiques de sécurité}
+
+Pour tirer parti des fonctionnalités de Consul tout en maintenant un niveau élevé de sécurité, il est recommandé de :
+\begin{itemize}
+	\item Activer le chiffrement TLS pour toutes les communications inter-nœuds.
+	\item Protéger l’interface HTTP API par une ACL stricte.
+	\item Mettre en place des politiques de token management et de rotation régulière des secrets.
+	\item Limiter l’accès aux agents et serveurs Consul au sein d’un réseau privé.
+	\item Activer l’audit des requêtes et opérations critiques.
+\end{itemize}
+
+\paragraph{Limitations et vigilance}
+
+De meme que vault , malgré sa richesse fonctionnelle, Consul peut devenir un point unique de coordination : une indisponibilité du cluster impacte la découverte des services et la cohérence des configurations. De plus, une configuration incorrecte des ACL ou des intentions (politiques de service mesh) peut entraîner des fuites d’informations ou des interruptions de service. Il est donc essentiel de soigner le dimensionnement du cluster, de planifier des sauvegardes régulières et de tester les scénarios de bascule.
 
 \section{Mise en place des concepts de l'infrastructure en code}
 
@@ -115,7 +203,7 @@ Ces templates incluent :
 \begin{itemize}
 	\item Le système d'exploitation minimal (par exemple Debian ou Ubuntu LTS).
 	\item Les mises à jour de sécurité appliquées.
-	\item Les dépendances de base (cloud-init, agents QEMU).
+	\item Les dépendances de base (cloud-init, agents QEMU, agents SPICE et agents ).
 	\item La configuration des clés SSH nécessaires à l'automatisation.
 \end{itemize}
 
@@ -254,13 +342,30 @@ En combinant ces composants, le réseau Kubernetes offre un modèle cohérent, f
 
 \subsection{MetalLB}
 
-MetalLB est un Load Balancer pour Kubernetes on-premise :
+MetalLB est une solution de load balancing spécialement conçue pour les clusters Kubernetes déployés en environnement on-premise. Contrairement aux plateformes cloud qui fournissent des services d’équilibrage de charge natifs, les installations locales de Kubernetes ne disposent pas par défaut d’un mécanisme équivalent pour l’attribution d’adresses IP publiques et la distribution du trafic.
+
+\paragraph{Principales fonctionnalités}
+
+MetalLB apporte plusieurs fonctionnalités essentielles :
 \begin{itemize}
-	\item Attribution d’adresses IP virtuelles.
-	\item Distribution du trafic vers les pods.
+	\item \textbf{Attribution d’adresses IP virtuelles} : il permet de réserver et d’annoncer des plages d’adresses IP utilisables pour exposer les services en mode \emph{LoadBalancer}.
+	\item \textbf{Distribution du trafic réseau} : il redirige les requêtes entrantes vers les pods cibles, en fonction de la configuration et de l’algorithme de balancing choisi.
+	\item \textbf{Compatibilité BGP et L2} : MetalLB propose deux modes de fonctionnement : le mode Layer 2, qui utilise ARP ou NDP pour annoncer l’adresse IP sur le réseau local, et le mode BGP, qui permet d’établir des sessions de routage dynamique avec les routeurs de l’infrastructure.
 \end{itemize}
 
-\textbf{Exemple d’utilisation} : exposer des services applicatifs Kubernetes en haute disponibilité.
+\paragraph{Intérêt dans un contexte on-premise}
+
+En environnement on-premise, Kubernetes présente une limite importante : le type de service \emph{LoadBalancer} est inutilisable par défaut, car il dépend d’un fournisseur d’infrastructure qui alloue et configure automatiquement l’équilibrage de charge. MetalLB comble cette lacune en reproduisant ce comportement de manière logicielle et en s’intégrant nativement avec l’API Kubernetes. Il permet ainsi d’exposer des services applicatifs sans recourir à des appliances réseau propriétaires ni modifier profondément l’architecture existante.
+
+\paragraph{Cas d’utilisation}
+
+MetalLB est couramment utilisé pour :
+\begin{itemize}
+	\item Exposer en haute disponibilité des applications web, API ou services internes hébergés dans Kubernetes.
+	\item Fournir des adresses IP stables et connues pour les clients et systèmes externes.
+	\item Automatiser la gestion des flux réseau entrants tout en conservant un contrôle fin sur les plages d’adresses attribuées.
+\end{itemize}
+
 \section{Mise en place des services de réseau}
 
 Cette partie décrit la mise en œuvre et l’automatisation des services essentiels au bon fonctionnement du réseau et à la sécurisation des flux. Ces services incluent le pare-feu, le reverse proxy ainsi que la gestion centralisée des secrets.
