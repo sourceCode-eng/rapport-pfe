@@ -1,52 +1,180 @@
 \section{Introduction}
 
-Dans un environnement où les systèmes d'information deviennent de plus en plus complexes et interconnectés, la maîtrise de l'infrastructure et des processus de déploiement est un enjeu majeur. Ce mémoire s'inscrit dans cette dynamique, avec pour objectif principal de concevoir et mettre en place une solution automatisée et sécurisée permettant de déployer, superviser et maintenir l'infrastructure technique de l'entreprise Oneex.
+Dans un environnement où les systèmes d'information deviennent de plus en plus complexes et interconnectés, la gestion manuelle des infrastructures techniques pose de nombreux défis. Les entreprises doivent faire face à des exigences croissantes en matière de sécurité, de disponibilité et de performance, tout en cherchant à optimiser leurs coûts et à réduire les délais de mise en production. Cette évolution rend la gestion des infrastructures non seulement complexe, mais parfois inefficace, voire impossible à grande échelle.
 
-Le projet vise à répondre aux besoins opérationnels croissants, à réduire les erreurs manuelles et à garantir un haut niveau de qualité de service, tout en respectant les contraintes de sécurité et de conformité réglementaire.
+Dans ce contexte, l'automatisation des processus d'infrastructure et l'adoption de solutions DevOps sont devenues des priorités stratégiques. La maîtrise de l'infrastructure et des processus de déploiement passe alors d'un luxe à une nécessité afin de soutenir rapidement et efficacement la croissance continue des besoins de l'entreprise.
 
-\section{Cas et exemples}
+Cependant, automatiser le déploiement des services ne suffit plus. Il est essentiel de garantir à tout moment leur bon fonctionnement grâce à des mécanismes de supervision et de contrôle rigoureux. La mise en place de solutions de \emph{monitoring}, de \emph{logging} et de \emph{tracing} permet de disposer d'une visibilité complète sur l'état des systèmes, d'anticiper les incidents et de réagir rapidement en cas d'anomalie. Ces dispositifs contribuent également à renforcer la traçabilité et à répondre aux impératifs de conformité réglementaire.
 
-Plusieurs situations rencontrées chez Oneex ont mis en évidence la nécessité d'une solution d'automatisation et de gestion centralisée de l'infrastructure. Parmi les cas récurrents :
+En parallèle, le renforcement de la cybersécurité constitue un enjeu majeur. La multiplication des points d'entrée et l'interconnexion croissante des services exposent l'infrastructure à de nouvelles menaces qu'il convient de prévenir et de détecter de manière proactive.
 
+Ce mémoire s'inscrit dans cette dynamique, avec pour objectif principal de concevoir et mettre en place une solution automatisée, sécurisée et résiliente permettant de déployer, superviser et maintenir l'infrastructure technique de l'entreprise Oneex. Le projet vise à répondre aux besoins opérationnels croissants, à réduire les erreurs manuelles et à garantir un haut niveau de qualité de service et de transparence, tout en respectant les contraintes strictes de sécurité et de conformité réglementaire.
+
+\section{Scénarios de référence et hypothèses de travail}
+
+Dans le cadre de l'étude préalable à la conception d'une solution d'automatisation et de sécurisation des infrastructures, il est pertinent d'envisager un ensemble de scénarios représentatifs susceptibles de se produire dans des environnements techniques comparables. Ces hypothèses permettent d'illustrer les enjeux et de définir les objectifs fonctionnels et opérationnels du projet.
+
+\subsection{Divergences entre environnements}
+
+Il est possible que la configuration manuelle des serveurs, opérée par plusieurs équipes successives, conduise progressivement à des écarts significatifs entre les environnements de développement, de test et de production. Les différences pourraient concerner notamment :
 \begin{itemize}
-	\item \textbf{Problèmes de cohérence des environnements} : la configuration manuelle des serveurs engendrait des divergences entre les environnements de développement, de test et de production.
-	\item \textbf{Difficultés de gestion des secrets} : le stockage et le partage des identifiants, clés d'API et certificats étaient réalisés de façon disparate, augmentant les risques de fuite.
-	\item \textbf{Manque de visibilité} : l'absence d'outils de supervision unifiés complexifiait le suivi de l'état des services et la détection des incidents.
-	\item \textbf{Temps de déploiement élevé} : chaque mise en place d'une infrastructure nécessitait plusieurs jours de préparation et de validation.
+	\item Les versions des systèmes d'exploitation, des librairies et des dépendances logicielles.
+	\item Les paramètres réseau tels que l'ouverture de ports ou l'attribution d'adresses IP.
+	\item La définition des règles de sécurité (droits d'accès, politiques de pare-feu).
 \end{itemize}
 
-Ces constats ont motivé la définition d'un projet structuré et ambitieux, articulé autour de l'automatisation, de la sécurité et de l'observabilité.
+Dans un tel scénario, ces divergences pourraient générer des dysfonctionnements applicatifs lors des bascules d'environnement et accroître la difficulté de reproduire les incidents constatés.
+
+\subsection{Gestion hétérogène des secrets}
+
+Un autre scénario plausible concerne l'absence de processus unifié de gestion des informations sensibles (identifiants, clés d'API, certificats). Il est envisageable que ces éléments soient stockés et partagés de façon informelle, par exemple :
+\begin{itemize}
+	\item Sous forme de fichiers non chiffrés sur les postes individuels.
+	\item Par échange de courriels non sécurisés.
+	\item Par messagerie instantanée, sans traçabilité ni archivage structuré.
+\end{itemize}
+
+Une telle situation serait susceptible d'exposer les infrastructures à des risques accrus de fuite d'informations critiques, ainsi qu'à des difficultés opérationnelles lors des renouvellements ou révocations des secrets.
+
+\subsection{Déficit d'observabilité}
+
+Il est également envisageable qu'une organisation n'ait pas mis en place de dispositif unifié de supervision et de journalisation. Dans ce cas, plusieurs limitations pourraient apparaître :
+\begin{itemize}
+	\item L'absence de collecte systématique des métriques de performance.
+	\item La dispersion des journaux applicatifs sur des serveurs multiples, sans agrégation centralisée.
+	\item Le manque de mécanismes de corrélation des événements entre composants.
+\end{itemize}
+
+Un tel déficit d'observabilité réduirait la capacité à détecter précocement les anomalies, à diagnostiquer efficacement les causes racines et à mesurer le respect des engagements de qualité de service.
+
+\subsection{Processus de déploiement manuel et long}
+
+Dans un scénario reposant sur un déploiement entièrement manuel, la création d'une infrastructure nouvelle pourrait nécessiter plusieurs jours d'opérations successives :
+\begin{enumerate}
+	\item Préparation et allocation des ressources matérielles ou virtuelles.
+	\item Installation des systèmes d'exploitation et des dépendances logicielles.
+	\item Paramétrage des droits d'accès et des configurations de sécurité.
+	\item Vérification manuelle de la conformité et du bon fonctionnement des services.
+\end{enumerate}
+
+Un tel processus induirait des délais importants, une faible reproductibilité et une exposition accrue aux erreurs humaines.
+
+\subsection{Risques opérationnels associés}
+
+Ces hypothèses convergent vers un ensemble de risques potentiels, parmi lesquels :
+\begin{itemize}
+	\item L'allongement des délais de livraison et la perte d'agilité opérationnelle.
+	\item L'augmentation de la probabilité d'erreurs de configuration.
+	\item La difficulté de garantir la sécurité des environnements et la confidentialité des données sensibles.
+	\item L'impossibilité de disposer d'une vision globale et en temps réel de l'état de l'infrastructure.
+\end{itemize}
+
+Ces risques soulignent l'intérêt d'intégrer, dès la conception de la solution, des mécanismes de \emph{monitoring}, de \emph{logging} et de \emph{tracing}, afin de renforcer la transparence et la capacité de réaction face aux incidents.
+
+\subsection{Justification des orientations retenues}
+
+L'analyse de ces scénarios de référence et des risques associés conduit à considérer comme prioritaire la mise en place d'une démarche structurée autour des axes suivants :
+\begin{itemize}
+	\item L'automatisation des processus de déploiement et de configuration, afin de réduire les délais et d'améliorer la cohérence.
+	\item La centralisation et la sécurisation de la gestion des secrets et des accès, pour prévenir les fuites d'informations sensibles.
+	\item Lorsque cela est possible, l'utilisation de mécanismes de génération et de rotation automatique de secrets temporaires (par exemple des credentials ou des clés TLS via des solutions de type \emph{Vault}), afin de limiter l'exposition prolongée des informations d'authentification.
+	\item La mise en place d'une gestion stricte des droits d'accès, fondée sur le principe du moindre privilège et l'application des bonnes pratiques du \emph{Zero Trust}, pour réduire la surface d'attaque et contrôler finement les autorisations.
+	\item L'intégration d'outils d'observabilité pour assurer un suivi continu et une traçabilité complète des opérations.
+	\item Le renforcement des contrôles de sécurité et la conformité avec les normes en vigueur.
+\end{itemize}
+
+Ces orientations constituent le socle sur lequel s'appuie le projet présenté dans ce mémoire.
 
 \section{Les besoins fonctionnels}
 
-Les besoins fonctionnels définissent les fonctionnalités attendues de la solution mise en œuvre. Ils se déclinent comme suit :
+Les besoins fonctionnels décrivent l'ensemble des fonctionnalités attendues de la solution envisagée, ainsi que les objectifs opérationnels qui en découlent. Ils visent à garantir la cohérence, la sécurité, la traçabilité et la résilience de l'infrastructure et des applications. Ces besoins peuvent être regroupés autour de plusieurs axes principaux :
+
+\subsection*{Provisioning et configuration des ressources}
 
 \begin{itemize}
-	\item \textbf{Automatisation du provisioning} : création et configuration des machines virtuelles via des outils d'Infrastructure as Code (Terraform).
-	\item \textbf{Gestion centralisée des configurations} : mise en place d'Ansible pour orchestrer l'installation des paquets et le paramétrage des systèmes.
-	\item \textbf{Déploiement applicatif automatisé} : utilisation d'un processus GitOps avec Argo CD pour garantir la cohérence des déploiements.
-	\item \textbf{Supervision et alertes} : intégration de Prometheus et Grafana pour la collecte et l'affichage des métriques.
-	\item \textbf{Gestion sécurisée des secrets} : déploiement de HashiCorp Vault afin de stocker et distribuer les informations sensibles.
-	\item \textbf{Mise en place d'environnements distincts} : séparation claire entre les environnements de test, de pré-production et de production.
-	\item \textbf{Audits automatiques de conformité} : génération régulière de rapports d'audit afin de vérifier l'intégrité des configurations et la conformité aux standards de sécurité.
-	\item \textbf{Détection précoce des erreurs} : mise en place de mécanismes permettant d'identifier rapidement les anomalies et les dysfonctionnements avant leur impact en production.
-	\item \textbf{Correction automatique des erreurs et des crashs} : déploiement de processus d'auto-remédiation permettant de restaurer les services en cas d'incident.
+	\item \textbf{Automatisation du provisioning des ressources} : permettre la création, la configuration et la suppression des composants d'infrastructure de manière déclarative et reproductible, afin de réduire les délais et d'éviter les interventions manuelles.
+
+	\item \textbf{Gestion centralisée et cohérente des configurations} : mettre en œuvre un mécanisme d'orchestration permettant d'installer les dépendances logicielles, d'appliquer les paramétrages requis et de maintenir l'uniformité entre les différents environnements.
 \end{itemize}
+
+\subsection*{Déploiement et mise à jour des applications}
+
+\begin{itemize}
+	\item \textbf{Déploiement applicatif automatisé et contrôlé} : intégrer un processus déclenchant les déploiements depuis des référentiels versionnés et assurant la synchronisation permanente entre le code source et les environnements cibles.
+\end{itemize}
+
+\subsection*{Supervision et observabilité}
+
+\begin{itemize}
+	\item \textbf{Supervision proactive et alertes en temps réel} : disposer d'un système de surveillance permettant de collecter les métriques de performance, de visualiser l'état des services et de générer des alertes en cas d'incident.
+
+	\item \textbf{Détection précoce des anomalies} : mettre en place des mécanismes d'analyse continue et d'identification des écarts de comportement afin d'anticiper les incidents et de réduire leur impact.
+
+	\item \textbf{Journalisation centralisée} : assurer la collecte, le stockage et la consultation unifiée des journaux système et applicatifs.
+\end{itemize}
+
+\subsection*{Sécurité et gestion des accès}
+
+\begin{itemize}
+	\item \textbf{Gestion sécurisée et dynamique des secrets} : intégrer un système centralisé de stockage, de chiffrement et de distribution des informations sensibles, avec des mécanismes de rotation automatique et de durée de vie limitée des secrets lorsque cela est possible.
+
+	\item \textbf{Séparation stricte des environnements} : organiser l'infrastructure en environnements distincts (développement, test, pré-production, production) afin de garantir leur isolation et de limiter les risques de contamination croisée.
+\end{itemize}
+
+\subsection*{Résilience et continuité de service}
+
+\begin{itemize}
+	\item \textbf{Correction automatique des incidents et des défaillances} : prévoir des processus d'auto-remédiation capables de restaurer l'état nominal des services, par exemple par le redémarrage ou le reprovisionnement automatisé des ressources en cas de panne.
+\end{itemize}
+
+\subsection*{Interface de pilotage}
+
+\begin{itemize}
+	\item \textbf{Interface unifiée d'administration} : proposer une interface utilisateur et/ou une API permettant d'interagir avec la plateforme de manière sécurisée et traçable.
+\end{itemize}
+
+Ces besoins fonctionnels constituent la base de la solution à concevoir, en intégrant les outils et les pratiques DevOps adaptés pour répondre aux enjeux opérationnels et réglementaires de l'entreprise.
 
 \section{Les besoins non fonctionnels}
 
-Les besoins non fonctionnels définissent les critères de qualité que la solution doit respecter :
+Les besoins non fonctionnels définissent les critères de qualité, de performance, de sécurité et de conformité que la solution doit respecter de manière transversale. Ces exigences sont essentielles pour garantir la fiabilité, la pérennité et la valeur ajoutée de la plateforme. Elles peuvent être regroupées selon plusieurs dimensions complémentaires.
+
+\subsection*{Qualité de service et performance}
 
 \begin{itemize}
-	\item \textbf{Haute disponibilité} : assurer une disponibilité supérieure à 99,9\% des services critiques.
-	\item \textbf{Sécurité renforcée} : garantir la protection des données sensibles et la conformité aux standards de sécurité.
-	\item \textbf{Scalabilité} : permettre l'évolution de l'infrastructure en fonction de la croissance de l'activité et de l'augmentation du nombre de clients.
-	\item \textbf{Maintenabilité} : faciliter les mises à jour, les correctifs et l'évolution des configurations.
-	\item \textbf{Traçabilité et auditabilité} : conserver l'historique des changements et des déploiements.
-	\item \textbf{Conformité réglementaire} : respecter les normes en vigueur (RGPD, ISO 27001, etc.) et les exigences spécifiques du secteur d'activité.
-	\item \textbf{Performance} : garantir des temps de réponse optimaux pour les services critiques, même en période de forte charge.
-	\item \textbf{Réduction du temps de mise en production} : diminuer les délais de déploiement des nouvelles fonctionnalités.
-	\item \textbf{Source unique de vérité (Single Source of Truth)} : centraliser et versionner l’ensemble des configurations, de la documentation et des états d’infrastructure dans un référentiel unique et fiable.
+	\item \textbf{Haute disponibilité} : garantir un taux de disponibilité supérieur à 99,9\,\% pour les services critiques, en prévoyant des mécanismes de redondance, de bascule automatique et de tolérance aux pannes.
+
+	\item \textbf{Performance} : assurer des temps de réponse optimaux et constants, y compris en période de forte charge, afin de préserver la qualité d'expérience des utilisateurs et le respect des engagements contractuels (SLA).
+
+	\item \textbf{Scalabilité} : permettre une montée en charge fluide et progressive de l'infrastructure, que ce soit en termes de volume de données, de nombre d'utilisateurs ou de capacités de traitement.
+
+	\item \textbf{Réduction du temps de mise en production} : optimiser les processus afin de diminuer significativement les délais nécessaires au déploiement de nouvelles fonctionnalités ou de correctifs.
+\end{itemize}
+
+\subsection*{Sécurité et protection des données}
+
+\begin{itemize}
+	\item \textbf{Sécurité renforcée} : garantir la protection des données sensibles, la confidentialité des échanges et la résilience face aux attaques, en appliquant les principes de \emph{security by design} et en intégrant les contrôles de sécurité dès la conception.
+
+	\item \textbf{Gestion stricte des droits d'accès} : appliquer le principe du moindre privilège, segmenter les privilèges et mettre en œuvre des mécanismes de contrôle d'accès granulaires et auditables, conformément aux approches de type Zero Trust.
+
+	\item \textbf{Traçabilité et auditabilité} : conserver un historique détaillé, horodaté et inviolable de toutes les opérations critiques, des changements de configuration et des actions administratives.
+
+	\item \textbf{Audits automatiques de conformité et d'intégrité} : générer périodiquement des rapports permettant de vérifier la cohérence des configurations, la robustesse des mécanismes de sécurité et le respect des politiques internes et réglementaires.
+\end{itemize}
+
+\subsection*{Évolutivité et maintenabilité}
+
+\begin{itemize}
+	\item \textbf{Maintenabilité} : faciliter l'application des mises à jour logicielles, l'évolution des configurations et l'intégration de nouvelles fonctionnalités, tout en minimisant les interruptions de service.
+
+	\item \textbf{Source unique de vérité (Single Source of Truth)} : centraliser et versionner l'ensemble des configurations, des états d'infrastructure et de la documentation technique dans un référentiel unique, fiable et auditable.
+\end{itemize}
+
+\subsection*{Conformité réglementaire et normes applicables}
+
+\begin{itemize}
+	\item \textbf{Conformité réglementaire} : respecter les obligations légales et les standards sectoriels en vigueur (RGPD, ISO 27001, NIS2, etc.), ainsi que les exigences spécifiques à l'activité et aux données traitées.
 \end{itemize}
 
 % \section{Le deroulement du projet}
@@ -148,148 +276,6 @@ GitLab CI a été configuré pour automatiser les étapes de build, test et dép
 	{Mise en place des services de production pour les clients}
 
 Enfin, les environnements de production ont été finalisés et validés en respectant les exigences de performance et de sécurité. La mise en service a inclus la configuration des sauvegardes, la documentation des procédures et la formation des utilisateurs.
-\section{Etude de cas et exemples}
-\subsection{Cas d’Usage Concrets}
-
-\paragraph{Exemple 1 -- Création d’un environnement complet}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item Création manuelle de trois machines virtuelles via Proxmox.
-	\item Configuration réseau effectuée à la main.
-	\item Copie et injection d’une clé SSH via \texttt{ssh-copy-id}.
-	\item Lancement manuel d’un script d’installation.
-	\item En cas d’erreur, reprise complète du processus.
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item \texttt{terraform apply} crée automatiquement les machines virtuelles.
-	\item Les clés et variables sensibles sont récupérées via Vault.
-	\item Ansible configure l’ensemble : utilisateurs, sécurité, Kubernetes.
-	\item Le déploiement est garanti identique à chaque exécution.
-\end{itemize}
-
-\paragraph{Exemple 2 -- Ajout d’une nouvelle application}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item Récupération du code sur une machine virtuelle.
-	\item Installation manuelle des dépendances.
-	\item Configuration du reverse proxy en éditant un fichier Nginx.
-	\item Gestion manuelle des secrets.
-	\item Vérification manuelle du démarrage du service.
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item Définition d’un manifest Kubernetes ou d’un chart Helm.
-	\item Commit dans le dépôt Git.
-	\item ArgoCD détecte automatiquement le changement et effectue le déploiement.
-	\item Les secrets sont injectés depuis Vault.
-	\item La configuration est traçable, versionnée et cohérente.
-\end{itemize}
-
-\paragraph{Exemple 3 -- Visualisation et inspection}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item Connexion SSH sur la machine virtuelle.
-	\item Parcours des fichiers de configuration.
-	\item Recherche des journaux système.
-	\item Vérification manuelle de l’état des services et de leur historique.
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item Consultation du dépôt Git du projet.
-	\item Inspection des manifests versionnés Kubernetes.
-	\item Vérification de l’historique des commits.
-	\item Observation en temps réel de la synchronisation via ArgoCD.
-\end{itemize}
-
-\paragraph{Exemple 4 -- Panne d’une machine virtuelle critique}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item En cas de saturation de la mémoire ou du disque, le service devient indisponible.
-	\item Exemple réel : saturation disque sur la machine GitLab ayant bloqué l’équipe.
-	\item Conséquences : interruption de la productivité, impact sur l’image, perte de confiance.
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item Les workloads sont conteneurisés et distribués sur plusieurs nœuds Kubernetes.
-	\item Si un nœud échoue, Kubernetes redémarre automatiquement les pods sur d’autres nœuds.
-	\item La disponibilité est maintenue sans intervention urgente.
-\end{itemize}
-
-\paragraph{Exemple 5 -- Gestion de stacks hétérogènes}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item Multiplicité des environnements techniques :
-	      \begin{itemize}
-		      \item Docker
-		      \item Python et \texttt{pip}
-		      \item Services installés via \texttt{apt}
-	      \end{itemize}
-	\item La connaissance des procédures est dispersée entre différents intervenants.
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item Chaque application dispose d’un manifest Kubernetes ou d’un chart Helm.
-	\item Les dépendances sont déclarées et isolées dans des conteneurs.
-	\item Le déploiement est homogène et automatisé via GitOps.
-	\item Plus besoin de maîtriser des commandes spécifiques à chaque stack.
-\end{itemize}
-
-\paragraph{Exemple 6 -- Retour en arrière après une erreur}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item Identification manuelle de l’erreur.
-	\item Correction parfois empirique.
-	\item Restauration longue (rollback manuel, restauration de snapshot).
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item \texttt{git revert} permet de revenir à un état stable.
-	\item ArgoCD synchronise automatiquement l’environnement.
-	\item Le retour arrière est rapide et traçable.
-\end{itemize}
-
-\paragraph{Exemple 7 -- Mise à jour sans interruption de service}
-
-\textbf{Approche classique :}
-\begin{itemize}
-	\item Mise à jour en place avec risque d’indisponibilité.
-	\item Obligation de programmer une plage de maintenance.
-\end{itemize}
-
-\textbf{Approche Infra\_v2 :}
-\begin{itemize}
-	\item Kubernetes réalise des \emph{rolling updates}.
-	\item Les pods sont remplacés progressivement.
-	\item Pas d’interruption visible pour les utilisateurs.
-	\item Rollback automatique en cas de problème.
-\end{itemize}
-
-\subsection*{Résumé des bénéfices}
-
-Ces exemples démontrent l’intérêt de l’approche \textbf{Infra\_v2}, qui apporte des avantages significatifs :
-
-\begin{itemize}
-	\item Automatisation et reproductibilité totales.
-	\item Sécurité centralisée des secrets.
-	\item Déploiement et rollback versionnés, contrôlés et traçables.
-	\item Résilience et haute disponibilité natives.
-	\item Réduction drastique des erreurs humaines.
-	\item Visibilité accrue sur l’état des applications et de l’infrastructure.
-	\item Scalabilité et maintenance simplifiées.
-\end{itemize}
 
 \section{Conclusion}
 Ce projet de mise en place d'une infrastructure automatisée et sécurisée pour Oneex a permis de répondre aux enjeux opérationnels et stratégiques de l'entreprise. En intégrant des outils modernes et des pratiques DevOps, il a été possible d'améliorer la fiabilité, la sécurité et la rapidité des déploiements.

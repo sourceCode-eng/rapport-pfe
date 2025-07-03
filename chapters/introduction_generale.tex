@@ -29,17 +29,7 @@ Oneex est une entreprise française basée à Clermont-Ferrand, avec un établis
 
 \subsection{Domaine d'activité}
 
-Oneex propose des solutions transversales adaptées à de nombreux secteurs, notamment la santé, les banques, la sécurité et le contrôle d’accès, la location de véhicules, ainsi que les aéroports et compagnies aériennes. L’entreprise se distingue par son application \emph{Oneex Cloud}, une plateforme qui offre un contrôle centralisé et un suivi avancé des vérifications d’identité.
-
-Voici quelques fonctionnalités clés :
-
-\begin{itemize}
-	\item \textbf{Suivi des documents scannés} : historique complet, résultats détaillés et traçabilité optimale.
-	\item \textbf{Demande d’expertise} : sollicitation d’experts pour garantir des analyses approfondies et fiables.
-	\item \textbf{Statistiques avancées} : exploitation des tendances de la fraude pour optimiser la gestion des incidents.
-\end{itemize}
-
-Ces solutions permettent aux entreprises de contrôler efficacement les accès, de réduire les fraudes et de fluidifier les processus d’intégration dans le respect des réglementations RGPD.
+A travers ses systemes de detection de faux documents , capables a operer en mode online ainsi qu'offline Oneex propose des solutions transversales adaptées à de nombreux secteurs, notamment la santé, les banques, la sécurité et le contrôle d’accès, la location de véhicules, ainsi que les aéroports et compagnies aériennes.
 
 \subsection{Organisation interne}
 
@@ -59,34 +49,36 @@ La direction et les équipes de Oneex rassemblent des profils pluridisciplinaire
 	\item[Sébastien Kowalczuk] Directeur des Opérations Sud-Ouest. Ancien enquêteur en contre-ingérence économique, il apporte une expertise forte en sécurité des données sensibles.
 \end{description}
 
-% \begin{figure}[ht]
-%     \centering
-%     \begin{tikzpicture}[
-%         sibling distance=25mm,
-%         level distance=20mm,
-%         edge from parent/.style={draw,-},
-%         every node/.style={
-%             draw,
-%             fill=blue!80,
-%             rectangle,
-%             text=white,
-%             align=center,
-%             font=\sffamily
-%         }
-%     ]
-%     \node {PRÉSIDENT \\ DIRECTEUR \\ GÉNÉRAL}
-%         child {node {DIRECTEUR \\ GÉNÉRAL}
-%             child {node {RESSOURCES \\ HUMAINES}}
-%             child {node {DIRECTION DES \\ OPÉRATIONS}}
-%             child {node {DIRECTION \\ TECHNIQUE}
-%                 child {node {Mahdi}}
-%             }
-%             child {node {SÉCURITÉ}}
-%         };
-%     \end{tikzpicture}
-%     \caption{\textit{Organisation interne simplifiée de l'entreprise}}
-%     \label{fig:organisation interne}
-% \end{figure}
+\begin{figure} [H]
+	\centering
+	\begin{tikzpicture}[
+			edge from parent/.style={draw, -},
+			level 1/.style={sibling distance=60mm, level distance=20mm},
+			level 2/.style={sibling distance=40mm, level distance=20mm},
+			every node/.style={
+					draw,
+					fill=blue!50!black,
+					rounded corners=3pt,
+					text=white,
+					align=center,
+					font=\sffamily\small,
+					text width=35mm,
+					minimum height=10mm
+				}
+		]
+		\node {PRÉSIDENT \\ DIRECTEUR \\ GÉNÉRAL}
+		child {node {DIRECTEUR \\ GÉNÉRAL}
+				child {node {RESSOURCES \\ HUMAINES}}
+				child {node {DIRECTION DES \\ OPÉRATIONS}}
+				child {node {DIRECTION \\ TECHNIQUE}
+						child {node {Mahdi}}
+					}
+				child {node {SÉCURITÉ}}
+			};
+	\end{tikzpicture}
+	\caption{\textit{Organisation interne simplifiée de l'entreprise}}
+	\label{fig:organisation_interne}
+\end{figure}
 
 \subsection{Produits et services de l'entreprise}
 
@@ -94,21 +86,21 @@ Oneex propose une gamme de solutions matérielles et logicielles, parmi lesquell
 
 \begin{itemize}
 	\item \textbf{Oneex Desktop} : une station de vérification d’identité clé en main simple et intuitive pour un accueil sécurisé , cette derniere effectue chaque scan en toute confiance. Le desktop Oneex reconnaît instantanément tous les documents d'identité de 197 pays — garantissant une vérification sûre et précise à chaque fois.
-	      \begin{figure}[ht]
+	      \begin{figure} [H]
 		      \centering
 		      \includegraphics[width=.5\textwidth]{figures/Oneex desktop.png}
 		      \caption{\textit{Oneex Desktop}}
 		      \label{fig:Oneex desktop}
 	      \end{figure}
 	\item \textbf{Oneex Suitcase} : une valise mobile permettant de réaliser des contrôles sur le terrain , portable et robuste , elle laisse les utilisateurs se profiter d’un système mobile de vérification d’identité fiable et sécurisé.
-	      \begin{figure}[ht]
+	      \begin{figure} [H]
 		      \centering
 		      \includegraphics[width=.5\textwidth]{figures/Oneex suitcase.png}
 		      \caption{\textit{Oneex Suitcase}}
 		      \label{fig:Oneex Suitcase}
 	      \end{figure}
 	\item \textbf{Oneex Kiosk} : un kiosque en libre-service pour l’accueil et le contrôle des visiteurs. Permet Accueiller vos visiteurs sans assistance grâce à une vérification rapide et un accès direct.Une solution pensée pour vos opérations, combinant biométrie avancée et automatisation complète de l’accès visiteurs.
-	      \begin{figure}[ht]
+	      \begin{figure} [H]
 		      \centering
 		      \includegraphics[width=.5\textwidth]{figures/Oneex kiosk.png}
 		      \caption{\textit{Oneex Kiosk}}
@@ -118,14 +110,26 @@ Oneex propose une gamme de solutions matérielles et logicielles, parmi lesquell
 
 Ces produits sont complétés par la suite logicielle Oneex Cloud et ScanApp, garantissant un pilotage centralisé et une intégration fluide dans les environnements clients.
 
-\subsection{Services informatiques et outils internes}
+Son application \emph{Oneex Cloud}, une plateforme offre un contrôle centralisé et un suivi avancé des vérifications d’identité.
 
-Afin de garantir un haut niveau de qualité, Oneex s’appuie sur une infrastructure robuste et des outils modernes facilitant la gestion des opérations.
+Cette plateforme permet un :
+
+\begin{itemize}
+	\item \textbf{Suivi des documents scannés} : historique complet, résultats détaillés et traçabilité optimale.
+	\item \textbf{Demande d’expertise} : sollicitation d’experts pour garantir des analyses approfondies et fiables.
+	\item \textbf{Statistiques avancées} : exploitation des tendances de la fraude pour optimiser la gestion des incidents.
+\end{itemize}
+
+Ces solutions permettent aux entreprises de contrôler efficacement les accès, de réduire les fraudes et de fluidifier les processus d’intégration dans le respect des réglementations RGPD.
+
+\subsection{Services informatiques et outils internes}
 
 \subsubsection{Les services informatiques}
 
 \textbf{Oneex ScanApp} constitue le cœur opérationnel de l’entreprise. Il assure l’analyse documentaire et la vérification d’identité, disponible sur postes fixes comme sur mobiles, avec une interface ergonomique et des fonctionnalités avancées. Il est constitué par une une interface utilisateur intuitive pour les ecrans des solutions que oneex offre et un moteur d’analyse de documents qui tourne localement , et est chargé par la lecture des documents , et l'execution d'une vingtaine d'algorithmes pour s'assurer de l'authenticité du document scanné.
-
+Il est composé de plusieurs modules , repartis entre le frontend et le backend, qui communiquent via des API sécurisées.
+Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données et il est repartit en
+<a completer>
 \textbf{Oneex Cloud} complète cet écosystème en permettant :
 
 \begin{itemize}
@@ -134,6 +138,14 @@ Afin de garantir un haut niveau de qualité, Oneex s’appuie sur une infrastruc
 	\item la sollicitation d’experts en cas de doute,
 	\item l’analyse statistique des fraudes détectées.
 \end{itemize}
+de meme ceci est hébergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données.
+Ces services sont accessibles via une interface web sécurisée, permettant aux utilisateurs de gérer les opérations de vérification d’identité de manière centralisée et efficace.
+L’entreprise utilise également des outils de gestion de projet et de suivi des tâches, tels que You
+Track, pour assurer une coordination optimale entre les équipes et garantir la qualité des livrables.
+Le système de gestion des versions est basé sur GitLab, permettant une collaboration fluide et un
+suivi rigoureux des modifications apportées au code source des applications.
+Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données et il est repartit en
+<a completer>
 
 \subsubsection{Les outils internes}
 
@@ -146,8 +158,17 @@ Les bases de données sont hébergées sur des serveurs dédiés et sécurisés,
 Afin de garentir un controle total et une idependence aux fournisseurs de cloud, Oneex a opté pour une infrastructure IAAS (Infrastructure as a Service) hébergée dans des serveurs dont proxmox est installé et utilisé pour gerer toutes les ressources. Cette infrastructure est composée de serveurs physiques et virtuels, permettant de déployer les applications et services nécessaires à l’activité de l’entreprise.
 Oneex prefere aussi garder toutes les machines virtuelles dans un sous reseau privé interne a proxmox , en exposant les services a travers un reverse proxy Nginx.
 Pour toute communication inter-proxmox entre les machines virtuelles, Oneex utilise un VPN IP-Sec réseau interne dédié, garantissant ainsi la sécurité et la performance des échanges.
-\section{Les projets informatiques de la société}
 
+Actuellement, l'entreprise dispose de plusieurs serveurs physiques hebergés chez sclaeway
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=.5\textwidth]{figures/Ressources cloud.png}
+	\caption{\textit{Ressources cloud de Oneex}}
+	\label{fig:Ressources cloud de Oneex}
+\end{figure}
+\section{Les projets informatiques de la société}
+<a completer>
+Oneex développe plusieurs projets informatiques stratégiques qui répondent à différents besoins métiers et techniques
 \subsection{Introduction}
 
 L’entreprise Oneex développe plusieurs projets informatiques stratégiques qui répondent à différents besoins métiers et techniques.
@@ -171,4 +192,3 @@ Application mobile ou desktop facilitant le scan et la vérification en temps r�
 \subsection{Oneex CSharp}
 
 Projet spécifique développé en C\# destiné à répondre à des besoins d’intégration ou d’outillage interne.
-
