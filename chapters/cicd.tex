@@ -135,6 +135,10 @@ Les hooks les plus fréquemment utilisés sont  :
 	\item Exécuter Commitlint pour garantir que les messages de commit respectent Conventional Commits.
 	\item Vérifier que les tests unitaires passent avant chaque push.
 	\item Appliquer Prettier pour uniformiser le formatage du code source.
+	\item Refuser les commits contenant des erreurs de syntaxe ou de style.
+	\item Exécuter des scripts personnalisés pour valider des règles métier spécifiques.
+	\item Executer des scripts de sécurité pour détecter les vulnérabilités dans les dépendances.
+	\item Vérifier que les fichiers de configuration sont à jour , conformes aux standards et ne contiennent pas d'informations sensibles.
 	\item Bloquer la création de commits vides ou sans description.
 \end{itemize}
 
@@ -156,6 +160,15 @@ En synthèse, Husky est un composant essentiel pour fiabiliser et automatiser le
 	\item Commitlint Documentation – \url{https://commitlint.js.org/}
 	\item ESLint Documentation – \url{https://eslint.org/docs/latest/}
 	\item Prettier Documentation – \url{https://prettier.io/docs/en/}
+\end{itemize}
+
+\textbf{Références suggérées supplémentaires pour la sécurité du code} :
+\begin{itemize}
+	\item npm Audit Documentation – \url{https://docs.npmjs.com/cli/v10/commands/npm-audit}
+	\item Snyk Documentation – \url{https://docs.snyk.io/}
+	\item Trivy Documentation – \url{https://aquasecurity.github.io/trivy/}
+	\item OWASP Dependency-Check – \url{https://jeremylong.github.io/DependencyCheck/}
+	\item Bandit Documentation – \url{https://bandit.readthedocs.io/en/latest/}
 \end{itemize}
 
 \subsection{Semantic Release}
@@ -285,6 +298,18 @@ Cette approche garantit que chaque build produit une image identique, facilement
 
 \subsection{Tagging des images}
 
+Le tagging des images conteneurisées ne peut pas être aléatoire, car il constitue la base de la traçabilité, de la reproductibilité et de la fiabilité des déploiements. Un schéma de versionnement clair et systématique permet de relier chaque image à son origine exacte et d'éviter toute ambiguïté lors des mises en production.
+
+Tout d'abord, l'utilisation d'un tag unique basé sur le hash du commit Git garantit la \textbf{traçabilité stricte}. Par exemple, lorsqu'un incident survient en production, il est indispensable de savoir précisément quel code source a généré l'image déployée. Si les tags étaient choisis de manière arbitraire ou remplacés sans cohérence (par exemple avec \texttt{latest} écrasé à chaque build), il serait impossible de retrouver la version exacte à l'origine du problème.
+
+Ensuite, un tagging rigoureux assure la \textbf{reproductibilité des environnements}. Lorsqu'un même tag est utilisé dans différents clusters (staging, production), il doit toujours pointer vers la même image. Ainsi, un déploiement appliqué plusieurs semaines plus tard avec le même manifeste Kubernetes sera identique au déploiement initial. Sans cette convention, des différences imprévisibles pourraient introduire des comportements inattendus.
+
+Le schéma de versionnement facilite également le \textbf{rollback} en cas de défaillance. Si une nouvelle version introduit un bug critique, il est possible de restaurer immédiatement l'image antérieure en redeployant le tag correspondant (par exemple \texttt{v1.2.3-main}), sans incertitude sur son contenu.
+
+Enfin, cette approche contribue à la \textbf{sûreté des opérations et à l'auditabilité}. Dans des contextes soumis à des exigences réglementaires (ISO, PCI-DSS) ou à des politiques internes strictes, le tag constitue une preuve technique qui relie chaque binaire à son processus de fabrication (pipeline CI/CD) et à son commit d'origine. Il devient ainsi possible de démontrer qui a produit l'image, à quel moment et avec quelles sources.
+
+Ces cas d'usage illustrent qu'un schéma de tagging structuré est essentiel pour garantir la qualité, la sécurité et la maîtrise des déploiements en environnement conteneurisé.
+
 Le versionnement des images conteneurisées est essentiel pour assurer la traçabilité des déploiements.
 Les pipelines CI/CD ont été configurés pour appliquer un schéma de tagging cohérent :
 \begin{itemize}
@@ -302,7 +327,7 @@ Plusieurs mesures ont été prises :
 \begin{itemize}
 	\item Création de comptes de service dédiés avec des droits restreints.
 	\item Génération de tokens d’accès utilisés par les runners CI pour authentifier les pushes vers le registre.
-	\item Stockage sécurisé des identifiants et des tokens dans Vault ou les variables protégées du système CI (par exemple GitLab CI/CD variables).
+	\item Stockage sécurisé des identifiants et des tokens en tant que variables d’environnement dans les pipelines CI/CD , en les declarant en tant que secrets dans GitLab.
 \end{itemize}
 
 Ces précautions garantissent que seuls les processus autorisés peuvent publier ou récupérer des images.

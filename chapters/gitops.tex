@@ -136,7 +136,7 @@ L’interface web d’Argo CD permet de superviser les applications GitOps et le
 La sécurisation de l’accès à Argo CD est essentielle.
 Les mesures suivantes ont été mises en place :
 \begin{itemize}
-	\item Activation de l’authentification via Dex avec un connecteur LDAP, permettant une intégration avec l’annuaire interne.
+	\item (A discuter si on veut l'integrer avec SSO Keyloak) Activation de l’authentification via Dex avec un connecteur LDAP, permettant une intégration avec l’annuaire interne.
 	\item Création de rôles et de policies RBAC pour définir des droits différenciés selon les équipes (lecture seule, modification, administration).
 	\item Rotation automatique des tokens d’accès.
 	\item Activation de TLS pour sécuriser les communications avec l’interface web.
