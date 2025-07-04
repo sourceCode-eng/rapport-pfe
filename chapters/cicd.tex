@@ -7,7 +7,7 @@ GitLab CI (Continuous Integration) est un système d’intégration et de livrai
 GitLab CI répond à plusieurs enjeux stratégiques  : accélérer le time-to-market, réduire les erreurs humaines, renforcer la traçabilité des changements et améliorer la collaboration entre équipes. Grâce à sa proximité avec le dépôt Git, il apporte une cohérence totale entre le code source, l’historique des commits et les pipelines d’automatisation. Il contribue ainsi à la modernisation et à la professionnalisation des processus de développement.
 
 %point de vue logique et technique
-, GitLab CI repose sur plusieurs concepts essentiels  :
+GitLab CI repose sur plusieurs concepts essentiels  :
 \begin{itemize}
 	\item \textbf{Le fichier \texttt{.gitlab-ci.yml}}  : fichier de configuration déclaratif placé à la racine du dépôt, qui décrit les jobs et les étapes du pipeline.
 	\item \textbf{Les jobs}  : unités atomiques qui exécutent des scripts ou des commandes (build, test, deploy).
@@ -23,7 +23,8 @@ GitLab CI prend en charge de nombreuses fonctionnalités avancées  : intégrati
 \begin{itemize}
 	\item Compiler automatiquement une application dès la création d’une merge request.
 	\item Exécuter des tests unitaires et fonctionnels dans un pipeline parallèle.
-	\item Construire et publier des images Docker sur GitLab Container Registry.
+	\item Formater le code source et analyser les dependences pour détecter les vulnérabilités.
+	\item Conteneuriser une application et la pousser vers un registre.
 	\item Déployer des applications sur Kubernetes via Helm ou kubectl.
 	\item Générer et publier automatiquement la documentation technique.
 \end{itemize}
@@ -40,13 +41,12 @@ GitLab CI prend en charge de nombreuses fonctionnalités avancées  : intégrati
 
 En synthèse, GitLab CI est une solution stratégique pour automatiser l’intégration et la livraison continues. Il permet aux équipes de gagner en efficacité opérationnelle, d’améliorer la qualité logicielle et d’accélérer la mise en production des innovations.
 
-\textbf{Références suggérées} :
+\textbf{Références et documentations} :
 \begin{itemize}
 	\item GitLab CI Documentation – \url{https://docs.gitlab.com/ee/ci/}
 	\item GitLab CI YAML Reference – \url{https://docs.gitlab.com/ee/ci/yaml/}
 	\item GitLab Runners – \url{https://docs.gitlab.com/runner/}
 	\item GitLab Kubernetes Integration – \url{https://docs.gitlab.com/ee/user/project/clusters/}
-	\item GitLab Auto DevOps – \url{https://docs.gitlab.com/ee/topics/autodevops/}
 \end{itemize}
 
 \subsection{Commitlint}

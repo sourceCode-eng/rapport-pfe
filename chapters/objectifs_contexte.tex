@@ -202,20 +202,11 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 \section{Architecture du projet}
 
 L'architecture globale du projet repose sur une approche moderne, modulaire et automatisée, intégrant les principes de l'Infrastructure as Code, du GitOps, de la conteneurisation et de l'observabilité. Elle a été conçue pour répondre aux exigences de performance, de sécurité, de scalabilité et de maintenabilité en s'appuyant sur plusieurs principes de l’état de l’art et bonnes pratiques du génie logiciel et de l’ingénierie des plateformes
-% Figure principale d'architecture globale
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/architecture-globale.png}
 	\caption{Schéma d'architecture globale}
 \end{figure}
-% COMMENTAIRE:
-% Ce schéma doit représenter une vue d'ensemble de l'infrastructure.
-% Éléments attendus :
-% - Couches horizontales : Infrastructure physique (Proxmox), Infrastructure as Code (Terraform, Ansible), Kubernetes, Observabilité, Sécurité, CI/CD, Services internes.
-% - Flèches montrant les interactions.
-% - Icônes des principaux outils (Kubernetes logo, Git, Vault, etc.).
-% PROMPT IA :
-% "Detailed architecture diagram showing a virtualized infrastructure with Proxmox hypervisors, Terraform and Ansible automation layers, Kubernetes orchestration, monitoring stack (Grafana, Prometheus, Loki, Tempo), Vault for secrets management, GitLab for CI/CD, pfSense firewall, and internal services like Harbor and Nextcloud. Use labeled boxes and arrows to illustrate flows."
 
 \subsection{Infrastructure virtualisée et provisioning automatisé}
 
@@ -233,20 +224,11 @@ Terraform a permis de décrire et de provisionner l'ensemble des ressources suiv
 
 Les modules Terraform ont été organisés par domaines fonctionnels afin de favoriser leur réutilisation et leur évolutivité.
 
-% Schéma Terraform provisioning
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/terraform-provisioning.png}
 	\caption{Schéma du processus de provisioning automatisé avec Terraform}
 \end{figure}
-% COMMENTAIRE:
-% Schéma en 3 étapes :
-% 1. Définition des modules Terraform.
-% 2. Execution Terraform Apply -> Création des VMs Proxmox.
-% 3. Résultat : Infrastructure provisionnée.
-% Icônes : Fichiers HCL, terminal, Proxmox nodes.
-% PROMPT IA :
-% "Step-by-step diagram showing Terraform provisioning: modules definition in HCL files, Terraform Apply process creating virtual machines in Proxmox cluster, final state with configured VMs. Include labels and arrows."
 
 \subsubsection*{Configuration automatisée avec Ansible}
 
@@ -266,14 +248,6 @@ Cette étape garantit l’homogénéité et la reproductibilité des environneme
 	\includegraphics[width=0.8\textwidth]{figures/ansible-configuration.png}
 	\caption{Processus d'automatisation de la configuration avec Ansible}
 \end{figure}
-% COMMENTAIRE:
-% Schéma illustrant :
-% - Ansible Control Node.
-% - Playbooks et rôles.
-% - Exécution SSH sur les machines provisionnées.
-% - Résultat : VMs configurées (Kubernetes, monitoring, sécurité).
-% PROMPT IA :
-% "Illustration showing Ansible Control Node running playbooks and roles over SSH to multiple virtual machines, configuring Kubernetes, monitoring tools, and security settings. Use clear arrows and labels."
 
 \subsection{Orchestration et déploiement applicatif}
 
@@ -300,14 +274,6 @@ Argo CD implémente une stratégie GitOps permettant :
 	\includegraphics[width=0.9\textwidth]{figures/gitops-argo-cd.png}
 	\caption{Flux GitOps des déploiements avec Argo CD}
 \end{figure}
-% COMMENTAIRE:
-% Schéma montrant :
-% - Développeur poussant des manifests dans Git.
-% - Argo CD détecte les changements.
-% - Synchronisation automatique avec Kubernetes cluster.
-% - Flèches indiquant le flux.
-% PROMPT IA :
-% "GitOps workflow diagram showing a developer committing Kubernetes manifests to a Git repository, Argo CD detecting changes and synchronizing them to the Kubernetes cluster automatically. Include icons and clear arrows."
 
 \subsection{Observabilité et monitoring}
 
@@ -327,15 +293,6 @@ Cette stack assure une observabilité complète et un diagnostic précis en cas 
 	\includegraphics[width=0.85\textwidth]{figures/observabilite-stack.png}
 	\caption{Architecture de la stack d'observabilité}
 \end{figure}
-% COMMENTAIRE:
-% Diagramme avec :
-% - Prometheus (metrics collection)
-% - Grafana (dashboards)
-% - Loki (logs)
-% - Tempo (traces)
-% - Kubernetes Nodes comme sources de données
-% PROMPT IA :
-% "Architecture diagram of observability stack including Prometheus for metrics, Grafana for visualization, Loki for log aggregation, and Tempo for tracing, all connected to Kubernetes nodes as data sources. Use labeled arrows."
 
 \subsection{Stockage distribué et persistance des données}
 
@@ -357,16 +314,9 @@ Vault joue le rôle de coffre-fort centralisé :
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{figures/observabilite-stack.png}
+	\includegraphics[width=0.8\textwidth]{figures/vault-gestion-secrets.png}
 	\caption{Flux de gestion sécurisée des secrets avec Vault}
 \end{figure}
-% COMMENTAIRE:
-% Schéma montrant :
-% - Applications demandant des secrets.
-% - Vault générant des tokens temporaires.
-% - Flux chiffrés.
-% PROMPT IA :
-% "Secrets management diagram showing applications requesting secrets from Vault, Vault generating short-lived tokens and delivering encrypted credentials, with arrows indicating secure flows."
 
 \subsection{Sécurité réseau et accès administratifs}
 
@@ -383,14 +333,6 @@ La sécurité périmétrique est confiée à un pare-feu pfSense :
 	\includegraphics[width=0.85\textwidth]{figures/pfsense-securite.png}
 	\caption{Architecture de sécurité réseau avec pfSense}
 \end{figure}
-% COMMENTAIRE:
-% Schéma avec :
-% - pfSense Firewall.
-% - Zones réseau (LAN, DMZ, WAN).
-% - VPN tunnel pour administrateurs.
-% - Règles filtrant les flux.
-% PROMPT IA :
-% "Network security diagram showing pfSense firewall with LAN, DMZ, and WAN zones, VPN tunnel for administrators, and rules controlling inbound and outbound traffic. Use clear labels."
 
 \subsection{Services internes pour le cycle de vie applicatif}
 
@@ -410,15 +352,6 @@ Ces outils sont hébergés sur Kubernetes afin d’assurer leur haute disponibil
 	\includegraphics[width=0.85\textwidth]{figures/services-internes.png}
 	\caption{Panorama des services internes}
 \end{figure}
-% COMMENTAIRE:
-% Diagramme montrant :
-% - GitLab (CI/CD)
-% - Harbor (container registry)
-% - YouTrack (issue tracking)
-% - Nextcloud (file sharing)
-% - Tous hébergés sur Kubernetes.
-% PROMPT IA :
-% "Diagram showing internal services deployed on Kubernetes: GitLab for CI/CD, Harbor for container registry, YouTrack for issue tracking, Nextcloud for file sharing. Connect all components to Kubernetes nodes."
 
 \subsection{Environnements de test et de production}
 
@@ -442,31 +375,3 @@ Ces outils sont hébergés sur Kubernetes afin d’assurer leur haute disponibil
 	\includegraphics[width=0.85\textwidth]{figures/gitlab-ci.png}
 	\caption{Processus d'intégration et de déploiement continu}
 \end{figure}
-% COMMENTAIRE:
-% Schéma illustrant :
-% - Développeur poussant du code.
-% - Pipeline GitLab CI (stages : build, test, deploy).
-% - Déploiement automatique sur Kubernetes.
-% PROMPT IA :
-% "CI/CD pipeline diagram showing a developer committing code to GitLab, triggering build, test, and deploy stages, with the application deployed to Kubernetes cluster. Use clear stages and arrows."
-
-\subsection*{Synthèse}
-
-L’architecture ainsi décrite allie modularité, automatisation et sécurité. Chaque composant contribue à la robustesse de la solution, tout en facilitant son évolutivité et sa maintenance.
-
-% Schéma synthèse globale
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\textwidth]{figures/synthese-architecture.png}
-	\caption{Vue d’ensemble synthétique de l’architecture}
-\end{figure}
-% COMMENTAIRE:
-% Schéma final résumant toutes les couches :
-% - Provisioning (Terraform, Ansible)
-% - Orchestration (Kubernetes)
-% - Observabilité
-% - Sécurité
-% - CI/CD
-% - Services internes
-% PROMPT IA :
-% "Comprehensive architecture diagram summarizing provisioning (Terraform, Ansible), orchestration with Kubernetes, observability stack, security with Vault and pfSense, CI/CD with GitLab, and internal services. Use layers and clear labels."
