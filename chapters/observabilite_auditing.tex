@@ -236,54 +236,54 @@ En synthèse, Tempo est un pilier des architectures d’observabilité modernes.
 	\item Grafana Labs Blog – \url{https://grafana.com/blog/}
 \end{itemize}
 
-\subsection{OpenTelemetry}
+% \subsection{OpenTelemetry}
 
-OpenTelemetry est une suite open source de spécifications, d’outils et de SDK destinée à la collecte, au traitement et à l’exportation des signaux d’observabilité  : métriques, logs et traces. Né de la fusion des projets OpenTracing et OpenCensus, OpenTelemetry est aujourd’hui un projet de la Cloud Native Computing Foundation (CNCF) et constitue le standard de facto pour instrumenter les applications modernes, qu’elles soient monolithiques ou microservices.
+% OpenTelemetry est une suite open source de spécifications, d’outils et de SDK destinée à la collecte, au traitement et à l’exportation des signaux d’observabilité  : métriques, logs et traces. Né de la fusion des projets OpenTracing et OpenCensus, OpenTelemetry est aujourd’hui un projet de la Cloud Native Computing Foundation (CNCF) et constitue le standard de facto pour instrumenter les applications modernes, qu’elles soient monolithiques ou microservices.
 
-%point de vue metier
-OpenTelemetry répond à des enjeux stratégiques majeurs  : renforcer la visibilité sur les systèmes distribués, anticiper les problèmes de performance, améliorer l’expérience utilisateur et faciliter la transformation digitale. En proposant un cadre unifié et standardisé, OpenTelemetry contribue à réduire la complexité opérationnelle et à accélérer la mise en place de stratégies d’observabilité efficaces.
+% %point de vue metier
+% OpenTelemetry répond à des enjeux stratégiques majeurs  : renforcer la visibilité sur les systèmes distribués, anticiper les problèmes de performance, améliorer l’expérience utilisateur et faciliter la transformation digitale. En proposant un cadre unifié et standardisé, OpenTelemetry contribue à réduire la complexité opérationnelle et à accélérer la mise en place de stratégies d’observabilité efficaces.
 
-%point de vue logique et technique
-, OpenTelemetry repose sur plusieurs composants essentiels  :
-\begin{itemize}
-	\item \textbf{Les SDK}  : bibliothèques spécifiques aux langages (Java, Go, Python, etc.) qui instrumentent automatiquement ou manuellement les applications.
-	\item \textbf{Le Collector}  : service qui reçoit, traite et exporte les signaux vers des backends comme Prometheus, Jaeger, Tempo, Zipkin ou Grafana.
-	\item \textbf{Les exporters}  : composants qui envoient les données collectées vers des systèmes tiers.
-	\item \textbf{Les ressources}  : ensembles de métadonnées qui décrivent les attributs des services (nom, version, environnement).
-	\item \textbf{Les protocoles}  : principalement OTLP (OpenTelemetry Protocol), conçu pour un transport efficace et interopérable des signaux.
-\end{itemize}
+% %point de vue logique et technique
+% , OpenTelemetry repose sur plusieurs composants essentiels  :
+% \begin{itemize}
+% 	\item \textbf{Les SDK}  : bibliothèques spécifiques aux langages (Java, Go, Python, etc.) qui instrumentent automatiquement ou manuellement les applications.
+% 	\item \textbf{Le Collector}  : service qui reçoit, traite et exporte les signaux vers des backends comme Prometheus, Jaeger, Tempo, Zipkin ou Grafana.
+% 	\item \textbf{Les exporters}  : composants qui envoient les données collectées vers des systèmes tiers.
+% 	\item \textbf{Les ressources}  : ensembles de métadonnées qui décrivent les attributs des services (nom, version, environnement).
+% 	\item \textbf{Les protocoles}  : principalement OTLP (OpenTelemetry Protocol), conçu pour un transport efficace et interopérable des signaux.
+% \end{itemize}
 
-OpenTelemetry est conçu comme un projet modulaire et extensible, permettant aux équipes d’adopter progressivement la collecte des traces, des métriques et des logs, selon leurs priorités.
+% OpenTelemetry est conçu comme un projet modulaire et extensible, permettant aux équipes d’adopter progressivement la collecte des traces, des métriques et des logs, selon leurs priorités.
 
-\textbf{Exemples et cas d’usage} :
-\begin{itemize}
-	\item Instrumenter automatiquement une API REST en Java pour collecter les latences et les erreurs.
-	\item Exporter les métriques applicatives vers Prometheus et les traces vers Tempo via le Collector.
-	\item Corréler les logs et les traces grâce à des identifiants de corrélation injectés automatiquement.
-	\item Visualiser le graphe de dépendances entre microservices dans Jaeger ou Grafana.
-	\item Monitorer en temps réel les indicateurs de performance d’un cluster Kubernetes.
-\end{itemize}
+% \textbf{Exemples et cas d’usage} :
+% \begin{itemize}
+% 	\item Instrumenter automatiquement une API REST en Java pour collecter les latences et les erreurs.
+% 	\item Exporter les métriques applicatives vers Prometheus et les traces vers Tempo via le Collector.
+% 	\item Corréler les logs et les traces grâce à des identifiants de corrélation injectés automatiquement.
+% 	\item Visualiser le graphe de dépendances entre microservices dans Jaeger ou Grafana.
+% 	\item Monitorer en temps réel les indicateurs de performance d’un cluster Kubernetes.
+% \end{itemize}
 
-\textbf{Avantages principaux} :
-\begin{itemize}
-	\item Standardisation des signaux d’observabilité (métriques, traces, logs).
-	\item Large compatibilité multi-langages et multi-plateformes.
-	\item Collecte et exportation flexibles via le Collector.
-	\item Intégration fluide avec les principaux backends d’observabilité.
-	\item Support actif par une large communauté et les principaux éditeurs cloud.
-	\item Réduction de la complexité opérationnelle et meilleure visibilité end-to-end.
-\end{itemize}
+% \textbf{Avantages principaux} :
+% \begin{itemize}
+% 	\item Standardisation des signaux d’observabilité (métriques, traces, logs).
+% 	\item Large compatibilité multi-langages et multi-plateformes.
+% 	\item Collecte et exportation flexibles via le Collector.
+% 	\item Intégration fluide avec les principaux backends d’observabilité.
+% 	\item Support actif par une large communauté et les principaux éditeurs cloud.
+% 	\item Réduction de la complexité opérationnelle et meilleure visibilité end-to-end.
+% \end{itemize}
 
-En synthèse, OpenTelemetry est une brique fondamentale de l’observabilité moderne. Il offre un cadre unifié, extensible et standardisé, permettant aux organisations de mieux comprendre et améliorer le comportement de leurs applications distribuées.
+% En synthèse, OpenTelemetry est une brique fondamentale de l’observabilité moderne. Il offre un cadre unifié, extensible et standardisé, permettant aux organisations de mieux comprendre et améliorer le comportement de leurs applications distribuées.
 
-\textbf{Références suggérées} :
-\begin{itemize}
-	\item OpenTelemetry Documentation – \url{https://opentelemetry.io/docs/}
-	\item OpenTelemetry GitHub – \url{https://github.com/open-telemetry/opentelemetry-specification}
-	\item CNCF OpenTelemetry Project – \url{https://www.cncf.io/projects/opentelemetry/}
-	\item Jaeger Documentation – \url{https://www.jaegertracing.io/docs/}
-	\item Grafana Tempo Documentation – \url{https://grafana.com/docs/tempo/latest/}
-\end{itemize}
+% \textbf{Références suggérées} :
+% \begin{itemize}
+% 	\item OpenTelemetry Documentation – \url{https://opentelemetry.io/docs/}
+% 	\item OpenTelemetry GitHub – \url{https://github.com/open-telemetry/opentelemetry-specification}
+% 	\item CNCF OpenTelemetry Project – \url{https://www.cncf.io/projects/opentelemetry/}
+% 	\item Jaeger Documentation – \url{https://www.jaegertracing.io/docs/}
+% 	\item Grafana Tempo Documentation – \url{https://grafana.com/docs/tempo/latest/}
+% \end{itemize}
 
 \section{Mise en place du monitoring continu}
 

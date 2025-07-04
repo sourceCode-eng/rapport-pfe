@@ -44,18 +44,18 @@ Terraform répond à plusieurs enjeux : accélération du provisioning, fiabilis
 
 \textbf{Cas d’utilisation} : provisionner un cluster Kubernetes sur Proxmox avec un réseau et des volumes configurés.
 
-\subsection{Cloud-init}
+% \subsection{Cloud-init}
 
-Cloud-init est un outil d’initialisation automatique des machines virtuelles lors du premier démarrage. Il est supporté par la plupart des plateformes cloud et hyperviseurs, et permet :
-\begin{itemize}
-	\item La configuration réseau.
-	\item La création d’utilisateurs et de clés SSH.
-	\item L’installation de paquets et le lancement de scripts.
-\end{itemize}
+% Cloud-init est un outil d’initialisation automatique des machines virtuelles lors du premier démarrage. Il est supporté par la plupart des plateformes cloud et hyperviseurs, et permet :
+% \begin{itemize}
+% 	\item La configuration réseau.
+% 	\item La création d’utilisateurs et de clés SSH.
+% 	\item L’installation de paquets et le lancement de scripts.
+% \end{itemize}
 
-Cloud-init contribue à standardiser les environnements et réduire les délais de mise en service.
+% Cloud-init contribue à standardiser les environnements et réduire les délais de mise en service.
 
-\textbf{Cas d’utilisation} : automatiser l’installation de Docker et la configuration réseau d’une instance Proxmox.
+% \textbf{Cas d’utilisation} : automatiser l’installation de Docker et la configuration réseau d’une instance Proxmox.
 
 \subsection{Ansible}
 
@@ -129,19 +129,19 @@ Pour garantir un niveau de protection élevé, il est recommandé de :
 \paragraph{Limitations et vigilance}
 
 Si Vault n’est pas configuré de manière rigoureuse, il peut devenir un point unique de défaillance et un vecteur d’attaque majeur. La compromission d’un nœud ou la perte des clés de déchiffrement peut entraîner une indisponibilité prolongée, voire la perte irrémédiable de certains secrets. Il est donc essentiel d’envisager des scénarios de récupération, tels que la sauvegarde chiffrée des données et la documentation des procédures d’unseal.
-\subsection{Consul}
+% \subsection{Consul}
 
-Consul est une solution de service discovery, de configuration distribuée et de service mesh développée par HashiCorp. Elle permet de centraliser la gestion dynamique des services et de renforcer la cohérence des environnements déployés. Consul apporte plusieurs fonctionnalités complémentaires à Vault et s’intègre naturellement dans les architectures automatisées.
+% Consul est une solution de service discovery, de configuration distribuée et de service mesh développée par HashiCorp. Elle permet de centraliser la gestion dynamique des services et de renforcer la cohérence des environnements déployés. Consul apporte plusieurs fonctionnalités complémentaires à Vault et s’intègre naturellement dans les architectures automatisées.
 
-\paragraph{Principales fonctionnalités}
+% \paragraph{Principales fonctionnalités}
 
-Les principales capacités de Consul sont les suivantes :
-\begin{itemize}
-	\item \textbf{Découverte automatique des services} : Consul maintient un catalogue des services enregistrés, avec leurs adresses et ports associés, facilitant leur détection et leur utilisation par d’autres composants.
-	\item \textbf{Supervision de l’état des services} : le système exécute des contrôles de santé (health checks) qui permettent de vérifier en continu la disponibilité et le bon fonctionnement des instances.
-	\item \textbf{Stockage clé-valeur} : Consul fournit un KV store distribué, utilisé pour stocker des paramètres de configuration ou des informations dynamiques accessibles par les applications.
-	\item \textbf{Service mesh sécurisé} : grâce à l’intégration avec Envoy, Consul offre un plan de contrôle permettant de chiffrer le trafic inter-services, d’implémenter des politiques d’accès et de réaliser du routage avancé.
-\end{itemize}
+% Les principales capacités de Consul sont les suivantes :
+% \begin{itemize}
+% 	\item \textbf{Découverte automatique des services} : Consul maintient un catalogue des services enregistrés, avec leurs adresses et ports associés, facilitant leur détection et leur utilisation par d’autres composants.
+% 	\item \textbf{Supervision de l’état des services} : le système exécute des contrôles de santé (health checks) qui permettent de vérifier en continu la disponibilité et le bon fonctionnement des instances.
+% 	\item \textbf{Stockage clé-valeur} : Consul fournit un KV store distribué, utilisé pour stocker des paramètres de configuration ou des informations dynamiques accessibles par les applications.
+% 	\item \textbf{Service mesh sécurisé} : grâce à l’intégration avec Envoy, Consul offre un plan de contrôle permettant de chiffrer le trafic inter-services, d’implémenter des politiques d’accès et de réaliser du routage avancé.
+% \end{itemize}
 
 \paragraph{Architecture et composants}
 
