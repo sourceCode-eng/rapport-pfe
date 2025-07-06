@@ -1,9 +1,13 @@
 \section{Introduction}
 
 L’observabilité constitue un pilier essentiel dans la gestion moderne des systèmes distribués. Elle regroupe l’ensemble des pratiques, outils et processus permettant de comprendre le comportement d’une infrastructure, de détecter les anomalies et de garantir la conformité aux exigences de sécurité et de qualité de service.
+
 Dans le contexte des architectures conteneurisées et des microservices, la complexité opérationnelle s’est fortement accrue. Chaque requête peut transiter par de nombreux composants, rendant le diagnostic des incidents particulièrement difficile sans outils adaptés.
 
-De plus, les exigences réglementaires et les bonnes pratiques imposent de disposer d’audits précis des accès, des changements et des événements critiques. L’observabilité et l’audit ne se limitent donc pas à la surveillance technique, mais participent également à la gouvernance et à la gestion des risques.
+Par ailleurs, les exigences réglementaires et les bonnes pratiques imposent de disposer d’audits précis des accès, des changements et des événements critiques. L’observabilité et l’audit ne se limitent donc pas à la simple surveillance technique, mais participent également à la gouvernance et à la gestion des risques.
+
+Enfin, il est important de souligner que surveiller uniquement des métriques brutes telles que l’utilisation CPU ou mémoire (« CPU à 80 % », par exemple) n’est pas suffisant. Ces indicateurs doivent être replacés dans leur contexte et enrichis par des analyses plus poussées (traçage distribué, corrélation d’événements, détection d’anomalies, etc.), comme nous le verrons dans les chapitres suivants.
+
 
 \subsection{Contexte et enjeux de l'observabilité et de l'audit}
 
