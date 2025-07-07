@@ -264,14 +264,64 @@ Dans le projet, plusieurs composants et bonnes pratiques ont été mis en œuvre
 
 Cette approche cohérente assure une exposition minimale des services au public et une sécurité renforcée tout en maintenant une haute disponibilité.
 
-\subsection{pfSense}
+\paragraph{Firewall pfSense}
 
-pfSense est une solution open source de pare-feu et de routage. Elle permet :
+Pour renforcer la sécurité réseau, plusieurs architectures avec \textbf{pfSense} (distribution libre spécialisée dans les fonctions de pare-feu et de routage) ont été considérées. Voici les options analysées :
+
+\subparagraph{Scénario 1 : pfSense en VM ou LXC dédié sur Proxmox}
+
 \begin{itemize}
-	\item La définition de règles de filtrage réseau.
-	\item La gestion de VPN et la segmentation des VLAN.
-	\item La supervision du trafic.
+	\item pfSense est déployé comme une VM avec deux interfaces réseau (WAN et LAN).
+	\item Elle agit comme passerelle pour toutes les autres VMs.
+	\item Avantage : isolation logique et grande flexibilité.
+	\item Limite : dépendance à Proxmox (si le nœud tombe, le firewall aussi).
 \end{itemize}
+
+\subparagraph{Scénario 2 : pfSense sur un serveur physique séparé}
+
+\begin{itemize}
+	\item pfSense fonctionne comme appliance physique devant le cluster.
+	\item Avantage : indépendance vis-à-vis de la plateforme de virtualisation.
+	\item Permet de filtrer tout le trafic entrant/sortant.
+	\item Limite : nécessite du matériel dédié, plus de câblage et de gestion physique.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/choix implementation pfsense.png}
+	\caption{Comparaison des architectures d'intégration de pfSense}
+\end{figure}
+
+Le tableau \ref{tab:pfsense_arch} résume les avantages et inconvénients de chaque approche :
+
+\begin{longtable}{|p{4.5cm}|p{3.5cm}|p{3cm}|p{3.5cm}|}
+	\caption{\it{Comparaison des modes d’intégration de pfSense}}
+	\label{tab:pfsense_arch}                                                                                                               \\ \hline
+	\textbf{Architecture}        & \textbf{Isolation} & \textbf{Résilience} & \textbf{Commentaires}                                        \\ \hline
+	\endfirsthead
+	\multicolumn{4}{l}{\tablename\ \thetable\ -- \textit{Suite}}                                                                           \\ \hline
+	\textbf{Architecture}        & \textbf{Isolation} & \textbf{Résilience} & \textbf{Commentaires}                                        \\ \hline
+	\endhead
+	\endfoot
+	\hline
+	\endlastfoot
+
+	VM dédiée ou LXC sur Proxmox & Élevée             & Moyenne             & Facile à déployer, centralisé, mais dépend du nœud Proxmox.  \\ \hline
+	Appliance physique séparée   & Très élevée        & Très élevée         & Solution professionnelle, coûteuse, idéale pour multi-sites. \\ \hline
+\end{longtable}
+
+\paragraph{Choix retenu et justification}
+
+Dans le contexte de l’infrastructure actuelle de Oneex, c’est le \textbf{scénario 1} (déploiement de pfSense dans une VM dédiée sur Proxmox) qui a été retenu. Cette approche présente plusieurs avantages majeurs en adéquation avec l’architecture existante :
+
+\begin{itemize}
+	\item Elle permet d’\textbf{intégrer pleinement le pare-feu dans le réseau interne}, avec un contrôle précis sur le filtrage inter-VLAN et la segmentation réseau.
+	\item pfSense peut \textbf{établir des connexions VPN de type IPsec} entre les différents LANs internes de l’entreprise, assurant ainsi une interconnexion sécurisée des environnements distants.
+	\item Cette configuration est \textbf{hautement personnalisable} : routage, NAT, tunnels chiffrés, DHCP statique, filtrage applicatif, etc., tout en restant cohérente avec la logique IaaS de Proxmox.
+\end{itemize}
+
+Malgré une résilience moyenne (liée à sa dépendance à Proxmox), cette solution constitue un compromis optimal entre flexibilité, centralisation et sécurité, tout en réduisant les coûts matériels. Elle est également plus facile à maintenir et à intégrer dans les processus automatisés de l'infrastructure.
+
 \subsection{Réseau de Kubernetes}
 
 Le réseau Kubernetes est un élément fondamental qui permet la communication entre les différents composants du cluster et les applications qui y sont déployées. Il repose sur plusieurs concepts clés visant à simplifier la connectivité et à assurer l’isolation logique des workloads.
@@ -284,6 +334,11 @@ Kubernetes adopte un modèle de réseau dit \emph{plat}, dans lequel :
 	\item Tous les pods peuvent communiquer entre eux, sans traduction d’adresses (NAT).
 	\item Les pods peuvent accéder aux services exposés par d’autres pods, quel que soit le nœud sur lequel ils s’exécutent.
 \end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/kubernetes-cluster-architecture.png}
+	\caption{Architecture d'un cluster Kubernetes}
+\end{figure}
 Ce modèle vise à réduire la complexité des communications et à permettre aux applications de se comporter comme si elles fonctionnaient sur un même réseau local.
 
 \paragraph{CNI (Container Network Interface)}
@@ -297,30 +352,61 @@ Ces plugins sont responsables de :
 \end{itemize}
 Parmi les solutions CNI les plus courantes, on peut citer Calico, Flannel, Cilium et Weave.
 
-\paragraph{Services et ClusterIP}
+\paragraph{Services et exposition réseau dans Kubernetes}
 
-Kubernetes introduit l’objet \texttt{Service} qui permet d’exposer un groupe de pods sous une adresse IP virtuelle et un nom DNS stable.
-Le type \texttt{ClusterIP} crée un point d’accès interne accessible uniquement depuis le cluster.
-Le routage vers les pods est assuré par le kube-proxy, qui configure des règles iptables ou IPVS selon le mode choisi.
+Kubernetes introduit l’objet \texttt{Service}, utilisé pour exposer un ensemble de pods via une abstraction réseau stable (nom DNS et IP virtuelle). Cela permet de découpler la logique de service de l’adressage dynamique des pods.
 
-\paragraph{Services NodePort et LoadBalancer}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/k8s-service-types.png}
+	\caption{Types de services Kubernetes}
+\end{figure}
 
-Pour exposer un service à l’extérieur du cluster :
+\subparagraph{ClusterIP}
+Il s’agit du type de service par défaut. Il crée une IP virtuelle interne au cluster, accessible uniquement depuis les autres composants Kubernetes. Le routage est effectué via le composant \texttt{kube-proxy}, qui configure des règles \texttt{iptables} ou \texttt{IPVS} selon la configuration du cluster.
+
+\subparagraph{NodePort}
+Ce type expose le service sur un port statique (généralement entre 30000 et 32767) sur toutes les interfaces réseau de chaque nœud. Le trafic externe accède alors aux pods via l’adresse IP d’un nœud et le port attribué.
+
+\subparagraph{LoadBalancer}
+Ce type s’appuie sur l’intégration avec un fournisseur de cloud pour provisionner automatiquement un équilibreur de charge (load balancer) et attribuer une IP publique. Il est idéal pour l’exposer à Internet, mais dépend de l’environnement cloud.
+
+\subparagraph{ExternalName}
+Ce type ne crée pas réellement de proxy mais agit comme une redirection DNS. Il permet d’exposer un service interne vers une ressource externe en mappant son nom à un domaine DNS externe, sans gestion de pods ou endpoints.
+
+\subparagraph{Ingress}
+En complément des services, l’objet \texttt{Ingress} permet de définir des règles de routage HTTP(S) avancées :
 \begin{itemize}
-	\item Le type \texttt{NodePort} alloue un port TCP/UDP sur chaque nœud du cluster.
-	\item Le type \texttt{LoadBalancer} s’intègre avec un équilibrage de charge externe (cloud provider) afin de disposer d’une IP publique.
-\end{itemize}
-Ces mécanismes simplifient l’accès aux applications depuis l’extérieur.
-
-\paragraph{Ingress et contrôleurs Ingress}
-
-L’\texttt{Ingress} est une ressource Kubernetes qui permet de définir des règles de routage HTTP(S) plus avancées, par exemple :
-\begin{itemize}
-	\item Routage par nom de domaine.
+	\item Routage basé sur les hôtes ou les chemins.
 	\item Terminaison TLS.
-	\item Redirections et règles de sécurité.
+	\item Redirections, en-têtes personnalisés, sécurité.
 \end{itemize}
-Un contrôleur Ingress (tel que NGINX Ingress Controller ou Traefik) est déployé pour interpréter et appliquer ces règles.
+Un contrôleur d’Ingress (comme NGINX ou Traefik) est requis pour appliquer ces règles.
+
+\bigskip
+
+\subparagraph{Tableau récapitulatif des types de services Kubernetes}
+
+\begin{longtable}{|p{4cm}|p{5cm}|p{6cm}|}
+	\caption{\it{Comparatif des types de services Kubernetes}}
+	\label{tab:services_k8s}                                                                                                                      \\ \hline
+	\textbf{Type de service} & \textbf{Accessibilité}                  & \textbf{Utilisation typique}                                             \\ \hline
+	\endfirsthead
+	\multicolumn{3}{l}{\tablename\ \thetable\ -- \textit{Suite}}                                                                                  \\ \hline
+	\textbf{Type de service} & \textbf{Accessibilité}                  & \textbf{Utilisation typique}                                             \\ \hline
+	\endhead
+	\hline \multicolumn{3}{r}{\textit{Suite de la page précédente}}                                                                               \\ \hline
+	\endfoot
+	\hline
+	\endlastfoot
+
+	\texttt{ClusterIP}       & Interne au cluster uniquement           & Communication entre pods ou services backend internes                    \\ \hline
+	\texttt{NodePort}        & Accès via IP du nœud et port externe    & Test local, accès direct sans load balancer                              \\ \hline
+	\texttt{LoadBalancer}    & IP publique attribuée automatiquement   & Exposition publique dans un environnement cloud                          \\ \hline
+	\texttt{ExternalName}    & Redirection DNS vers un service externe & Connexion à des services externes (API tierces, bases de données gérées) \\ \hline
+
+\end{longtable}
+Le tableau \ref{tab:services_k8s} présente une comparaison synthétique des différents types de services proposés par Kubernetes.
 
 \paragraph{Network Policies}
 
@@ -352,21 +438,53 @@ MetalLB apporte plusieurs fonctionnalités essentielles :
 \begin{itemize}
 	\item \textbf{Attribution d’adresses IP virtuelles} : il permet de réserver et d’annoncer des plages d’adresses IP utilisables pour exposer les services en mode \emph{LoadBalancer}.
 	\item \textbf{Distribution du trafic réseau} : il redirige les requêtes entrantes vers les pods cibles, en fonction de la configuration et de l’algorithme de balancing choisi.
-	\item \textbf{Compatibilité BGP et L2} : MetalLB propose deux modes de fonctionnement : le mode Layer 2, qui utilise ARP ou NDP pour annoncer l’adresse IP sur le réseau local, et le mode BGP, qui permet d’établir des sessions de routage dynamique avec les routeurs de l’infrastructure.
+	\item \textbf{Compatibilité BGP et L2} : MetalLB propose deux modes de fonctionnement :
+	      \begin{itemize}
+		      \item Le mode \textbf{Layer 2}, qui utilise ARP ou NDP pour annoncer l’adresse IP sur le réseau local.
+		      \item Le mode \textbf{BGP}, qui permet d’établir des sessions de routage dynamique avec les routeurs de l’infrastructure.
+	      \end{itemize}
 \end{itemize}
 
-\paragraph{Intérêt dans un contexte on-premise}
+\paragraph{Mécanisme de haute disponibilité (HA)}
 
-En environnement on-premise, Kubernetes présente une limite importante : le type de service \emph{LoadBalancer} est inutilisable par défaut, car il dépend d’un fournisseur d’infrastructure qui alloue et configure automatiquement l’équilibrage de charge. MetalLB comble cette lacune en reproduisant ce comportement de manière logicielle et en s’intégrant nativement avec l’API Kubernetes. Il permet ainsi d’exposer des services applicatifs sans recourir à des appliances réseau propriétaires ni modifier profondément l’architecture existante.
+MetalLB met en œuvre un mécanisme de haute disponibilité pour garantir la continuité de service même en cas de défaillance d’un nœud.
 
-\paragraph{Cas d’utilisation}
-
-MetalLB est couramment utilisé pour :
+Dans le mode Layer 2 :
 \begin{itemize}
-	\item Exposer en haute disponibilité des applications web, API ou services internes hébergés dans Kubernetes.
-	\item Fournir des adresses IP stables et connues pour les clients et systèmes externes.
-	\item Automatiser la gestion des flux réseau entrants tout en conservant un contrôle fin sur les plages d’adresses attribuées.
+	\item Un seul nœud dans le cluster est désigné comme \emph{speaker} pour une adresse IP donnée.
+	\item En cas de panne ou d’indisponibilité du nœud speaker, les autres nœuds organisent une élection pour élire un nouveau speaker, qui prendra le relais et continuera à annoncer l’IP virtuelle sur le réseau.
 \end{itemize}
+
+Ce mécanisme permet de garantir que les services exposés restent accessibles même en cas de panne matérielle ou logicielle sur un nœud.
+
+\paragraph{Avantages et inconvénients}
+
+\begin{itemize}
+	\item \textbf{Avantages} :
+	      \begin{itemize}
+		      \item Permet l’utilisation de services \texttt{LoadBalancer} en on-premise sans équipement physique supplémentaire.
+		      \item Haute disponibilité grâce à la redondance des speakers.
+		      \item Facilement intégrable dans un cluster Kubernetes existant.
+		      \item Compatible avec les politiques réseau Kubernetes.
+	      \end{itemize}
+
+	\item \textbf{Inconvénients / Limites} :
+	      \begin{itemize}
+		      \item \textbf{Goulot d’étranglement potentiel} : seul le speaker actif reçoit le trafic entrant pour une IP donnée, ce qui peut limiter le débit réseau.
+		      \item Ce modèle peut réduire le \emph{throughput} maximal, car le speaker redistribue ensuite le trafic vers les pods cibles situés éventuellement sur d'autres nœuds.
+		      \item Le modèle ne permet pas un load balancing L4 actif/actif entre nœuds (sauf en mode BGP multi-routeur).
+	      \end{itemize}
+\end{itemize}
+
+\paragraph{Remarque sur les performances}
+
+Dans la majorité des cas d’usage (web APIs, services métiers), la limite du throughput au niveau du speaker est acceptable. En effet, le facteur limitant n’est pas la capacité réseau brute mais le temps de traitement des requêtes applicatives. Grâce au modèle distribué de Kubernetes, ce traitement est réparti entre les pods, ce qui permet de maintenir de bonnes performances globales même si un seul nœud reçoit initialement le trafic.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/Metallb network.png}
+	\caption{Réseau de MetalLB}
+\end{figure}
 
 \section{Mise en place des services de réseau}
 
