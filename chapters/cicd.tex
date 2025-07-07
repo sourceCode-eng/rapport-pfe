@@ -322,15 +322,131 @@ Ces conventions permettent de relier chaque déploiement Kubernetes à l’image
 
 \subsection{Configuration de l’authentification}
 
-La sécurité des échanges entre les outils CI/CD et le registre d’images est un point critique.
-Plusieurs mesures ont été prises :
+La sécurité des échanges entre les outils CI/CD et les services externes (registre d’images, dépôt GitOps) repose sur une gestion rigoureuse des identifiants et des autorisations.
+
+Plusieurs mesures ont été mises en œuvre pour garantir une authentification sécurisée :
 \begin{itemize}
-	\item Création de comptes de service dédiés avec des droits restreints.
-	\item Génération de tokens d’accès utilisés par les runners CI pour authentifier les pushes vers le registre.
-	\item Stockage sécurisé des identifiants et des tokens en tant que variables d’environnement dans les pipelines CI/CD , en les declarant en tant que secrets dans GitLab.
+	\item Création de comptes de service dédiés avec des droits limités.
+	\item Génération de tokens d’accès spécifiques à chaque usage.
+	\item Stockage sécurisé des identifiants et des tokens via les \textbf{variables GitLab CI/CD}, marquées comme protégées et masquées.
+	\item Définition de règles de rotation périodique de ces secrets.
 \end{itemize}
 
-Ces précautions garantissent que seuls les processus autorisés peuvent publier ou récupérer des images.
+\paragraph{Authentification CI/CD vers Harbor (registre d’images)}
+
+Les runners GitLab doivent pouvoir pousser les images Docker construites vers Harbor.
+
+\subparagraph{Étapes de configuration}
+
+\begin{enumerate}
+	\item \textbf{Créer un compte robot dans Harbor} :
+	      \begin{itemize}
+		      \item Accéder au projet ciblé sur Harbor.
+		            %       \begin{figure}[H]
+		            %       	\centering
+		            %       	\includegraphics[width=0.6\textwidth]{figures/projet ciblé.png}
+		            %       	\caption{acceder au projet ciblé sur Harbor}
+		            %       \end{figure}
+		            % \item Onglet \emph{Robot Accounts > New Robot Account}.
+		            %       \begin{figure}[H]
+		            %       	\centering
+		            %       	\includegraphics[width=0.6\textwidth]{figures/creer un compte robot page 1/3.png}
+		            %       	\caption{Choisir les paramètres du compte robot sur Harbor}
+		            %       \end{figure}
+		            %       \begin{figure}[H]
+		            %       	\centering
+		            %       	\includegraphics[width=0.6\textwidth]{figures/figures/creer un compte robot page 2/3.png}
+		            %       	\caption{Choisir les permissions du compte robot sur Harbor}
+		            %       \end{figure}
+		            %       \begin{figure}[H]
+		            %       	\centering
+		            %       	\includegraphics[width=0.6\textwidth]{figures/figures/creer un compte robot page 3/3.png}
+		            %       	\caption{Choisir projets du compte robot sur Harbor}
+		            %       \end{figure}
+		      \item Nommer le compte (ex: \texttt{ci-push}), définir les permissions nécessaires (\texttt{push}, \texttt{pull}).
+	      \end{itemize}
+
+	\item \textbf{Copier l’identifiant et le token généré} :
+	      \begin{itemize}
+		      \item Identifiant : \texttt{robot\$ci-push}
+		      \item Mot de passe/token : affiché une seule fois à la création.
+	      \end{itemize}
+
+	\item \textbf{Ajouter les variables dans GitLab} :
+	      \begin{itemize}
+		      \item Aller dans \emph{Settings > CI/CD > Variables}.
+		      \item Définir :
+		            \begin{itemize}
+			            \item \texttt{HARBOR\_USERNAME = robot\$ci-push}
+			            \item \texttt{HARBOR\_PASSWORD = <token>}
+		            \end{itemize}
+		      \item Activer \textbf{Protected} et \textbf{Masked}.
+	      \end{itemize}
+
+	      %   \begin{figure}[H]
+	      %   	\centering
+	      %   	\includegraphics[width=0.6\textwidth]{figures/gitlab_ci_vars.png}
+	      %   	\caption{Variables CI/CD dans GitLab pour Harbor}
+	      %   \end{figure}
+
+	\item \textbf{Authentification dans la pipeline} :
+
+	      \begin{verbatim}
+docker-login:
+  image: docker:latest
+  stage: build
+  script:
+    - echo "$HARBOR_PASSWORD" | docker login my-harbor.oneex.fr -u "$HARBOR_USERNAME" --password-stdin
+    - docker build -t my-harbor.oneex.fr/project/app:$CI_COMMIT_SHORT_SHA .
+    - docker push my-harbor.oneex.fr/project/app:$CI_COMMIT_SHORT_SHA
+\end{verbatim}
+
+\end{enumerate}
+
+\paragraph{Authentification Argo CD vers GitLab (dépôt GitOps)}
+
+Argo CD doit accéder au dépôt Git contenant les manifests Kubernetes ou les Helm charts à déployer.
+
+\subparagraph{Étapes de configuration}
+
+\begin{enumerate}
+	\item \textbf{Créer un token GitLab} :
+	      \begin{itemize}
+		      \item Aller dans \emph{GitLab > Preferences > Access Tokens}.
+		      \item Définir un token avec les scopes : \texttt{read\_repository}, voire \texttt{write\_repository}.
+	      \end{itemize}
+
+	      %   \begin{figure}[H]
+	      %   	\centering
+	      %   	\includegraphics[width=0.6\textwidth]{figures/gitlab_access_token.png}
+	      %   	\caption{Création d’un access token GitLab pour Argo CD}
+	      %   \end{figure}
+
+	\item \textbf{Ajouter le dépôt dans Argo CD} :
+	      \begin{itemize}
+		      \item Via la CLI :
+		            \begin{lstlisting}[language=bash]
+argocd repo add https://gitlab.com/oneex/gitops-repo.git \
+  --username <gitlab-username> \
+  --password <access-token>
+	      	      \end{lstlisting}
+		      \item Ou via l’interface graphique : \emph{Settings > Repositories > Connect Repo using HTTPS}.
+	      \end{itemize}
+
+	      %   \begin{figure}[H]
+	      %   	\centering
+	      %   	\includegraphics[width=0.6\textwidth]{figures/argocd_add_repo.png}
+	      %   	\caption{Ajout du dépôt GitOps dans Argo CD}
+	      %   \end{figure}
+
+	\item \textbf{(Optionnel) Gestion des credentials via Vault ou SealedSecrets} :
+	      \begin{itemize}
+		      \item Pour éviter le stockage de secrets dans les manifests ou CRDs.
+	      \end{itemize}
+\end{enumerate}
+
+\vspace{0.5cm}
+Ces mécanismes assurent que seuls les outils autorisés peuvent interagir avec Harbor et les dépôts Git, renforçant la sécurité de la chaîne DevOps tout en maintenant une automatisation fluide et traçable.
 
 \subsection{Préparation des tâches des pipelines}
 

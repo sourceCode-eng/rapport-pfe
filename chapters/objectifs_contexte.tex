@@ -165,7 +165,6 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 	\item \textbf{Audits automatiques de conformité et d'intégrité} : générer périodiquement des rapports permettant de vérifier la cohérence des configurations, la robustesse des mécanismes de sécurité et le respect des politiques internes et réglementaires.
 \end{itemize}
 
-
 \subsection*{Évolutivité et maintenabilité}
 
 \begin{itemize}
@@ -365,12 +364,87 @@ Ces outils sont hébergés sur Kubernetes afin d’assurer leur haute disponibil
 
 \subsection{Intégration et automatisation des déploiements}
 
-\textbf{GitLab CI} assure l'automatisation du cycle de vie applicatif :
+\textbf{GitLab CI/CD} joue un rôle central dans l'automatisation du cycle de vie applicatif. L’ensemble du pipeline est défini dans le fichier \texttt{.gitlab-ci.yml}, qui décrit les différentes étapes à exécuter pour chaque push, merge ou tag selon la configuration définie.
+
+L’infrastructure GitLab repose sur plusieurs composants clés :
 \begin{itemize}
-	\item Construction des images conteneurs.
-	\item Exécution des tests automatisés.
-	\item Déploiement vers les environnements Kubernetes.
+	\item \textbf{\texttt{.gitlab-ci.yml}} : fichier principal décrivant les jobs et les stages du pipeline.
+	\item \textbf{GitLab Runners} : exécutent les jobs dans des environnements isolés (VMs, containers...).
+	\item \textbf{Variables GitLab} : utilisées pour stocker de manière sécurisée les credentials (tokens d’accès, clés API, identifiants, etc.), accessibles dans les jobs via des variables d’environnement.
+	\item \textbf{Scripts et templates} : fichiers auxiliaires contenant les commandes d’automatisation (par exemple : \texttt{deploy.sh}, \texttt{test.sh}, \texttt{build.Dockerfile}).
 \end{itemize}
+
+\paragraph{Structure générale d’un pipeline GitLab CI}
+
+Un pipeline CI/CD complet est généralement structuré autour des étapes suivantes :
+
+\begin{itemize}
+	\item \textbf{Validation}
+	\item Formatage du code (ex : \texttt{black}, \texttt{prettier}, \texttt{clang-format}).
+	\item Tests unitaires et fonctionnels (ex : \texttt{pytest}, \texttt{Jest}, \texttt{JUnit}).
+	\item Analyse de dépendances (\texttt{OWASP Dependency-Check}, \texttt{safety}).
+	\item Analyse de sécurité des secrets (\texttt{truffleHog}, \texttt{git-secrets}).
+	\item Linting et analyse statique (ex : \texttt{ESLint}, \texttt{pylint}, \texttt{SonarQube}).
+\end{itemize}
+
+\begin{itemize}
+	\item \textbf{Build}
+	      \begin{itemize}
+		      \item Compilation de binaires ou de librairies.
+		      \item Construction d’images Docker avec \texttt{Dockerfile}.
+		      \item Intégration des modules ou plugins nécessaires.
+	      \end{itemize}
+
+	\item \textbf{Package}
+	      \begin{itemize}
+		      \item Génération des artefacts (archives, packages, images).
+		      \item Génération automatique de changelogs (\texttt{git-chglog}, \texttt{conventional-changelog}).
+		      \item Mise à jour du \texttt{README}, documentation ou métadonnées.
+	      \end{itemize}
+
+	\item \textbf{Release}
+	      \begin{itemize}
+		      \item Création d’une release GitLab avec description, tag, et artefacts associés.
+		      \item Publication vers des registries (DockerHub, GitLab Container Registry, PyPI, Maven, etc.).
+		      \item Possibilité de signature cryptographique des artefacts.
+	      \end{itemize}
+
+	\item \textbf{Deploy}
+	      \begin{itemize}
+		      \item Déploiement automatique vers les environnements cibles (dev, staging, prod).
+		      \item Utilisation de \texttt{kubectl}, \texttt{helm}, ou ArgoCD pour interagir avec Kubernetes.
+		      \item Authentification via credentials sécurisés définis comme \texttt{CI/CD variables}.
+	      \end{itemize}
+
+	\item \textbf{Notify}
+	      \begin{itemize}
+		      \item Envoi de notifications Slack, Discord, Rocket.Chat, email ou webhook.
+		      \item Génération de rapports HTML ou PDF avec les résultats des tests et des déploiements.
+		      \item Archivage des logs dans des systèmes de monitoring (ELK, Loki, etc.).
+	      \end{itemize}
+\end{itemize}
+
+\paragraph{Exemple de gestion des credentials}
+Les variables sensibles telles que les clés d’accès API, tokens de déploiement ou credentials Kubernetes sont définies dans l’interface GitLab CI/CD (\texttt{Settings > CI/CD > Variables}) et injectées dans les jobs via :
+\begin{verbatim}
+deploy:
+script:
+- echo "$KUBECONFIG_SECRET" > kubeconfig
+- kubectl --kubeconfig=kubeconfig apply -f k8s/
+\end{verbatim}
+
+\paragraph{Exemple de stage de release}
+\begin{verbatim}
+release:
+stage: release
+script:
+- echo "Generating release..."
+- git tag v${CI_COMMIT_SHORT_SHA}
+- git push origin v${CI_COMMIT_SHORT_SHA}
+- curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN"
+--data "name=Release v${CI_COMMIT_SHORT_SHA}&tag_name=v${CI_COMMIT_SHORT_SHA}"
+"https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/releases"
+\end{verbatim}
 
 % Schéma GitLab CI
 \begin{figure}[H]
