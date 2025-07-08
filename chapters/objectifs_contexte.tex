@@ -84,6 +84,48 @@ L'analyse de ces scénarios de référence et des risques associés conduit à c
 \end{itemize}
 
 Ces orientations constituent le socle sur lequel s'appuie le projet présenté dans ce mémoire.
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+		\hline
+		\textbf{Aspect}                                                                                                              & \textbf{Situation initiale} & \textbf{Situation après mise en place} \\
+		\hline
+
+		\textbf{Cohérence des environnements}                                                                                        &
+		Configurations manuelles et divergentes entre développement, test et production, générant des écarts difficiles à maîtriser. &
+		Automatisation des déploiements garantissant la standardisation et la reproductibilité des environnements.                                                                                          \\
+		\hline
+
+		\textbf{Gestion des secrets}                                                                                                 &
+		Stockage informel et non sécurisé des identifiants, échanges par email ou messagerie instantanée.                            &
+		Centralisation sécurisée des secrets avec rotation automatique et contrôle des accès.                                                                                                               \\
+		\hline
+
+		\textbf{Observabilité}                                                                                                       &
+		Absence d’agrégation centralisée des journaux et des métriques, difficultés de diagnostic.                                   &
+		Mise en place d’outils de supervision, de journalisation et de traçabilité unifiés.                                                                                                                 \\
+		\hline
+
+		\textbf{Déploiement des infrastructures}                                                                                     &
+		Processus manuel long (plusieurs jours), faible reproductibilité et risque élevé d’erreurs humaines.                         &
+		Automatisation complète permettant des déploiements rapides et contrôlés.                                                                                                                           \\
+		\hline
+
+		\textbf{Sécurité opérationnelle}                                                                                             &
+		Droits d’accès gérés de façon hétérogène et peu contrôlée, exposition accrue aux attaques.                                   &
+		Application du principe du moindre privilège et d’une approche Zero Trust, contrôles renforcés.                                                                                                     \\
+		\hline
+
+		\textbf{Temps de réaction aux incidents}                                                                                     &
+		Diagnostic lent et difficile en cas d’anomalie ou d’incident critique.                                                       &
+		Observabilité en temps réel et capacité d’investigation rapide grâce à la centralisation des informations.                                                                                          \\
+		\hline
+
+	\end{tabular}
+	\caption{Synthèse des cas d'usage avant et après la mise en place de la solution}
+	\label{tab:avant_apres}
+\end{table}
 
 \section{Les besoins fonctionnels}
 
@@ -310,7 +352,7 @@ Le stockage persistant est assuré par Longhorn, qui fournit :
 Vault joue le rôle de coffre-fort centralisé :
 \begin{itemize}
 	\item Stockage chiffré des mots de passe, certificats et tokens.
-	\item Génération dynamique de secrets temporaires.
+	\item Génération dynamique de secrets temporaires et rotation de secrets.
 	\item Politiques d’accès granulaires pour limiter les droits.
 \end{itemize}
 
@@ -452,3 +494,116 @@ script:
 	\includegraphics[width=0.85\textwidth]{figures/gitlab-ci.png}
 	\caption{Processus d'intégration et de déploiement continu}
 \end{figure}
+
+\section{Fondements théoriques de l’automatisation des infrastructures}
+
+\subsection{Évolution historique}
+
+La gestion des systèmes d’information a connu une évolution rapide, marquée par plusieurs transformations majeures. Elle est passée de l’administration manuelle des serveurs physiques, où chaque déploiement nécessitait des opérations répétitives et susceptibles d’erreurs, à l’émergence des datacenters virtualisés et du Cloud Computing. Cette progression a été motivée par la recherche d’une meilleure agilité opérationnelle et par la nécessité de réduire les coûts d’exploitation.
+
+La complexification des environnements informatiques a conduit à la formalisation de pratiques visant à automatiser la création, la configuration et la supervision des ressources. C’est dans ce contexte qu’a émergé le paradigme de l’Infrastructure as Code, qui constitue aujourd’hui un socle incontournable des démarches de modernisation.
+
+\subsection{Approche DevOps}
+
+Le développement des infrastructures modernes s’inscrit dans une démarche DevOps, qui associe les équipes de développement et d’exploitation dans une collaboration continue. Cette approche vise à réduire les cycles de livraison, améliorer la qualité logicielle et favoriser l’automatisation des processus. Elle s’appuie sur une culture de responsabilisation partagée, une intégration continue et une surveillance permanente des systèmes. DevOps contribue ainsi à faire converger les objectifs techniques et organisationnels, en alignant la production logicielle et les opérations.
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=.5\textwidth]{figures/Devops.png}
+	\caption{Taches de DevOps}
+	\label{fig:Taches de DevOps}
+\end{figure}
+\subsection{Modèles conceptuels}
+
+L’Infrastructure as Code (IaC) désigne l’ensemble des méthodes et outils permettant de décrire l’état souhaité d’une infrastructure sous forme de fichiers de configuration versionnés et exécutables. Deux modèles se distinguent généralement : le modèle impératif, dans lequel l’utilisateur décrit la séquence exacte des opérations, et le modèle déclaratif, qui se concentre sur la définition de l’état final visé en laissant au moteur d’exécution la responsabilité d’y converger.
+
+\subsection{Approche GitOps}
+
+En prolongement de l’IaC, l’approche GitOps propose de faire du système de gestion de version la source unique de vérité pour la configuration et le déploiement applicatif. Elle se caractérise par un processus de déploiement automatisé, piloté par des agents qui observent l’état déclaré dans les dépôts et appliquent les modifications nécessaires aux environnements. Cette méthode garantit une traçabilité complète des évolutions, facilite le retour en arrière et renforce la cohérence entre les différents environnements. GitOps s’intègre naturellement avec les pipelines CI/CD, qui orchestrent la construction, les tests et la mise en production de façon systématique.
+
+\section{Conteneurisation et orchestration}
+
+\subsection{Principes de la conteneurisation}
+
+La conteneurisation a constitué une rupture technologique majeure en introduisant une isolation légère des environnements d’exécution, en comparaison avec les machines virtuelles traditionnelles. Chaque conteneur encapsule l’application et ses dépendances, assurant ainsi une portabilité élevée et une reproductibilité des exécutions sur différents environnements.
+
+Parmi les bénéfices les plus fréquemment identifiés figurent la réduction de la charge système, l’optimisation des coûts d’infrastructure, l’accélération des cycles de déploiement et une meilleure isolation des processus.
+
+\subsection{Orchestration des conteneurs}
+
+Pour coordonner ces conteneurs à grande échelle, des plateformes d’orchestration ont été développées. Kubernetes s’est progressivement imposé comme la solution de référence, grâce à sa capacité à automatiser le placement des workloads, l’ajustement dynamique des ressources, la relance des conteneurs défaillants et la gestion centralisée des configurations ainsi que des secrets. Ces fonctionnalités favorisent l’exploitation efficace d’environnements complexes et distribués.
+
+\subsection{Patterns d’architecture cloud-native}
+
+La conteneurisation et l’orchestration encouragent l’adoption de modèles applicatifs dits \emph{cloud-native}. Ces architectures reposent notamment sur le découpage en microservices, la scalabilité horizontale, la résilience par la redondance et le découplage entre l’infrastructure et les applications. Ces principes sont aujourd’hui largement adoptés par les entreprises souhaitant moderniser leurs systèmes d’information.
+
+\section{Approches de supervision et d’observabilité}
+
+\subsection{Enjeux de l’observabilité}
+
+Dans des environnements distribués et dynamiques, l’observabilité est un facteur déterminant de fiabilité et de performance. Elle va au-delà de la supervision traditionnelle en visant une compréhension globale et en temps réel des comportements des systèmes. Cette démarche repose sur trois piliers essentiels : les métriques, qui mesurent l’état et les performances ; les logs, qui conservent l’historique des événements ; et les traces distribuées, qui permettent de suivre le parcours des requêtes au sein de l’architecture.
+
+\subsection{Outils et standards de référence}
+
+Différentes solutions se sont imposées comme standards de fait dans le domaine. Prometheus est souvent privilégié pour la collecte des métriques et la génération d’alertes, tandis que Grafana assure leur visualisation et leur suivi en temps réel. Elastic Stack ou Loki sont fréquemment utilisés pour l’agrégation et l’analyse des logs, et des outils tels que Jaeger et OpenTelemetry facilitent le traçage distribué. L’adoption de protocoles ouverts et d’API standardisées favorise leur intégration avec les plateformes d’orchestration.
+
+\section{Sécurité des infrastructures automatisées}
+
+\subsection{Principes de sécurité}
+
+La sécurisation des infrastructures automatisées s’appuie sur le principe de \emph{Security by Design}, qui préconise l’intégration des mesures de protection dès les phases initiales de conception. Le modèle \emph{Zero Trust}, largement diffusé, repose notamment sur l’absence de confiance implicite accordée à un composant, l'identification, l’authentification et l’autorisation systématiques de chaque requête ainsi que la limitation des privilèges au strict nécessaire. Ces approches sont particulièrement adaptées aux environnements hybrides et multi-clouds.
+
+\subsection{Gestion des secrets et des accès}
+
+La gestion centralisée des secrets constitue une pratique essentielle pour sécuriser les identifiants, certificats et autres éléments sensibles. Elle repose sur le stockage chiffré, la rotation périodique des clés et la traçabilité des accès. Des outils spécialisés, tels que Vault, apportent des solutions robustes et éprouvées pour répondre à ces exigences.
+
+\subsection{Sécurité périmétrique et segmentation}
+
+La protection des infrastructures repose également sur des dispositifs périmétriques tels que les pare-feu, les listes de contrôle d’accès et la segmentation réseau. Ces mécanismes permettent de limiter la surface d’exposition, de cloisonner les environnements et de renforcer la résilience face aux attaques latérales. La mise en œuvre de politiques de filtrage strictes et le principe du moindre privilège complètent ces mesures pour réduire les risques d’intrusion.
+
+\paragraph{Option : pfSense en tant que routeur et pare-feu principal}
+
+Dans l’architecture retenue, il est possible de déployer pfSense comme machine virtuelle dédiée assurant le rôle de passerelle unique et de point de contrôle des flux réseau. Dans ce scénario, pfSense est connecté à deux interfaces réseau distinctes~:
+\begin{itemize}
+	\item Une interface \textbf{LAN}, reliée au réseau interne Proxmox et aux machines virtuelles.
+	\item Une interface \textbf{WAN}, reliée au réseau externe (Internet).
+\end{itemize}
+
+Toutes les machines virtuelles définissent pfSense comme leur passerelle par défaut. Cela permet :
+\begin{itemize}
+	\item De centraliser le filtrage et le NAT.
+	\item De contrôler et journaliser l’ensemble des flux entrants et sortants.
+	\item D’appliquer des politiques de segmentation et de routage spécifiques par VLAN ou sous-réseau.
+	\item D’établir des tunnels VPN (IPSec, OpenVPN) de manière centralisée.
+\end{itemize}
+
+Cette approche offre une séparation claire entre le plan de gestion (Proxmox) et le plan de données (trafic applicatif), améliorant la sécurité globale.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+			node distance=2cm,
+			box/.style={draw, rectangle, minimum width=3cm, minimum height=1cm, align=center},
+			vm/.style={draw, rectangle, minimum width=2cm, minimum height=0.8cm, align=center}
+		]
+
+		% Nodes
+		\node[box] (internet) {Internet};
+		\node[box, below of=internet] (proxmox) {Proxmox Hyperviseur};
+		\node[box, below of=proxmox] (pfsense) {VM pfSense \\ (Pare-feu / Routeur)};
+		\node[box, below of=pfsense] (switch) {Réseau LAN Interne};
+		\node[vm, left=1.5cm of switch] (vm1) {VM1};
+		\node[vm, right=1.5cm of switch] (vm2) {VM2};
+
+		% Arrows
+		\draw[->] (internet) -- (proxmox);
+		\draw[->] (proxmox) -- (pfsense);
+		\draw[->] (pfsense) -- (switch);
+		\draw[->] (switch) -- (vm1);
+		\draw[->] (switch) -- (vm2);
+
+	\end{tikzpicture}
+	\caption{Architecture avec pfSense en tant que routeur et pare-feu principal}
+	\label{fig:pfsense-router}
+\end{figure}
+
+Cette configuration permet de garantir que tout le trafic réseau transite par pfSense, offrant un contrôle périmétrique complet et la possibilité d’appliquer des politiques de sécurité avancées.

@@ -2,11 +2,11 @@
 
 Dans un contexte technologique en constante évolution, marqué par une forte concurrence et une accélération des cycles de développement, l’importance des concepts que nous avons mis en œuvre est devenue capitale. L’automatisation, qui était autrefois perçue comme un avantage optionnel, s’impose désormais comme une nécessité incontournable pour garantir la fiabilité, la sécurité et la rapidité des processus.
 
-Selon le rapport \textit{State of DevOps 2023} publié par Google Cloud et DORA, les organisations ayant adopté des pratiques d’automatisation avancées déploient leurs applications 208 fois plus rapidement et sont 106 fois plus rapides à corriger les incidents\footnote{Google Cloud, DORA Report 2023 - \url{https://cloud.google.com/devops/state-of-devops}}. De plus, 94\% des leaders IT estiment que l’automatisation est essentielle pour améliorer la productivité des équipes et réduire les erreurs humaines\footnote{Red Hat, Global Tech Outlook 2023 - \url{https://www.redhat.com/en/resources/global-tech-outlook-2023}}.
+Selon le rapport State of DevOps 2023 publié par Google Cloud et DORA, les organisations ayant adopté des pratiques d’automatisation avancées déploient leurs applications 208 fois plus rapidement et sont 106 fois plus rapides à corriger les incidents \cite{dora2023}. De plus, 94 \%, des leaders IT estiment que l’automatisation est essentielle pour améliorer la productivité des équipes et réduire les erreurs humaines \cite{redhat2023}.
 
-La sécurité n’est pas en reste : 61\% des entreprises ayant mis en œuvre des pipelines CI/CD sécurisés ont constaté une diminution significative des failles en production\footnote{GitLab DevSecOps Survey 2023 - \url{https://about.gitlab.com/blog/2023/05/11/global-devsecops-survey/}}.
+La sécurité n’est pas en reste : 61 \%, des entreprises ayant mis en œuvre des pipelines CI/CD sécurisés ont constaté une diminution significative des failles en production \cite{gitlab2023}.
 
-Ces chiffres soulignent l’impact direct des pratiques modernes d’automatisation, d’Infrastructure as Code (IaC) et d'observabilité sur la performance globale des systèmes informatiques. Dans ce projet, nous avons choisi d’intégrer ces pratiques pour construire une infrastructure robuste, sécurisée, et auto-adaptative, en phase avec les exigences actuelles de l’industrie.
+Ces chiffres soulignent l’impact direct des pratiques modernes d’automatisation, d’Infrastructure as Code (IaC) et d’observabilité sur la performance globale des systèmes informatiques. Dans ce projet, nous avons choisi d’intégrer ces pratiques pour construire une infrastructure robuste, sécurisée et auto-adaptative, en phase avec les exigences actuelles de l’industrie.
 
 \section{Présentation de l'organisme d'accueil}
 
@@ -114,6 +114,19 @@ Oneex propose une gamme de solutions matérielles et logicielles, parmi lesquell
 	      \end{figure}
 \end{itemize}
 
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{|p{3cm}|p{5cm}|p{4cm}|p{2.5cm}|}
+		\hline
+		\textbf{Produit} & \textbf{Description}                     & \textbf{Dimensions} & \textbf{Poids} \\ \hline
+		Oneex Desktop    & Station de vérification d’identité fixe  & 465 x 365 x 175 mm  & 8 kg           \\ \hline
+		Oneex Suitcase   & Valise mobile de contrôle sur le terrain & 560 x 365 x 230 mm  & 12 kg          \\ \hline
+		Oneex Kiosk      & Kiosque en libre-service autonome        & 1640 x 450 x 460 mm & 65 kg          \\ \hline
+	\end{tabular}
+	\caption{Caractéristiques physiques principales des solutions matérielles Oneex}
+	\label{tab:oneex-produits}
+\end{table}
 Ces produits sont complétés par la suite logicielle Oneex Cloud et ScanApp, garantissant un pilotage centralisé et une intégration fluide dans les environnements clients.
 
 Son application \emph{Oneex Cloud}, une plateforme offre un contrôle centralisé et un suivi avancé des vérifications d’identité.
@@ -136,8 +149,7 @@ Ces solutions permettent aux entreprises de contrôler efficacement les accès, 
 
 Il est constitué par une une interface utilisateur intuitive pour les ecrans des solutions que oneex offre et un moteur d’analyse de documents qui tourne localement , et est chargé par la lecture des documents , et l'execution d'une vingtaine d'algorithmes pour s'assurer de l'authenticité du document scanné.
 Il est composé de plusieurs modules , repartis entre le frontend et le backend, qui communiquent via des API sécurisées.
-Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données et il est repartit en
-<a completer>
+Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données et il est repartit en 4 depots principaux , chacun dédié à un aspect spécifique de l'application.
 
 \textbf{Oneex Cloud} complète cet écosystème en permettant :
 
@@ -154,8 +166,10 @@ L’entreprise utilise également des outils de gestion de projet et de suivi de
 Track, pour assurer une coordination optimale entre les équipes et garantir la qualité des livrables.
 Le système de gestion des versions est basé sur GitLab, permettant une collaboration fluide et un
 suivi rigoureux des modifications apportées au code source des applications.
-Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données et il est repartit en
-<a completer>
+Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissant ainsi la sécurité et la confidentialité des données et il est representé en tant que deux parties :
+* front office : qui represente l'interface utilisateur et les interactions avec les clients, incluant les applications mobiles et desktop.
+* back office : qui l'interface des administrateurs et des experts, permettant la gestion des opérations, le suivi des incidents et l'analyse des données.
+Chaque partie est développée en utilisant go et nuxt.js, garantissant ainsi une performance optimale et une expérience utilisateur fluide et ils sont separés en plusieurs depots, groupés en deux projets : le backend et le frontend.
 
 \subsubsection{Les outils internes}
 
@@ -166,6 +180,7 @@ Les bases de données sont hébergées sur des serveurs dédiés et sécurisés,
 \subsubsection{Infrastructures internes}
 
 Afin de garantir un contrôle total et une indépendance vis-à-vis des fournisseurs de cloud, Oneex a opté pour une infrastructure IaaS (Infrastructure as a Service) autohébergée sur des serveurs physiques administrés via la solution de virtualisation Proxmox VE.
+Actuellement, l'entreprise dispose de plusieurs serveurs physiques hébergés chez Scaleway, utilisés pour héberger l’ensemble de ses VMs, systèmes critiques et clusters Kubernetes.
 
 \begin{figure} [H]
 	\centering
@@ -179,7 +194,7 @@ Afin de garantir un contrôle total et une indépendance vis-à-vis des fourniss
 L’architecture réseau repose sur deux types de bridges configurés sur chaque hôte Proxmox :
 
 \begin{itemize}
-	\item \textbf{Bridge public (vmbr0)} : utilisé uniquement par l’hyperviseur Proxmox lui-même, pour exposer certains services de supervision, de gestion ou de secours. Aucune VM n’est connectée à ce bridge.
+	\item \textbf{Bridge public (vmbr0)} : utilisé uniquement par l’hyperviseur Proxmox lui-même et le pare feu Pfsense, pour exposer certains services, . Aucune VM n’est connectée à ce bridge.
 	\item \textbf{Bridge interne (vmbr1)} : représente le LAN interne de l’entreprise. Proxmox y participe activement en tant que passerelle (\texttt{gateway}) pour les machines virtuelles, leur permettant un accès vers l’extérieur ou à d’autres zones du réseau.
 \end{itemize}
 
@@ -194,30 +209,11 @@ Les services hébergés par les VMs ne sont pas exposés directement, mais à tr
 
 \paragraph{Communications inter-sites}
 
-Pour les échanges entre différents serveurs Proxmox ou clusters distants, Oneex utilise un réseau privé chiffré basé sur VPN IPsec. Ce réseau interne garantit la confidentialité, l’intégrité et la performance des communications intersites sans dépendance à un cloud public.
+Pour les échanges entre différents machines virtuelles dans des serveurs proxmox distincts , Oneex utilise un réseau privé chiffré basé sur VPN IPsec. Ce réseau interne garantit la confidentialité, l’intégrité et la performance des communications intersites sans dépendance à un cloud public.
 
-Actuellement, l'entreprise dispose de plusieurs serveurs physiques hébergés chez Scaleway, utilisés pour héberger l’ensemble de ses VMs, systèmes critiques et clusters Kubernetes.
-
-% \section{Les projets informatiques de la société}
-% <a completer>
-% Oneex développe plusieurs projets informatiques stratégiques qui répondent à différents besoins métiers et techniques
-
-% \subsection{Oneex Front}
-
-% Application frontend permettant la gestion des opérations, l’affichage des données et l’interaction avec les utilisateurs finaux.
-
-% \subsection{Oneex Back}
-
-% Backend exposant les API et orchestrant les processus métiers critiques.
-
-% \subsection{Oneex Scanner}
-
-% Solution logicielle dédiée à l’acquisition et à l’analyse des documents d’identité.
-
-% \subsection{Oneex ScanApp}
-
-% Application mobile ou desktop facilitant le scan et la vérification en temps réel des documents.
-
-% \subsection{Oneex CSharp}
-
-% Projet spécifique développé en C\# destiné à répondre à des besoins d’intégration ou d’outillage interne.
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=.5\textwidth]{figures/Reseau intra proxmox.png}
+	\caption{Communications inter-sites}
+	\label{fig:Communications inter-sites}
+\end{figure}
