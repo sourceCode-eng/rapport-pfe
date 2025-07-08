@@ -64,9 +64,11 @@ Un tel processus induirait des délais importants, une faible reproductibilité 
 Ces hypothèses convergent vers un ensemble de risques potentiels, parmi lesquels :
 \begin{itemize}
 	\item L'allongement des délais de livraison et la perte d'agilité opérationnelle.
+	\item L'augmentation de la surface d'attaque due à des configurations hétérogènes et non sécurisées.
 	\item L'augmentation de la probabilité d'erreurs de configuration.
 	\item La difficulté de garantir la sécurité des environnements et la confidentialité des données sensibles.
 	\item L'impossibilité de disposer d'une vision globale et en temps réel de l'état de l'infrastructure.
+	\item Temps de diagnostic et de reaction aux incidents allongés, rendant difficile la résolution rapide des problèmes critiques.
 \end{itemize}
 
 Ces risques soulignent l'intérêt d'intégrer, dès la conception de la solution, des mécanismes de \emph{monitoring}, de \emph{logging} et de \emph{tracing}, afin de renforcer la transparence et la capacité de réaction face aux incidents.
@@ -131,7 +133,7 @@ Ces orientations constituent le socle sur lequel s'appuie le projet présenté d
 
 Les besoins fonctionnels décrivent l'ensemble des fonctionnalités attendues de la solution envisagée, ainsi que les objectifs opérationnels qui en découlent. Ils visent à garantir la cohérence, la sécurité, la traçabilité et la résilience de l'infrastructure et des applications. Ces besoins peuvent être regroupés autour de plusieurs axes principaux :
 
-\subsection*{Provisioning et configuration des ressources}
+\subsection{Provisioning et configuration des ressources}
 
 \begin{itemize}
 	\item \textbf{Automatisation du provisioning des ressources} : permettre la création, la configuration et la suppression des composants d'infrastructure de manière déclarative et reproductible, afin de réduire les délais et d'éviter les interventions manuelles.
@@ -139,13 +141,13 @@ Les besoins fonctionnels décrivent l'ensemble des fonctionnalités attendues de
 	\item \textbf{Gestion centralisée et cohérente des configurations} : mettre en œuvre un mécanisme d'orchestration permettant d'installer les dépendances logicielles, d'appliquer les paramétrages requis et de maintenir l'uniformité entre les différents environnements.
 \end{itemize}
 
-\subsection*{Déploiement et mise à jour des applications}
+\subsection{Déploiement et mise à jour des applications}
 
 \begin{itemize}
 	\item \textbf{Déploiement applicatif automatisé et contrôlé} : intégrer un processus déclenchant les déploiements depuis des référentiels versionnés et assurant la synchronisation permanente entre le code source et les environnements cibles.
 \end{itemize}
 
-\subsection*{Supervision et observabilité}
+\subsection{Supervision et observabilité}
 
 \begin{itemize}
 	\item \textbf{Supervision proactive et alertes en temps réel} : disposer d'un système de surveillance permettant de collecter les métriques de performance, de visualiser l'état des services et de générer des alertes en cas d'incident.
@@ -155,7 +157,7 @@ Les besoins fonctionnels décrivent l'ensemble des fonctionnalités attendues de
 	\item \textbf{Journalisation centralisée} : assurer la collecte, le stockage et la consultation unifiée des journaux système et applicatifs.
 \end{itemize}
 
-\subsection*{Sécurité et gestion des accès}
+\subsection{Sécurité et gestion des accès}
 
 \begin{itemize}
 	\item \textbf{Gestion sécurisée et dynamique des secrets} : intégrer un système centralisé de stockage, de chiffrement et de distribution des informations sensibles, avec des mécanismes de rotation automatique et de durée de vie limitée des secrets lorsque cela est possible.
@@ -163,13 +165,13 @@ Les besoins fonctionnels décrivent l'ensemble des fonctionnalités attendues de
 	\item \textbf{Séparation stricte des environnements} : organiser l'infrastructure en environnements distincts (développement, test, pré-production, production) afin de garantir leur isolation et de limiter les risques de contamination croisée.
 \end{itemize}
 
-\subsection*{Résilience et continuité de service}
+\subsection{Résilience et continuité de service}
 
 \begin{itemize}
 	\item \textbf{Correction automatique des incidents et des défaillances} : prévoir des processus d'auto-remédiation capables de restaurer l'état nominal des services, par exemple par le redémarrage ou le reprovisionnement automatisé des ressources en cas de panne.
 \end{itemize}
 
-\subsection*{Interface de pilotage}
+\subsection{Interface de pilotage}
 
 \begin{itemize}
 	\item \textbf{Interface unifiée d'administration} : proposer une interface utilisateur et/ou une API permettant d'interagir avec la plateforme de manière sécurisée et traçable.
@@ -181,7 +183,7 @@ Ces besoins fonctionnels constituent la base de la solution à concevoir, en int
 
 Les besoins non fonctionnels définissent les critères de qualité, de performance, de sécurité et de conformité que la solution doit respecter de manière transversale. Ces exigences sont essentielles pour garantir la fiabilité, la pérennité et la valeur ajoutée de la plateforme. Elles peuvent être regroupées selon plusieurs dimensions complémentaires.
 
-\subsection*{Qualité de service et performance}
+\subsection{Qualité de service et performance}
 
 \begin{itemize}
 	\item \textbf{Haute disponibilité} : garantir un taux de disponibilité supérieur à 99,9\,\% pour les services critiques, en prévoyant des mécanismes de redondance, de bascule automatique et de tolérance aux pannes.
@@ -193,7 +195,7 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 	\item \textbf{Réduction du temps de mise en production} : optimiser les processus afin de diminuer significativement les délais nécessaires au déploiement de nouvelles fonctionnalités ou de correctifs.
 \end{itemize}
 
-\subsection*{Sécurité et protection des données}
+\subsection{Sécurité et protection des données}
 
 \begin{itemize}
 	\item \textbf{Sécurité renforcée} : garantir la protection des données sensibles, la confidentialité des échanges et la résilience face aux attaques, en appliquant les principes de \emph{security by design} et en intégrant les contrôles de sécurité dès la conception.
@@ -207,7 +209,7 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 	\item \textbf{Audits automatiques de conformité et d'intégrité} : générer périodiquement des rapports permettant de vérifier la cohérence des configurations, la robustesse des mécanismes de sécurité et le respect des politiques internes et réglementaires.
 \end{itemize}
 
-\subsection*{Évolutivité et maintenabilité}
+\subsection{Évolutivité et maintenabilité}
 
 \begin{itemize}
 	\item \textbf{Maintenabilité} : faciliter l'application des mises à jour logicielles, l'évolution des configurations et l'intégration de nouvelles fonctionnalités, tout en minimisant les interruptions de service.
@@ -218,7 +220,7 @@ Les besoins non fonctionnels définissent les critères de qualité, de performa
 
 \end{itemize}
 
-\subsection*{Conformité réglementaire et normes applicables}
+\subsection{Conformité réglementaire et normes applicables}
 
 \begin{itemize}
 	\item \textbf{Conformité réglementaire} : respecter les obligations légales et les standards sectoriels en vigueur notamment RGPD, ANSII mais egalement ISO 27001, NIS2, etc. , ainsi que les exigences spécifiques à l'activité et aux données traitées.
@@ -347,6 +349,13 @@ Le stockage persistant est assuré par Longhorn, qui fournit :
 	\item Une intégration transparente avec Kubernetes.
 \end{itemize}
 
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=.5\textwidth]{figures/how-longhorn-works.png}
+	\caption{Stockage distribué avec Longhorn}
+	\label{fig: Stockage distribué avec Longhorn}
+\end{figure}
+
 \subsection{Gestion sécurisée des secrets}
 
 Vault joue le rôle de coffre-fort centralisé :
@@ -402,6 +411,7 @@ Ces outils sont hébergés sur Kubernetes afin d’assurer leur haute disponibil
 \begin{itemize}
 	\item Des environnements de \textbf{test} et de \textbf{staging} reprenant la même architecture que la production ont été mis en place afin de valider les développements et les mises à jour.
 	\item Les environnements de \textbf{production} ont été configurés avec des sauvegardes automatiques et des mesures renforcées de sécurité et de supervision.
+	\item Kustomize a ete utilisé pour garder une concistence et de gérer les variations de configuration entre les environnements, permettant de maintenir une base commune tout en adaptant les paramètres spécifiques (par exemple, les ressources allouées, les endpoints externes, etc.).
 \end{itemize}
 
 \subsection{Intégration et automatisation des déploiements}
@@ -416,7 +426,7 @@ L’infrastructure GitLab repose sur plusieurs composants clés :
 	\item \textbf{Scripts et templates} : fichiers auxiliaires contenant les commandes d’automatisation (par exemple : \texttt{deploy.sh}, \texttt{test.sh}, \texttt{build.Dockerfile}).
 \end{itemize}
 
-\paragraph{Structure générale d’un pipeline GitLab CI}
+\subsection{Structure générale d’un pipeline GitLab CI}
 
 Un pipeline CI/CD complet est généralement structuré autour des étapes suivantes :
 
@@ -467,7 +477,7 @@ Un pipeline CI/CD complet est généralement structuré autour des étapes suiva
 \end{itemize}
 
 \paragraph{Exemple de gestion des credentials}
-Les variables sensibles telles que les clés d’accès API, tokens de déploiement ou credentials Kubernetes sont définies dans l’interface GitLab CI/CD (\texttt{Settings > CI/CD > Variables}) et injectées dans les jobs via :
+Les variables sensibles telles que les clés d’accès API, tokens d'acces aux depots et tokens de déploiement ou credentials Kubernetes sont définies dans l’interface GitLab CI/CD (\texttt{Settings > CI/CD > Variables}) et injectées dans les jobs via :
 \begin{verbatim}
 deploy:
 script:
@@ -524,14 +534,10 @@ En prolongement de l’IaC, l’approche GitOps propose de faire du système de 
 
 \subsection{Principes de la conteneurisation}
 
-La conteneurisation a constitué une rupture technologique majeure en introduisant une isolation légère des environnements d’exécution, en comparaison avec les machines virtuelles traditionnelles. Chaque conteneur encapsule l’application et ses dépendances, assurant ainsi une portabilité élevée et une reproductibilité des exécutions sur différents environnements.
-
-Parmi les bénéfices les plus fréquemment identifiés figurent la réduction de la charge système, l’optimisation des coûts d’infrastructure, l’accélération des cycles de déploiement et une meilleure isolation des processus.
-
+La conteneurisation a constitué une rupture technologique majeure en introduisant une isolation légère des environnements d’exécution, en comparaison avec les machines virtuelles traditionnelles. Chaque conteneur encapsule l’application et ses dépendances, assurant ainsi une portabilité élevée et une reproductibilité des exécutions sur différents environnements.Selon une étude de la CNCF et le rapport State of Containers de Datadog, plus de 80 \% des entreprises utilisant des microservices ont adopté des conteneurs dans leur environnement de production. En 2022, la CNCF rapportait que 42 \% des organisations exécutaient plus de 50 \% de leurs workloads en conteneurs, une proportion qui ne cesse de progresser.Parmi les bénéfices les plus fréquemment identifiés figurent la réduction de la charge système (les conteneurs consomment en moyenne 30 à 50 \% moins de ressources que des machines virtuelles équivalentes), l’optimisation des coûts d’infrastructure, l’accélération des cycles de déploiement (près de 60 \% des entreprises déclarent qu’elles déploient des applications en production plusieurs fois par semaine grâce aux conteneurs) et une meilleure isolation des processus.
 \subsection{Orchestration des conteneurs}
 
-Pour coordonner ces conteneurs à grande échelle, des plateformes d’orchestration ont été développées. Kubernetes s’est progressivement imposé comme la solution de référence, grâce à sa capacité à automatiser le placement des workloads, l’ajustement dynamique des ressources, la relance des conteneurs défaillants et la gestion centralisée des configurations ainsi que des secrets. Ces fonctionnalités favorisent l’exploitation efficace d’environnements complexes et distribués.
-
+Pour coordonner ces conteneurs à grande échelle, des plateformes d’orchestration ont été développées. Kubernetes s’est progressivement imposé comme la solution de référence, grâce à sa capacité à automatiser le placement des workloads, l’ajustement dynamique des ressources, la relance des conteneurs défaillants et la gestion centralisée des configurations ainsi que des secrets.Selon le rapport annuel de la Cloud Native Computing Foundation (CNCF), Kubernetes est aujourd’hui utilisé par plus de 96 \% des organisations qui exploitent des conteneurs en production. Sa popularité ne cesse de croître : en 2016, seuls 27 \% des répondants déclaraient l’utiliser, contre près de 90 \% en 2022, ce qui illustre l’ampleur de son adoption. Ces fonctionnalités favorisent l’exploitation efficace d’environnements complexes et distribués. De plus, plus de 70 \% des entreprises déclarent que Kubernetes joue un rôle stratégique dans leur modernisation applicative et l’adoption du cloud hybride.
 \subsection{Patterns d’architecture cloud-native}
 
 La conteneurisation et l’orchestration encouragent l’adoption de modèles applicatifs dits \emph{cloud-native}. Ces architectures reposent notamment sur le découpage en microservices, la scalabilité horizontale, la résilience par la redondance et le découplage entre l’infrastructure et les applications. Ces principes sont aujourd’hui largement adoptés par les entreprises souhaitant moderniser leurs systèmes d’information.

@@ -42,18 +42,18 @@ Terraform répond à plusieurs enjeux : accélération du provisioning, fiabilis
 
 \textbf{Cas d’utilisation} : provisionner un cluster Kubernetes sur Proxmox avec un réseau et des volumes configurés.
 
-% \subsection{Cloud-init}
+\subsection{Cloud-init}
 
-% Cloud-init est un outil d’initialisation automatique des machines virtuelles lors du premier démarrage. Il est supporté par la plupart des plateformes cloud et hyperviseurs, et permet :
-% \begin{itemize}
-% 	\item La configuration réseau.
-% 	\item La création d’utilisateurs et de clés SSH.
-% 	\item L’installation de paquets et le lancement de scripts.
-% \end{itemize}
+Cloud-init est un outil d’initialisation automatique des machines virtuelles lors du premier démarrage. Il est supporté par la plupart des plateformes cloud et hyperviseurs, et permet notamment :
+\begin{itemize}
+	\item La configuration réseau.
+	\item La création d’utilisateurs et de clés SSH.
+	\item L’installation de paquets et le lancement de scripts personnalisés.
+\end{itemize}
 
-% Cloud-init contribue à standardiser les environnements et réduire les délais de mise en service.
+Cloud-init contribue à standardiser les environnements et réduire les délais de mise en service. Il joue également un rôle essentiel comme étape préalable avant l’utilisation d’outils d’infrastructure as code tels que Terraform, en garantissant que les instances disposent d’une configuration de base cohérente (accès SSH opérationnel, configuration réseau correcte, packages requis déjà installés). Cette préparation est indispensable pour que Terraform puisse ensuite se connecter aux machines et appliquer les ressources et configurations supplémentaires de manière automatisée.
 
-% \textbf{Cas d’utilisation} : automatiser l’installation de Docker et la configuration réseau d’une instance Proxmox.
+\textbf{Cas d’utilisation} : automatiser l’installation de Docker et la configuration réseau d’une instance Proxmox, afin de préparer l’environnement avant l’orchestration et la gestion avancée via Terraform.
 
 \subsection{Ansible}
 
@@ -85,13 +85,14 @@ Vault est un gestionnaire de secrets développé par HashiCorp, conçu pour séc
 Vault repose sur plusieurs concepts fondamentaux :
 
 \begin{itemize}
-	\item \textbf{Seal et Unseal} : lors de son démarrage, Vault est scellé (sealed). Dans cet état, aucune donnée ne peut être lue ou écrite. Le processus d’unseal consiste à déverrouiller Vault en fournissant une combinaison de clés de déchiffrement (unseal keys) générées lors de l’initialisation. Ce mécanisme s’appuie sur l’algorithme de \emph{Shamir’s Secret Sharing}, qui divise la clé maîtresse en fragments distribués à différents opérateurs. Cela garantit qu’aucun individu ne détient seul la capacité de déverrouiller le système. La nécessité d’unseal manuellement après un redémarrage contribue à limiter l’exposition en cas de compromission physique ou de coupure d’alimentation.
+	\item \textbf{Seal et Unseal} : lors de son démarrage, Vault est scellé (sealed). Dans cet état, aucune donnée ne peut être lue ou écrite. Le processus d’unseal consiste à déverrouiller Vault en fournissant une combinaison de clés de déchiffrement (unseal keys) générées lors de l’initialisation. Ce mécanisme s’appuie sur l’algorithme de \emph{Shamir’s Secret Sharing}, qui divise la clé maîtresse en fragments distribués à différents opérateurs. Cela garantit qu’aucun individu ne détient seul la capacité de déverrouiller le système. La nécessité d’unseal manuellement après un redémarrage contribue à limiter l’exposition en cas de compromission.
 	\item \textbf{Backends de stockage} : Vault peut s’appuyer sur différents backends de stockage (par exemple Consul, fichiers locaux, Amazon S3) pour persister ses données chiffrées. Le choix du backend influence les performances, la disponibilité et la tolérance aux pannes.
 	\item \textbf{Secrets Engines} : ce sont les composants responsables de la gestion des secrets. Certains engines fournissent du stockage statique (par exemple les clés stockées manuellement), d’autres génèrent des secrets dynamiques à la demande (par exemple des credentials temporaires pour une base de données).
 	\item \textbf{Auth Methods} : ces méthodes définissent comment les utilisateurs ou applications s’authentifient auprès de Vault. Il peut s’agir de tokens statiques, d’authentification AppRole, de certificats TLS ou d’intégrations avec Kubernetes.
 	\item \textbf{Policies} : les politiques d’accès contrôlent avec précision ce que chaque entité est autorisée à faire. Elles définissent les droits de lecture, d’écriture ou de suppression sur des chemins spécifiques.
 \end{itemize}
 
+Vault supporte également un mode haute disponibilité (HA) distribué, qui permet le déploiement d’un cluster avec plusieurs instances. Dans ce mode, un nœud actif (active node) prend en charge les requêtes, tandis que les autres nœuds fonctionnent en standby. Cette architecture contribue à améliorer la tolérance aux pannes, à garantir la continuité de service en cas de défaillance d’un serveur et à renforcer la résilience globale du système.
 \paragraph{Design de sécurité}
 
 Vault adopte une approche de sécurité par défaut :
@@ -100,7 +101,9 @@ Vault adopte une approche de sécurité par défaut :
 	\item Chaque requête est soumise à une évaluation des politiques d’accès.
 	\item Les secrets peuvent être versionnés et révoqués à tout moment.
 	\item Les logs d’audit permettent de tracer finement chaque opération.
+	\item Vault est également capable de générer des \textbf{secrets temporaires} (secrets dynamiques) qui remplacent les identifiants statiques. Ces secrets éphémères expirent automatiquement après un délai défini et peuvent être révoqués de façon proactive, ce qui limite la fenêtre d’exposition en cas de compromission.
 \end{itemize}
+
 Ce modèle de sécurité réduit le risque d’exposition accidentelle et renforce la conformité aux exigences réglementaires.
 
 \paragraph{Exemple d’utilisation}
@@ -230,7 +233,7 @@ Grâce à Terraform, la création des VMs est reproductible et contrôlée dans 
 Après le provisionnement des ressources, la préparation des inventaires est essentielle pour permettre à Ansible de prendre le relais.
 Pour ce faire, un script d'automatisation collecte dynamiquement les informations des machines créées (adresses IP, identifiants, groupes logiques) et génère un inventaire au format YAML compatible avec Ansible.
 
-Cette génération automatisée évite les erreurs liées aux manipulations manuelles et garantit que l'inventaire reflète toujours l'état réel de l'infrastructure.
+Cette génération automatisée évite les erreurs liées aux manipulations manuelles et garantit que l'inventaire reflète toujours l'état réel de l'infrastructure.De plus, elle s’inscrit dans une démarche DRY (Don’t Repeat Yourself), en éliminant la duplication des informations entre les étapes de provisionnement et de configuration
 L'inventaire est versionné dans un dépôt Git, renforçant la traçabilité des évolutions.
 
 \subsection{Configuration automatique des machines virtuelles avec Ansible}
