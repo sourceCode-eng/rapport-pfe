@@ -1,49 +1,11 @@
-\section{Synthèse des apports du projet}
-
 Le projet présenté dans ce mémoire s’inscrit dans un contexte d’évolution rapide et soutenue des systèmes d’information, marqué par des besoins accrus en automatisation, en sécurité et en observabilité. Partant d’un environnement initial caractérisé par une forte hétérogénéité et une dépendance importante aux processus manuels, cette initiative avait pour objectif de concevoir et déployer une architecture moderne, automatisée et résiliente, en mesure de soutenir la croissance et les ambitions stratégiques de l’entreprise Oneex.
 
-Les travaux réalisés ont permis de concrétiser ces objectifs grâce à l’intégration progressive de technologies et de méthodologies éprouvées, notamment Terraform pour le provisionnement déclaratif, Kubernetes pour l’orchestration et la scalabilité des conteneurs, Vault pour la gestion centralisée et sécurisée des secrets, et Prometheus et Grafana pour la collecte et la visualisation des métriques. L’adoption d’un modèle GitOps a contribué à renforcer la traçabilité des déploiements, à améliorer la cohérence entre les environnements et à réduire significativement les délais de mise en production.
+Les travaux réalisés ont permis d’atteindre ces objectifs grâce à l’intégration progressive de technologies et de méthodologies éprouvées, notamment Terraform pour le provisionnement déclaratif, Kubernetes pour l’orchestration et la scalabilité des conteneurs, Vault pour la gestion centralisée et sécurisée des secrets, ainsi que Prometheus et Grafana pour la collecte et la visualisation des métriques. L’adoption d’un modèle GitOps a contribué à renforcer la traçabilité des déploiements, à améliorer la cohérence entre les environnements et à réduire significativement les délais de mise en production. Cette démarche a apporté plusieurs bénéfices tangibles, parmi lesquels une réduction sensible des temps de déploiement et des interventions manuelles, une meilleure maîtrise des configurations et des versions applicatives, une visibilité accrue sur l’état opérationnel des services et des ressources, ainsi qu’un renforcement de la sécurité des environnements grâce à une gestion centralisée des secrets et à l’application plus systématique du principe du moindre privilège.
 
-\section{Bénéfices constatés}
+Toutefois, certaines limites ont été relevées. La complexité inhérente à la maîtrise des outils, notamment Vault et Argo CD, a nécessité un investissement important en formation et en accompagnement des équipes. La disponibilité restreinte des ressources matérielles et le calendrier contraint ont également retardé certaines phases de test et de validation. La documentation technique et opérationnelle n’a pas pu être finalisée de façon exhaustive et certaines optimisations, comme l’automatisation complète des sauvegardes chiffrées, restent à mettre en œuvre. Par ailleurs, la solution déployée ne dispose pas encore de dispositifs spécialisés de détection et de réponse aux incidents, et l’intégration d’un système SIEM couplé à des mécanismes de réponse automatisée (SOAR) constitue une perspective essentielle pour renforcer la capacité à détecter, analyser et contenir les menaces en temps réel.
 
-La démarche mise en place a apporté plusieurs bénéfices tangibles :
-\begin{itemize}
-	\item Une réduction sensible des temps de déploiement et des interventions manuelles ;
-	\item Une meilleure maîtrise des configurations et des versions applicatives ;
-	\item Une visibilité accrue sur l’état opérationnel des services et des ressources ;
-	\item Un renforcement de la sécurité des environnements grâce à une gestion centralisée des secrets et une application plus systématique du principe du moindre privilège.
-\end{itemize}
-Ces avancées constituent un socle robuste sur lequel l’entreprise pourra s’appuyer pour faire évoluer son infrastructure en fonction de ses besoins futurs.
+Pour répondre à ces limites et accompagner l’évolution de l’entreprise, plusieurs pistes d’amélioration pourront être envisagées, notamment le renforcement de la scalabilité horizontale du cluster Kubernetes, la mise en place d’alertes dynamiques basées sur l’analyse comportementale des utilisateurs, l’expérimentation de mécanismes de défense active, ainsi qu’un accompagnement soutenu de la conduite du changement par des formations ciblées et la diffusion des bonnes pratiques DevOps.
 
-\section{Limites identifiées}
-
-Toutefois, certaines limites et points de vigilance ont été relevés :
-\begin{itemize}
-	\item La complexité inhérente à la maîtrise des outils (notamment Vault et Argo CD) a nécessité un investissement important en montée en compétences et en accompagnement des équipes ;
-	\item La disponibilité restreinte des ressources matérielles et le calendrier contraint ont retardé certaines phases de test et de validation ;
-	\item La documentation technique et opérationnelle n’a pas pu être finalisée de façon exhaustive ;
-	\item Certaines optimisations, comme l’automatisation complète des sauvegardes chiffrées, n’ont pas encore été mises en œuvre ;
-	\item Enfin, la solution déployée ne dispose pas à ce stade de dispositifs spécialisés de détection et de réponse aux incidents. L’intégration de systèmes SIEM (Security Information and Event Management) et de mécanismes de réponse automatisée (SOAR) constitue une perspective essentielle pour renforcer la capacité à détecter, analyser et contenir les menaces en temps réel.
-\end{itemize}
-
-\section{Perspectives d’évolution}
-
-Pour répondre à ces limites et accompagner l’évolution de l’entreprise, plusieurs pistes d’amélioration pourront être envisagées :
-\begin{itemize}
-\item Compléter et enrichir la documentation technique et fonctionnelle ;
-\item Renforcer la scalabilité horizontale du cluster Kubernetes afin de supporter de nouvelles applications ;
-\item Mettre en place des alertes dynamiques et des seuils adaptatifs basés sur l’analyse comportementale (UEBA) pour une détection plus fine des anomalies ;
-\item Implémenter un système SIEM couplé à des processus de réponse automatisée (SOAR) pour renforcer la supervision et la capacité de réaction ;
-\item Expérimenter des mécanismes de défense active (deception systems) afin de piéger et retarder les attaquants tout en collectant des informations utiles ;
-\item Accompagner la conduite du changement par des formations ciblées et la diffusion progressive des bonnes pratiques DevOps.
-\end{itemize}
-
-\section{Enseignements personnels}
-
-Sur le plan personnel, la conduite de ce projet m’a permis de développer des compétences solides et transverses, tant sur le plan technique qu’organisationnel. J’ai consolidé mes connaissances dans la conception et le déploiement d’infrastructures automatisées et sécurisées, et j’ai acquis une meilleure compréhension des enjeux liés à la disponibilité et à la résilience des systèmes critiques. Ce projet m’a également appris à structurer et planifier des tâches complexes, à documenter rigoureusement les processus et à collaborer avec des interlocuteurs aux profils variés.
-
-Cette expérience a confirmé mon intérêt pour le domaine du DevOps, de l’infrastructure as code et de la sécurité des systèmes, que je souhaite approfondir dans la suite de mon parcours professionnel.
-
-\section{Conclusion}
+Sur le plan personnel, la conduite de ce projet m’a permis de développer des compétences solides et transverses, tant sur le plan technique qu’organisationnel. J’ai consolidé mes connaissances dans la conception et le déploiement d’infrastructures automatisées et sécurisées, et j’ai acquis une meilleure compréhension des enjeux liés à la disponibilité et à la résilience des systèmes critiques. Ce projet m’a également appris à structurer et planifier des tâches complexes, à documenter rigoureusement les processus et à collaborer avec des interlocuteurs aux profils variés. Cette expérience a confirmé mon intérêt pour le domaine du DevOps, de l’infrastructure as code et de la sécurité des systèmes, que je souhaite approfondir dans la suite de mon parcours professionnel.
 
 En définitive, cette démarche s’inscrit dans une dynamique de transformation continue, nécessitant un engagement soutenu en matière de formation, de gouvernance technique et d’innovation. L’adoption progressive des bonnes pratiques, associée à l’évolution permanente des outils et des compétences, permettra de consolider la robustesse, la sécurité et l’efficience des systèmes d’information et de préparer l’entreprise aux défis technologiques de demain.
