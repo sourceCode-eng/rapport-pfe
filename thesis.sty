@@ -58,6 +58,7 @@
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}   % Dotted leaders for chapters
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}    % Dotted leaders for sections
 %\usepackage{minitoc}                     % Mini table of contents for each chapter , conflicts with almost everything so disabled
+\usepackage{titletoc}
 
 
 % ========================
@@ -102,16 +103,27 @@
 \usepackage{todonotes}                       % To-do notes in margin
 \setlength{\marginparwidth}{2cm}             % Margin width for todonotes
 
+
 % ========================
 % Headers and Footers
 % ========================
-\usepackage{fancyhdr}                        % Custom headers and footers
-\fancyhf{}                                   % Clear header/footer defaults
-\fancyfoot[R]{Page \thepage}                 % Page number on bottom right
-\pagestyle{fancy}                            % Use fancy page style
-\fancypagestyle{plain}{                      % For chapters (plain style)
+\usepackage{fancyhdr}
+
+% Fancy: front matter , no header or footer
+\fancypagestyle{fancy}{
   \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% Plain: main content style , header with chapter title, footer with page number
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\nouppercase{\leftmark}}
   \fancyfoot[R]{Page \thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
 }
 
 
