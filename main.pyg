@@ -5,7 +5,7 @@ script:
 - kubectl --kubeconfig=kubeconfig apply -f k8s/
 \end{verbatim}
 
-\paragraph{Exemple de stage de release}
+\subsection{Exemple de stage de release}
 \begin{verbatim}
 release:
 stage: release

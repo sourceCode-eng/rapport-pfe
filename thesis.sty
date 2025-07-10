@@ -7,9 +7,9 @@
 % ========================
 % Language and Encoding
 % ========================
-\usepackage[french,english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+\usepackage[french,english]{babel}          % Multilingual support (French and English)
+\usepackage[T1]{fontenc}                    % Use T1 font encoding (better hyphenation, accented characters)
+%\usepackage[utf8]{inputenc}                % UTF-8 input encoding (redundant if using modern engines)
 
 
 % ========================
@@ -20,122 +20,127 @@
             bottom=20mm,
             left=25mm,
             right=20mm,
-            bindingoffset=5mm]{geometry}
-\usepackage{setspace}
-\onehalfspacing
-\setlength{\parindent}{0cm}
-\setlength{\parskip}{6pt}
-
-
-
-% Modern font (optional)
-%\usepackage{newtxtext,newtxmath}
-
+            bindingoffset=5mm]{geometry}     % Page size and margins
+\usepackage{setspace}                       % Line spacing commands
+\onehalfspacing                             % 1.5 line spacing
+\setlength{\parindent}{0cm}                 % No paragraph indentation
+\setlength{\parskip}{6pt}                   % Space between paragraphs
+\usepackage{times}                          % Use Times font (classic)
+%\usepackage{newtxtext,newtxmath}           % Modern Times-like font alternative (commented)
+\usepackage{xurl}                           % Allow line breaks inside URLs
 
 
 % ========================
 % Section Headings
 % ========================
-\usepackage{titlesec}
-\titleformat{\chapter}{\normalfont\bfseries\LARGE}{\thechapter.}{1em}{}
-\titleformat{\section}{\normalfont\bfseries\Large}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalfont\bfseries\large}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalfont\bfseries\normalsize}{\thesubsubsection}{1em}{}
-
-\titlespacing*{\chapter}{0pt}{20pt plus 2pt minus 2pt}{10pt}
-\titlespacing*{\section}{0pt}{12pt plus 2pt minus 2pt}{6pt}
-\titlespacing*{\subsection}{0pt}{10pt plus 2pt minus 2pt}{4pt}
-\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 2pt}{2pt}
+\usepackage{titlesec}                       % Custom formatting for section titles
+\titleformat{\chapter}
+  {\normalfont\bfseries\LARGE}{\thechapter.}{1em}{}     % Chapter format
+\titleformat{\section}
+  {\normalfont\bfseries\Large}{\thesection}{1em}{}      % Section format
+\titleformat{\subsection}
+  {\normalfont\bfseries\large}{\thesubsection}{1em}{}   % Subsection format
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\normalsize}{\thesubsubsection}{1em}{}  % Subsubsection format
+\titlespacing*{\chapter}{0pt}{20pt plus 2pt minus 2pt}{10pt}    % Spacing around chapters
+\titlespacing*{\section}{0pt}{12pt plus 2pt minus 2pt}{6pt}     % Spacing around sections
+\titlespacing*{\subsection}{0pt}{10pt plus 2pt minus 2pt}{4pt}  % Spacing around subsections
+\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 2pt}{2pt}% Spacing around subsubsections
 
 
 % ========================
 % Table of Contents formatting
 % ========================
-\usepackage{tocloft}
-\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill}
-\setlength{\cftbeforetoctitleskip}{0em}
-
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\usepackage{tocloft}                          % Customize TOC, LOF, LOT formatting
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}   % Centered TOC title
+\renewcommand{\cftaftertoctitle}{\hfill}                 % Centered TOC title
+\setlength{\cftbeforetoctitleskip}{0em}                 % No extra space before TOC title
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}   % Dotted leaders for chapters
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}    % Dotted leaders for sections
+\usepackage{minitoc}                     % Mini table of contents for each chapter      
 
 
 % ========================
 % Lists
 % ========================
-% \usepackage{enumitem}
-% \setlist[itemize]{noitemsep, topsep=0pt}
-% \setlist[enumerate]{noitemsep, topsep=0pt}
+\usepackage{enumitem}                        % Fine control over list spacing and labels
+\setlist[itemize]{noitemsep, topsep=0pt}     % Compact itemize lists
+\setlist[enumerate]{noitemsep, topsep=0pt}   % Compact enumerate lists
+\usepackage{longtable}                       % Tables spanning multiple pages
+\usepackage{multirow}                        % Cells spanning multiple rows in tables
+\setlength {\marginparwidth }{2cm}          % Margin width for todonotes
+\usepackage{amssymb}                         % Additional math symbols
+\renewcommand{\labelitemi}{\tiny$\blacksquare$}   % Black square bullets in itemize
 
 
 % ========================
 % Code
 % ========================
-\usepackage{listings}
-\usepackage{verbatimbox}
+\usepackage{listings}                        % Code listings
+\usepackage{verbatimbox}                     % Centered verbatim environments
 
 
 % ========================
 % Bibliography
 % ========================
-\usepackage[sorting=nyt]{biblatex}
-\usepackage{csquotes}
-\addbibresource{references.bib}
-\emergencystretch=1em
-\usepackage[final]{microtype}
+\usepackage[sorting=none]{biblatex}          % Bibliography management , nyt for name , tear , title
+\usepackage{csquotes}                        % Recommended with biblatex
+\addbibresource{references.bib}              % BibTeX file location
+\emergencystretch=1em                        % Helps avoid overfull lines in bibliography
+\usepackage[final]{microtype}                % Better justification and kerning
 
 
 % ========================
 % Hyperlinks
 % ========================
-\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks]{hyperref}             % Clickable links without colored boxes
 
 
 % ========================
 % Notes
 % ========================
-% \usepackage{todonotes}
-% \setlength{\marginparwidth}{2cm}
+\usepackage{todonotes}                       % To-do notes in margin
+\setlength{\marginparwidth}{2cm}             % Margin width for todonotes
 
 % ========================
 % Headers and Footers
 % ========================
-\usepackage{fancyhdr}
-\fancyhf{}
-\fancyfoot[R]{Page \thepage}
-\pagestyle{fancy}
-\fancypagestyle{plain}{
+\usepackage{fancyhdr}                        % Custom headers and footers
+\fancyhf{}                                   % Clear header/footer defaults
+\fancyfoot[R]{Page \thepage}                 % Page number on bottom right
+\pagestyle{fancy}                            % Use fancy page style
+\fancypagestyle{plain}{                      % For chapters (plain style)
   \fancyhf{}
   \fancyfoot[R]{Page \thepage}
 }
 
 
 % ========================
+% Images and Figures
+% ========================
+\usepackage{graphicx}                        % Include images
+\usepackage{wrapfig}                         % Wrap text around figures
+\usepackage{caption}                         % Custom caption formatting
+\captionsetup{labelsep=period}              % Use "." after "Figure 1"
+\usepackage{float}                           % Force figure placement (e.g., [H])
+
+
+% ========================
 % Miscellaneous
 % ========================
-\usepackage{needspace}
-\usepackage{hyphenat}
-\usepackage{blindtext}
-\usepackage{chngcntr}
-\counterwithout{table}{chapter}
-\counterwithout{figure}{chapter}
+\usepackage{needspace}                       % Reserve space to prevent page breaks
+\usepackage{hyphenat}                        % Advanced hyphenation options
+\usepackage{blindtext}                       % Filler text for testing
+\usepackage{chngcntr}                        % Change counter behavior
+\counterwithout{table}{chapter}              % Continuous table numbering
+\counterwithout{figure}{chapter}             % Continuous figure numbering
+\usepackage{pdfpages}                        % Include PDFs
+\usepackage{ifthen}                          % Conditional logic
+\usepackage{datetime}                        % Date formatting
+\renewcommand{\dateseparator}{-}             % Use "-" in dates (ISO style)
 
 
-
-\usepackage{scrextend}                              %
-\usepackage{graphicx}                               %
-\usepackage{wrapfig}                                % Wrap images properly around text
-\usepackage[dvipsnames]{xcolor}                     %
-\usepackage{longtable}                              %
-\usepackage{multirow}                               %
-\setlength {\marginparwidth }{2cm}
-\usepackage{todonotes}                              %
-\usepackage{float}                                  %
-\usepackage{pdfpages}
-\usepackage{amssymb}                                % For square itemized lists
-\renewcommand{\labelitemi}{\tiny$\blacksquare$}     % For square itemized lists
-\usepackage{caption}                                %
-\captionsetup{labelsep=period}                      %
-\usepackage{times}                                  %
-\newcounter{ltrow}                                  %
-\usepackage[hang,flushmargin]{footmisc} 
+\sloppy                                      % Allow flexible line breaks to avoid overfull boxes
+% ========================
+% End of thesis package
+% ========================

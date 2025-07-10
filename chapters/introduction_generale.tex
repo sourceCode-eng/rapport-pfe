@@ -146,7 +146,7 @@ Ces solutions permettent aux entreprises de contrôler efficacement les accès, 
 
 \subsection{Services informatiques et outils internes}
 
-\subsubsection{Les services informatiques}
+\subsection{Les services informatiques}
 
 \textbf{Oneex ScanApp} constitue le cœur opérationnel de l’entreprise. Il assure l’analyse documentaire et la vérification d’identité, disponible sur postes fixes comme sur mobiles, avec une interface ergonomique et des fonctionnalités avancées.
 
@@ -174,13 +174,13 @@ Le code de ces dernieres est hebergé sur un serveur gitlab interne, garantissan
 * back office : qui l'interface des administrateurs et des experts, permettant la gestion des opérations, le suivi des incidents et l'analyse des données.
 Chaque partie est développée en utilisant go et nuxt.js, garantissant ainsi une performance optimale et une expérience utilisateur fluide et ils sont separés en plusieurs depots, groupés en deux projets : le backend et le frontend.
 
-\subsubsection{Les outils internes}
+\subsection{Les outils internes}
 
 L’entreprise utilise plusieurs outils collaboratifs et techniques, parmi lesquels :
 GitLab, Harbor, Nextcloud, Jitsi, Label Studio, YouTrack, Vault, SSO Keycloak.
 Les bases de données sont hébergées sur des serveurs dédiés et sécurisés, garantissant la confidentialité et la disponibilité des informations sensibles ainsi que la conformité aux réglementations et assurer un controle et une gestion des accès rigoureux.
 
-\subsubsection{Infrastructures internes}
+\subsection{Infrastructures internes}
 
 Afin de garantir un contrôle total et une indépendance vis-à-vis des fournisseurs de cloud, Oneex a opté pour une infrastructure IaaS (Infrastructure as a Service) autohébergée sur des serveurs physiques administrés via la solution de virtualisation Proxmox VE.
 Actuellement, l'entreprise dispose de plusieurs serveurs physiques hébergés chez Scaleway, utilisés pour héberger l’ensemble de ses VMs, systèmes critiques et clusters Kubernetes.
@@ -191,7 +191,7 @@ Actuellement, l'entreprise dispose de plusieurs serveurs physiques hébergés ch
 	\caption{Ressources cloud de Oneex}
 \end{figure}
 
-\paragraph{Architecture réseau}
+\subsection{Architecture réseau}
 
 L’architecture réseau repose sur deux types de bridges configurés sur chaque hôte Proxmox :
 
@@ -208,7 +208,7 @@ Les services hébergés par les VMs ne sont pas exposés directement, mais à tr
 	\caption{Réseau interne des serveurs Proxmox}
 \end{figure}
 
-\paragraph{Communications inter-sites}
+\subsection{Communications inter-sites}
 
 Pour les échanges entre différents machines virtuelles dans des serveurs proxmox distincts , Oneex utilise un réseau privé chiffré basé sur VPN IPsec. Ce réseau interne garantit la confidentialité, l’intégrité et la performance des communications intersites sans dépendance à un cloud public.
 

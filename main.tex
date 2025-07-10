@@ -2,10 +2,6 @@
 
 % all the other includes etc. are done in the thesis.sty file.
 \usepackage{thesis}
-\usepackage{ifthen}
-\usepackage{datetime}
-
-\renewcommand{\dateseparator}{-} % The ISO standard uses hyphens
 
 
 % PDF Metadata
@@ -22,6 +18,7 @@
 
 % begin document
 \begin{document}
+\dominitoc
 \includepdf[pages=-]{page de garde.pdf}
 \renewcommand{\headrulewidth}{0pt}
 
@@ -31,6 +28,7 @@
 \cleardoublepage
 \pagenumbering{arabic}
 \setcounter{page}{1}
+\setcounter{chapter}{0}
 % chapters
 \input{chapters/chapters_main.tex}
 

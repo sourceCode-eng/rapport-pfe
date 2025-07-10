@@ -9,7 +9,7 @@ GitLab CI répond à plusieurs enjeux stratégiques  : accélérer le time-to-ma
 %point de vue logique et technique
 GitLab CI repose sur plusieurs concepts essentiels  :
 \begin{itemize}
-	\item \textbf{Le fichier \texttt{.gitlab-ci.yml}}  : fichier de configuration déclaratif placé à la racine du dépôt, qui décrit les jobs et les étapes du pipeline.
+	\item \textbf{Le fichier .gitlab-ci.yml}  : fichier de configuration déclaratif placé à la racine du dépôt, qui décrit les jobs et les étapes du pipeline.
 	\item \textbf{Les jobs}  : unités atomiques qui exécutent des scripts ou des commandes (build, test, deploy).
 	\item \textbf{Les stages}  : regroupements logiques des jobs (par exemple, build, test, deploy) exécutés séquentiellement ou en parallèle.
 	\item \textbf{Les runners}  : exécutants (machines ou conteneurs) qui traitent les jobs. Ils peuvent être partagés, spécifiques ou autoscalés.
@@ -332,11 +332,11 @@ Plusieurs mesures ont été mises en œuvre pour garantir une authentification s
 	\item Définition de règles de rotation périodique de ces secrets.
 \end{itemize}
 
-\paragraph{Authentification CI/CD vers Harbor (registre d’images)}
+\subsection{Authentification CI/CD vers Harbor (registre d’images)}
 
 Les runners GitLab doivent pouvoir pousser les images Docker construites vers Harbor.
 
-\subparagraph{Étapes de configuration}
+\subsection{Étapes de configuration}
 
 La création d’un compte robot dans Harbor constitue une étape essentielle afin de permettre l’automatisation des interactions avec le registre d’images. Ce mécanisme s’avère particulièrement utile dans le cadre d’une chaîne DevOps, notamment pour les processus de déploiement continu et la gestion des artefacts.
 
@@ -380,7 +380,7 @@ Pour chaque projet, des permissions détaillées sont définies. Dans cette conf
 	\caption{Définition des permissions spécifiques aux projets}
 \end{figure}
 
-Une fois les paramètres configurés, l’activation du compte et la génération du jeton d’authentification sont effectuées en cochant respectivement les options Enable Robot Account et Generate New Token. Le jeton généré est présenté à l’issue de l’opération. Il est important de noter que ce jeton constitue un identifiant unique et confidentiel, utilisé pour authentifier les requêtes automatisées. Il doit être conservé de manière sécurisée, puisqu’il ne peut pas être récupéré ultérieurement via l’interface.
+Une fois les paramètres configurés, l’activation du compte et la génération du jeton d’authentification sont effectuées en cochant respectivement les options Activer le compte Robot et Générer un nouveau jeton. Le jeton généré est présenté à l’issue de l’opération. Il est important de noter que ce jeton constitue un identifiant unique et confidentiel, utilisé pour authentifier les requêtes automatisées. Il doit être conservé de manière sécurisée, puisqu’il ne peut pas être récupéré ultérieurement via l’interface.
 
 \begin{figure}[H]
 	\centering
@@ -494,7 +494,7 @@ Une fois configuré, le GitLab Runner est en mesure de procéder automatiquement
 	\caption{Flux d’authentification et de publication des images Docker entre GitLab et Harbor}
 \end{figure}
 
-\paragraph{Authentification Argo CD vers GitLab (dépôt GitOps)}
+\subsection{Authentification Argo CD vers GitLab (dépôt GitOps)}
 
 Argo CD doit accéder au dépôt Git contenant les manifests Kubernetes ou les Helm charts à déployer.
 

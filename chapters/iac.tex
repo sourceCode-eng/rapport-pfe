@@ -80,7 +80,7 @@ Vault est un gestionnaire de secrets développé par HashiCorp, conçu pour séc
 	\item Audit complet des opérations et des accès.
 \end{itemize}
 
-\paragraph{Concepts de base}
+\subsection{Concepts de base}
 
 Vault repose sur plusieurs concepts fondamentaux :
 
@@ -93,7 +93,7 @@ Vault repose sur plusieurs concepts fondamentaux :
 \end{itemize}
 
 Vault supporte également un mode haute disponibilité (HA) distribué, qui permet le déploiement d’un cluster avec plusieurs instances. Dans ce mode, un nœud actif (active node) prend en charge les requêtes, tandis que les autres nœuds fonctionnent en standby. Cette architecture contribue à améliorer la tolérance aux pannes, à garantir la continuité de service en cas de défaillance d’un serveur et à renforcer la résilience globale du système.
-\paragraph{Design de sécurité}
+\subsection{Design de sécurité}
 
 Vault adopte une approche de sécurité par défaut :
 \begin{itemize}
@@ -106,7 +106,7 @@ Vault adopte une approche de sécurité par défaut :
 
 Ce modèle de sécurité réduit le risque d’exposition accidentelle et renforce la conformité aux exigences réglementaires.
 
-\paragraph{Exemple d’utilisation}
+\subsection{Exemple d’utilisation}
 
 Vault est particulièrement adapté pour :
 \begin{itemize}
@@ -116,7 +116,7 @@ Vault est particulièrement adapté pour :
 	\item Mettre en place un PKI interne pour l’émission automatique de certificats.
 \end{itemize}
 
-\paragraph{Bonnes pratiques de sécurité}
+\subsection{Bonnes pratiques de sécurité}
 
 Pour garantir un niveau de protection élevé, il est recommandé de :
 \begin{itemize}
@@ -127,24 +127,24 @@ Pour garantir un niveau de protection élevé, il est recommandé de :
 	\item S’assurer que le backend de stockage est hautement disponible et correctement sécurisé.
 \end{itemize}
 
-\paragraph{Limitations et vigilance}
+\subsection{Limitations et vigilance}
 
 Si Vault n’est pas configuré de manière rigoureuse, il peut devenir un point unique de défaillance et un vecteur d’attaque majeur. La compromission d’un nœud ou la perte des clés de déchiffrement peut entraîner une indisponibilité prolongée, voire la perte irrémédiable de certains secrets. Il est donc essentiel d’envisager des scénarios de récupération, tels que la sauvegarde chiffrée des données et la documentation des procédures d’unseal.
-% \subsection{Consul}
+\subsection{Consul}
 
-% Consul est une solution de service discovery, de configuration distribuée et de service mesh développée par HashiCorp. Elle permet de centraliser la gestion dynamique des services et de renforcer la cohérence des environnements déployés. Consul apporte plusieurs fonctionnalités complémentaires à Vault et s’intègre naturellement dans les architectures automatisées.
+Consul est une solution de service discovery, de configuration distribuée et de service mesh développée par HashiCorp. Elle permet de centraliser la gestion dynamique des services et de renforcer la cohérence des environnements déployés. Consul apporte plusieurs fonctionnalités complémentaires à Vault et s’intègre naturellement dans les architectures automatisées.
 
-% \paragraph{Principales fonctionnalités}
+\subsection{Principales fonctionnalités}
 
-% Les principales capacités de Consul sont les suivantes :
-% \begin{itemize}
-% 	\item \textbf{Découverte automatique des services} : Consul maintient un catalogue des services enregistrés, avec leurs adresses et ports associés, facilitant leur détection et leur utilisation par d’autres composants.
-% 	\item \textbf{Supervision de l’état des services} : le système exécute des contrôles de santé (health checks) qui permettent de vérifier en continu la disponibilité et le bon fonctionnement des instances.
-% 	\item \textbf{Stockage clé-valeur} : Consul fournit un KV store distribué, utilisé pour stocker des paramètres de configuration ou des informations dynamiques accessibles par les applications.
-% 	\item \textbf{Service mesh sécurisé} : grâce à l’intégration avec Envoy, Consul offre un plan de contrôle permettant de chiffrer le trafic inter-services, d’implémenter des politiques d’accès et de réaliser du routage avancé.
-% \end{itemize}
+Les principales capacités de Consul sont les suivantes :
+\begin{itemize}
+	\item \textbf{Découverte automatique des services} : Consul maintient un catalogue des services enregistrés, avec leurs adresses et ports associés, facilitant leur détection et leur utilisation par d’autres composants.
+	\item \textbf{Supervision de l’état des services} : le système exécute des contrôles de santé (health checks) qui permettent de vérifier en continu la disponibilité et le bon fonctionnement des instances.
+	\item \textbf{Stockage clé-valeur} : Consul fournit un KV store distribué, utilisé pour stocker des paramètres de configuration ou des informations dynamiques accessibles par les applications.
+	\item \textbf{Service mesh sécurisé} : grâce à l’intégration avec Envoy, Consul offre un plan de contrôle permettant de chiffrer le trafic inter-services, d’implémenter des politiques d’accès et de réaliser du routage avancé.
+\end{itemize}
 
-\paragraph{Architecture et composants}
+\subsection{Architecture et composants}
 
 Consul repose sur une architecture distribuée, composée de plusieurs éléments :
 \begin{itemize}
@@ -155,7 +155,7 @@ Consul repose sur une architecture distribuée, composée de plusieurs élément
 	\item \textbf{Connect} : le composant de service mesh qui gère l’émission de certificats TLS, le chiffrement du trafic et le contrôle des autorisations.
 \end{itemize}
 
-\paragraph{Mécanismes et cas d’usage}
+\subsection{Mécanismes et cas d’usage}
 
 Consul propose plusieurs mécanismes qui répondent à des besoins spécifiques :
 
@@ -169,7 +169,7 @@ Consul propose plusieurs mécanismes qui répondent à des besoins spécifiques 
 
 \textbf{Exemple d’utilisation} : synchroniser dynamiquement les configurations applicatives avec Consul Template, mettre à jour les fichiers de configuration NGINX lorsque de nouveaux services sont enregistrés, ou établir un canal de communication chiffré entre des microservices.
 
-\paragraph{Bonnes pratiques de sécurité}
+\subsection{Bonnes pratiques de sécurité}
 
 Pour tirer parti des fonctionnalités de Consul tout en maintenant un niveau élevé de sécurité, il est recommandé de :
 \begin{itemize}
@@ -180,7 +180,7 @@ Pour tirer parti des fonctionnalités de Consul tout en maintenant un niveau él
 	\item Activer l’audit des requêtes et opérations critiques.
 \end{itemize}
 
-\paragraph{Limitations et vigilance}
+\subsection{Limitations et vigilance}
 
 De meme que vault , malgré sa richesse fonctionnelle, Consul peut devenir un point unique de coordination : une indisponibilité du cluster impacte la découverte des services et la cohérence des configurations. De plus, une configuration incorrecte des ACL ou des intentions (politiques de service mesh) peut entraîner des fuites d’informations ou des interruptions de service. Il est donc essentiel de soigner le dimensionnement du cluster, de planifier des sauvegardes régulières et de tester les scénarios de bascule.
 
@@ -265,7 +265,7 @@ Dans le projet, plusieurs composants et bonnes pratiques ont été mis en œuvre
 
 Cette approche cohérente assure une exposition minimale des services au public et une sécurité renforcée tout en maintenant une haute disponibilité.
 
-\paragraph{Firewall pfSense}
+\subsection{Firewall pfSense}
 
 Pour renforcer la sécurité réseau, plusieurs architectures avec \textbf{pfSense} (distribution libre spécialisée dans les fonctions de pare-feu et de routage) ont été considérées. Voici les options analysées :
 
@@ -311,7 +311,7 @@ Le tableau \ref{tab:pfsense_arch} résume les avantages et inconvénients de cha
 	Appliance physique séparée   & Très élevée        & Très élevée         & Solution professionnelle, coûteuse, idéale pour multi-sites. \\ \hline
 \end{longtable}
 
-\paragraph{Choix retenu et justification}
+\subsection{Choix retenu et justification}
 
 Dans le contexte de l’infrastructure actuelle de Oneex, c’est le \textbf{scénario 1} (déploiement de pfSense dans une VM dédiée sur Proxmox) qui a été retenu. Cette approche présente plusieurs avantages majeurs en adéquation avec l’architecture existante :
 
@@ -327,7 +327,7 @@ Malgré une résilience moyenne (liée à sa dépendance à Proxmox), cette solu
 
 Le réseau Kubernetes est un élément fondamental qui permet la communication entre les différents composants du cluster et les applications qui y sont déployées. Il repose sur plusieurs concepts clés visant à simplifier la connectivité et à assurer l’isolation logique des workloads.
 
-\paragraph{Modèle de réseau plat}
+\subsection{Modèle de réseau plat}
 
 Kubernetes adopte un modèle de réseau dit \emph{plat}, dans lequel :
 \begin{itemize}
@@ -342,7 +342,7 @@ Kubernetes adopte un modèle de réseau dit \emph{plat}, dans lequel :
 \end{figure}
 Ce modèle vise à réduire la complexité des communications et à permettre aux applications de se comporter comme si elles fonctionnaient sur un même réseau local.
 
-\paragraph{CNI (Container Network Interface)}
+\subsection{CNI (Container Network Interface)}
 
 Pour mettre en œuvre le modèle réseau, Kubernetes s’appuie sur des plugins CNI (Container Network Interface).
 Ces plugins sont responsables de :
@@ -353,7 +353,7 @@ Ces plugins sont responsables de :
 \end{itemize}
 Parmi les solutions CNI les plus courantes, on peut citer Calico, Flannel, Cilium et Weave.
 
-\paragraph{Services et exposition réseau dans Kubernetes}
+\subsection{Services et exposition réseau dans Kubernetes}
 
 Kubernetes introduit l’objet \texttt{Service}, utilisé pour exposer un ensemble de pods via une abstraction réseau stable (nom DNS et IP virtuelle). Cela permet de découpler la logique de service de l’adressage dynamique des pods.
 
@@ -409,7 +409,7 @@ Un contrôleur d’Ingress (comme NGINX ou Traefik) est requis pour appliquer ce
 \end{longtable}
 Le tableau \ref{tab:services_k8s} présente une comparaison synthétique des différents types de services proposés par Kubernetes.
 
-\paragraph{Network Policies}
+\subsection{Network Policies}
 
 Pour renforcer la sécurité, Kubernetes propose les \texttt{NetworkPolicies}, qui définissent des règles de filtrage des flux entre pods :
 \begin{itemize}
@@ -419,7 +419,7 @@ Pour renforcer la sécurité, Kubernetes propose les \texttt{NetworkPolicies}, q
 \end{itemize}
 Les politiques réseau nécessitent un CNI compatible (par exemple Calico).
 
-\paragraph{DNS interne}
+\subsection{DNS interne}
 
 Kubernetes fournit un service DNS interne (CoreDNS) qui résout les noms des services et pods :
 \begin{itemize}
@@ -433,7 +433,7 @@ En combinant ces composants, le réseau Kubernetes offre un modèle cohérent, f
 
 MetalLB est une solution de load balancing spécialement conçue pour les clusters Kubernetes déployés en environnement on-premise. Contrairement aux plateformes cloud qui fournissent des services d’équilibrage de charge natifs, les installations locales de Kubernetes ne disposent pas par défaut d’un mécanisme équivalent pour l’attribution d’adresses IP publiques et la distribution du trafic.
 
-\paragraph{Principales fonctionnalités}
+\subsection{Principales fonctionnalités}
 
 MetalLB apporte plusieurs fonctionnalités essentielles :
 \begin{itemize}
@@ -446,7 +446,7 @@ MetalLB apporte plusieurs fonctionnalités essentielles :
 	      \end{itemize}
 \end{itemize}
 
-\paragraph{Mécanisme de haute disponibilité (HA)}
+\subsection{Mécanisme de haute disponibilité (HA)}
 
 MetalLB met en œuvre un mécanisme de haute disponibilité pour garantir la continuité de service même en cas de défaillance d’un nœud.
 
@@ -458,7 +458,7 @@ Dans le mode Layer 2 :
 
 Ce mécanisme permet de garantir que les services exposés restent accessibles même en cas de panne matérielle ou logicielle sur un nœud.
 
-\paragraph{Avantages et inconvénients}
+\subsection{Avantages et inconvénients}
 
 \begin{itemize}
 	\item \textbf{Avantages} :
@@ -477,7 +477,7 @@ Ce mécanisme permet de garantir que les services exposés restent accessibles m
 	      \end{itemize}
 \end{itemize}
 
-\paragraph{Remarque sur les performances}
+\subsection{Remarque sur les performances}
 
 Dans la majorité des cas d’usage (web APIs, services métiers), la limite du throughput au niveau du speaker est acceptable. En effet, le facteur limitant n’est pas la capacité réseau brute mais le temps de traitement des requêtes applicatives. Grâce au modèle distribué de Kubernetes, ce traitement est réparti entre les pods, ce qui permet de maintenir de bonnes performances globales même si un seul nœud reçoit initialement le trafic.
 
@@ -626,7 +626,7 @@ Kustomize est un outil natif Kubernetes de composition et de personnalisation de
 \end{itemize}
 \textbf{Exécution} : Argo CD supporte nativement Kustomize. Lors de la synchronisation, le contrôleur applique kustomize build pour générer les manifestes avant de les appliquer au cluster.
 
-\paragraph{Intégration avec Argo CD}
+\subsection{Intégration avec Argo CD}
 
 Argo CD offre un support natif pour Helm et Kustomize. Lors de la définition d’une application, il suffit de préciser le type de source (Helm, Kustomize ou Directory). Le processus de rendu est alors entièrement automatisé :
 \begin{itemize}
@@ -636,7 +636,7 @@ Argo CD offre un support natif pour Helm et Kustomize. Lors de la définition d�
 	\item Les différences sont appliquées automatiquement ou manuellement selon la stratégie choisie.
 \end{itemize}
 
-\paragraph{Bénéfices principaux}
+\subsection{Bénéfices principaux}
 
 Le recours à Helm et Kustomize apporte plusieurs avantages :
 \begin{itemize}

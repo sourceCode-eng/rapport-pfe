@@ -239,7 +239,7 @@ L'architecture globale du projet repose sur une approche moderne, modulaire et a
 
 L'infrastructure physique est virtualisée au moyen d'une plateforme Proxmox. La création des ressources a été entièrement automatisée via une démarche Infrastructure as Code.
 
-\subsubsection*{Infrastructure as Code avec Terraform}
+\subsection*{Infrastructure as Code avec Terraform}
 
 Terraform a permis de décrire et de provisionner l'ensemble des ressources suivantes de façon déclarative et reproductible :
 \begin{itemize}
@@ -257,7 +257,7 @@ Les modules Terraform ont été organisés par domaines fonctionnels afin de fav
 	\caption{Schéma du processus de provisioning automatisé avec Terraform}
 \end{figure}
 
-\subsubsection*{Configuration automatisée avec Ansible}
+\subsection*{Configuration automatisée avec Ansible}
 
 Après la création des ressources, Ansible assure la configuration des serveurs :
 \begin{itemize}
@@ -278,7 +278,7 @@ Cette étape garantit l’homogénéité et la reproductibilité des environneme
 
 \subsection{Orchestration et déploiement applicatif}
 
-\subsubsection*{Cluster Kubernetes}
+\subsection*{Cluster Kubernetes}
 
 Kubernetes est le cœur de l’architecture d’orchestration. Il assure la gestion :
 \begin{itemize}
@@ -287,7 +287,7 @@ Kubernetes est le cœur de l’architecture d’orchestration. Il assure la gest
 	\item De l’isolation des workloads.
 \end{itemize}
 
-\subsubsection*{Déploiement GitOps avec Argo CD}
+\subsection*{Déploiement GitOps avec Argo CD}
 
 Argo CD implémente une stratégie GitOps permettant :
 \begin{itemize}
@@ -476,7 +476,7 @@ Un pipeline CI/CD complet est généralement structuré autour des étapes suiva
 	      \end{itemize}
 \end{itemize}
 
-\paragraph{Exemple de gestion des credentials}
+\subsection{Exemple de gestion des credentials}
 Les variables sensibles telles que les clés d’accès API, tokens d'acces aux depots et tokens de déploiement ou credentials Kubernetes sont définies dans l’interface GitLab CI/CD (\texttt{Settings > CI/CD > Variables}) et injectées dans les jobs via :
 \begin{verbatim}
 deploy:
@@ -485,7 +485,7 @@ script:
 - kubectl --kubeconfig=kubeconfig apply -f k8s/
 \end{verbatim}
 
-\paragraph{Exemple de stage de release}
+\subsection{Exemple de stage de release}
 \begin{verbatim}
 release:
 stage: release
@@ -564,7 +564,7 @@ La gestion centralisée des secrets constitue une pratique essentielle pour séc
 
 La protection des infrastructures repose également sur des dispositifs périmétriques tels que les pare-feu, les listes de contrôle d’accès et la segmentation réseau. Ces mécanismes permettent de limiter la surface d’exposition, de cloisonner les environnements et de renforcer la résilience face aux attaques latérales. La mise en œuvre de politiques de filtrage strictes et le principe du moindre privilège complètent ces mesures pour réduire les risques d’intrusion.
 
-\paragraph{Option : pfSense en tant que routeur et pare-feu principal}
+\subsection{Option : pfSense en tant que routeur et pare-feu principal}
 
 Dans l’architecture retenue, il est possible de déployer pfSense comme machine virtuelle dédiée assurant le rôle de passerelle unique et de point de contrôle des flux réseau. Dans ce scénario, pfSense est connecté à deux interfaces réseau distinctes~:
 \begin{itemize}

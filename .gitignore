@@ -12,6 +12,9 @@
 *.lof
 *.lot
 *.out
+*.mtc*
+*.maf
+main.listing
 
 # Compiled PDF (uncomment if you don't want PDFs in git)
 # *.pdf
