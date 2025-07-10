@@ -76,14 +76,21 @@ La direction et les équipes de Oneex rassemblent des profils pluridisciplinaire
 		child {node {DIRECTEUR \\ GÉNÉRAL}
 				child {node {RESSOURCES \\ HUMAINES}}
 				child {node {DIRECTION DES \\ OPÉRATIONS}}
-				child {node {DIRECTION \\ TECHNIQUE}
-						child {node {Mahdi}}
+				child {node[
+								draw,
+								fill=green!60!black, % Changer la couleur ici
+								rounded corners=3pt,
+								text=white,
+								align=center,
+								font=\sffamily\small,
+								text width=35mm,
+								minimum height=10mm
+							]{DIRECTION \\ TECHNIQUE}
 					}
 				child {node {SÉCURITÉ}}
 			};
 	\end{tikzpicture}
 	\caption{Organisation interne simplifiée de l'entreprise}
-	\label{fig:organisation_interne}
 \end{figure}
 
 \subsection{Produits et services de l'entreprise}
@@ -96,21 +103,18 @@ Oneex propose une gamme de solutions matérielles et logicielles, parmi lesquell
 		      \centering
 		      \includegraphics[width=.5\textwidth]{figures/Oneex desktop.png}
 		      \caption{Oneex Desktop}
-		      \label{fig:Oneex desktop}
 	      \end{figure}
 	\item \textbf{Oneex Suitcase} : une valise mobile permettant de réaliser des contrôles sur le terrain , portable et robuste , elle laisse les utilisateurs se profiter d’un système mobile de vérification d’identité fiable et sécurisé.
 	      \begin{figure} [H]
 		      \centering
 		      \includegraphics[width=.5\textwidth]{figures/Oneex suitcase.png}
 		      \caption{Oneex Suitcase}
-		      \label{fig:Oneex Suitcase}
 	      \end{figure}
 	\item \textbf{Oneex Kiosk} : un kiosque en libre-service pour l’accueil et le contrôle des visiteurs. Permet Accueiller vos visiteurs sans assistance grâce à une vérification rapide et un accès direct.Une solution pensée pour vos opérations, combinant biométrie avancée et automatisation complète de l’accès visiteurs.
 	      \begin{figure} [H]
 		      \centering
 		      \includegraphics[width=.5\textwidth]{figures/Oneex kiosk.png}
 		      \caption{Oneex Kiosk}
-		      \label{fig:Oneex Kiosk}
 	      \end{figure}
 \end{itemize}
 
@@ -125,7 +129,6 @@ Oneex propose une gamme de solutions matérielles et logicielles, parmi lesquell
 		Oneex Kiosk      & Kiosque en libre-service autonome        & 1640 x 450 x 460 mm & 65 kg          \\ \hline
 	\end{tabular}
 	\caption{Caractéristiques physiques principales des solutions matérielles Oneex}
-	\label{tab:oneex-produits}
 \end{table}
 Ces produits sont complétés par la suite logicielle Oneex Cloud et ScanApp, garantissant un pilotage centralisé et une intégration fluide dans les environnements clients.
 
@@ -186,7 +189,6 @@ Actuellement, l'entreprise dispose de plusieurs serveurs physiques hébergés ch
 	\centering
 	\includegraphics[width=.5\textwidth]{figures/Ressources cloud.png}
 	\caption{Ressources cloud de Oneex}
-	\label{fig:Ressources cloud de Oneex}
 \end{figure}
 
 \paragraph{Architecture réseau}
@@ -204,7 +206,6 @@ Les services hébergés par les VMs ne sont pas exposés directement, mais à tr
 	\centering
 	\includegraphics[width=.5\textwidth]{figures/Reseau inter proxmox.png}
 	\caption{Réseau interne des serveurs Proxmox}
-	\label{fig:Réseau interne des serveurs Proxmox}
 \end{figure}
 
 \paragraph{Communications inter-sites}
@@ -215,5 +216,4 @@ Pour les échanges entre différents machines virtuelles dans des serveurs proxm
 	\centering
 	\includegraphics[width=.5\textwidth]{figures/Reseau intra proxmox.png}
 	\caption{Communications inter-sites}
-	\label{fig:Communications inter-sites}
 \end{figure}

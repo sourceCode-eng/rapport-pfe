@@ -1,0 +1,17 @@
+deploy:
+script:
+- echo "$KUBECONFIG_SECRET" > kubeconfig
+- kubectl --kubeconfig=kubeconfig apply -f k8s/
+\end{verbatim}
+
+\paragraph{Exemple de stage de release}
+\begin{verbatim}
+release:
+stage: release
+script:
+	- echo "Generating release..."
+	- git tag v${CI_COMMIT_SHORT_SHA}
+	- git push origin v${CI_COMMIT_SHORT_SHA}
+	- curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN"
+	--data "name=Release v${CI_COMMIT_SHORT_SHA}&tag_name=v${CI_COMMIT_SHORT_SHA}"
+	"https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/releases"
