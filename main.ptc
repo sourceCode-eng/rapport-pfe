@@ -1,4 +1,4 @@
-\babel@toc {english}{}\relax 
+\babel@toc {french}{}\relax 
 \contentsline {chapter}{Liste des figures}{X}{section*.6}%
 \contentsline {chapter}{Liste des tableaux}{XI}{section*.7}%
 \contentsline {chapter}{\numberline {1}Introduction générale}{1}{chapter.1}%
@@ -15,161 +15,192 @@
 \contentsline {subsection}{\numberline {1.2.8}Infrastructures internes}{7}{subsection.1.2.8}%
 \contentsline {subsection}{\numberline {1.2.9}Architecture réseau}{8}{subsection.1.2.9}%
 \contentsline {subsection}{\numberline {1.2.10}Communications inter-sites}{8}{subsection.1.2.10}%
-\contentsline {chapter}{\numberline {2}Objectifs et contexte du projet}{10}{chapter.2}%
+\contentsline {chapter}{\numberline {2}Conception et architecture du projet}{10}{chapter.2}%
 \ttl@stoptoc {chap@1}
 \ttl@starttoc {chap@2}
-\contentsline {section}{\numberline {2.1}Contexte et enjeux du projet}{12}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Scénarios de référence et hypothèses de travail}{12}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Divergences entre environnements}{12}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Gestion hétérogène des secrets}{13}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Déficit d'observabilité}{13}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Processus de déploiement manuel et long}{13}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Risques opérationnels associés}{14}{subsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.2.6}Justification des orientations retenues}{14}{subsection.2.2.6}%
-\contentsline {section}{\numberline {2.3}Les besoins fonctionnels}{15}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Provisioning et configuration des ressources}{16}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Déploiement et mise à jour des applications}{16}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Supervision et observabilité}{16}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Sécurité et gestion des accès}{16}{subsection.2.3.4}%
-\contentsline {subsection}{\numberline {2.3.5}Résilience et continuité de service}{16}{subsection.2.3.5}%
-\contentsline {subsection}{\numberline {2.3.6}Interface de pilotage}{17}{subsection.2.3.6}%
-\contentsline {section}{\numberline {2.4}Les besoins non fonctionnels}{17}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Qualité de service et performance}{17}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Sécurité et protection des données}{17}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Évolutivité et maintenabilité}{18}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}Conformité réglementaire et normes applicables}{18}{subsection.2.4.4}%
-\contentsline {section}{\numberline {2.5}Architecture du projet}{18}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Infrastructure virtualisée et provisioning automatisé}{19}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Orchestration et déploiement applicatif}{20}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Observabilité et monitoring}{21}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Stockage distribué et persistance des données}{22}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}Gestion sécurisée des secrets}{23}{subsection.2.5.5}%
-\contentsline {subsection}{\numberline {2.5.6}Sécurité réseau et accès administratifs}{23}{subsection.2.5.6}%
-\contentsline {subsection}{\numberline {2.5.7}Services internes pour le cycle de vie applicatif}{24}{subsection.2.5.7}%
-\contentsline {subsection}{\numberline {2.5.8}Environnements de test et de production}{25}{subsection.2.5.8}%
-\contentsline {subsection}{\numberline {2.5.9}Intégration et automatisation des déploiements}{25}{subsection.2.5.9}%
-\contentsline {subsection}{\numberline {2.5.10}Structure générale d’un pipeline GitLab CI}{25}{subsection.2.5.10}%
-\contentsline {subsection}{\numberline {2.5.11}Exemple de gestion des credentials}{26}{subsection.2.5.11}%
-\contentsline {subsection}{\numberline {2.5.12}Exemple de stage de release}{26}{subsection.2.5.12}%
-\contentsline {section}{\numberline {2.6}Fondements théoriques de l’automatisation des infrastructures}{27}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Évolution historique}{27}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Approche DevOps}{28}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}Modèles conceptuels}{28}{subsection.2.6.3}%
-\contentsline {subsection}{\numberline {2.6.4}Approche GitOps}{28}{subsection.2.6.4}%
-\contentsline {section}{\numberline {2.7}Conteneurisation et orchestration}{29}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Principes de la conteneurisation}{29}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}Orchestration des conteneurs}{29}{subsection.2.7.2}%
-\contentsline {subsection}{\numberline {2.7.3}Patterns d’architecture cloud-native}{29}{subsection.2.7.3}%
-\contentsline {section}{\numberline {2.8}Approches de supervision et d’observabilité}{30}{section.2.8}%
-\contentsline {subsection}{\numberline {2.8.1}Enjeux de l’observabilité}{30}{subsection.2.8.1}%
-\contentsline {subsection}{\numberline {2.8.2}Outils et standards de référence}{30}{subsection.2.8.2}%
-\contentsline {section}{\numberline {2.9}Sécurité des infrastructures automatisées}{30}{section.2.9}%
-\contentsline {subsection}{\numberline {2.9.1}Principes de sécurité}{30}{subsection.2.9.1}%
-\contentsline {subsection}{\numberline {2.9.2}Gestion des secrets et des accès}{30}{subsection.2.9.2}%
-\contentsline {subsection}{\numberline {2.9.3}Sécurité périmétrique et segmentation}{30}{subsection.2.9.3}%
-\contentsline {subsection}{\numberline {2.9.4}Option : pfSense en tant que routeur et pare-feu principal}{31}{subsection.2.9.4}%
-\contentsline {subsection}{\numberline {2.9.5}Réplication et résilience}{32}{subsection.2.9.5}%
-\contentsline {chapter}{\numberline {3}Conception et automatisation de l’infrastructure}{33}{chapter.3}%
+\contentsline {section}{\numberline {2.1}Objectifs et contexte du projet}{12}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Contexte et enjeux du projet}{12}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Scénarios de référence et hypothèses de travail}{12}{subsection.2.1.2}%
+\contentsline {paragraph}{\textbf {Divergences entre environnements}}{13}{paragraph*.15}%
+\contentsline {paragraph}{\textbf {Gestion hétérogène des secrets}}{13}{paragraph*.16}%
+\contentsline {paragraph}{\textbf {Déficit d'observabilité}}{13}{paragraph*.17}%
+\contentsline {paragraph}{\textbf {Processus de déploiement manuel et long}}{14}{paragraph*.18}%
+\contentsline {paragraph}{\textbf {Risques opérationnels associés}}{14}{paragraph*.19}%
+\contentsline {paragraph}{\textbf {Justification des orientations retenues}}{14}{paragraph*.20}%
+\contentsline {subsection}{\numberline {2.1.3}Les besoins fonctionnels}{16}{subsection.2.1.3}%
+\contentsline {paragraph}{\textbf {Provisioning et configuration des ressources}}{16}{paragraph*.21}%
+\contentsline {paragraph}{\textbf {Déploiement et mise à jour des applications}}{16}{paragraph*.22}%
+\contentsline {paragraph}{\textbf {Supervision et observabilité}}{16}{paragraph*.23}%
+\contentsline {paragraph}{\textbf {Sécurité et gestion des accès}}{16}{paragraph*.24}%
+\contentsline {paragraph}{\textbf {Résilience et continuité de service}}{17}{paragraph*.25}%
+\contentsline {paragraph}{\textbf {Interface de pilotage}}{17}{paragraph*.26}%
+\contentsline {paragraph}{\textbf {Les besoins non fonctionnels}}{17}{paragraph*.27}%
+\contentsline {paragraph}{\textbf {Qualité de service et performance}}{17}{paragraph*.28}%
+\contentsline {paragraph}{\textbf {Sécurité et protection des données}}{18}{paragraph*.29}%
+\contentsline {paragraph}{\textbf {Évolutivité et maintenabilité}}{18}{paragraph*.30}%
+\contentsline {paragraph}{\textbf {Conformité réglementaire et normes applicables}}{18}{paragraph*.31}%
+\contentsline {section}{\numberline {2.2}Fondements théoriques et méthodologiques}{18}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Architecture du projet}{18}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Infrastructure virtualisée et provisioning automatisé}{19}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Orchestration et déploiement applicatif}{20}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Observabilité et monitoring}{21}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Stockage distribué et persistance des données}{22}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}Gestion sécurisée des secrets}{23}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}Sécurité réseau et accès administratifs}{23}{subsection.2.3.6}%
+\contentsline {subsection}{\numberline {2.3.7}Services internes pour le cycle de vie applicatif}{24}{subsection.2.3.7}%
+\contentsline {subsection}{\numberline {2.3.8}Environnements de test et de production}{25}{subsection.2.3.8}%
+\contentsline {subsection}{\numberline {2.3.9}Intégration et automatisation des déploiements}{25}{subsection.2.3.9}%
+\contentsline {subsection}{\numberline {2.3.10}Structure générale d’un pipeline GitLab CI}{25}{subsection.2.3.10}%
+\contentsline {subsection}{\numberline {2.3.11}Exemple de gestion des credentials}{26}{subsection.2.3.11}%
+\contentsline {subsection}{\numberline {2.3.12}Exemple de stage de release}{26}{subsection.2.3.12}%
+\contentsline {section}{\numberline {2.4}Fondements théoriques de l’automatisation des infrastructures}{27}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Évolution historique}{27}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Approche DevOps}{28}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Modèles conceptuels}{28}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Approche GitOps}{28}{subsection.2.4.4}%
+\contentsline {section}{\numberline {2.5}Conteneurisation et orchestration}{29}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Principes de la conteneurisation}{29}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Orchestration des conteneurs}{29}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Patterns d’architecture cloud-native}{29}{subsection.2.5.3}%
+\contentsline {section}{\numberline {2.6}Approches de supervision et d’observabilité}{30}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Enjeux de l’observabilité}{30}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Outils et standards de référence}{30}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Sécurité des infrastructures automatisées}{30}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Principes de sécurité}{30}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Gestion des secrets et des accès}{30}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}Sécurité périmétrique et segmentation}{30}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}Option : pfSense en tant que routeur et pare-feu principal}{31}{subsection.2.7.4}%
+\contentsline {subsection}{\numberline {2.7.5}Réplication et résilience}{32}{subsection.2.7.5}%
+\contentsline {paragraph}{Virtualisation et clustering Proxmox}{32}{paragraph*.44}%
+\contentsline {paragraph}{Sauvegarde des données}{32}{paragraph*.45}%
+\contentsline {paragraph}{Stockage persistant dans Kubernetes}{32}{paragraph*.46}%
+\contentsline {paragraph}{Réseau et accès externe}{33}{paragraph*.47}%
+\contentsline {paragraph}{Réplication et résilience applicative}{33}{paragraph*.48}%
+\contentsline {paragraph}{Comparaison synthétique des approches}{34}{paragraph*.49}%
+\contentsline {subsection}{\numberline {2.7.6}Distribution du réseau}{34}{subsection.2.7.6}%
+\contentsline {paragraph}{Segmentation et isolation}{34}{paragraph*.51}%
+\contentsline {paragraph}{Haute disponibilité et équilibrage de charge}{34}{paragraph*.52}%
+\contentsline {paragraph}{Routage interne et service discovery}{35}{paragraph*.53}%
+\contentsline {paragraph}{Comparaison des approches}{35}{paragraph*.54}%
+\contentsline {subsection}{\numberline {2.7.7}Distribution du traitement}{35}{subsection.2.7.7}%
+\contentsline {paragraph}{Virtualisation et orchestration}{35}{paragraph*.56}%
+\contentsline {paragraph}{Autoscaling et gestion de la charge}{36}{paragraph*.57}%
+\contentsline {paragraph}{Comparaison des stratégies de traitement}{36}{paragraph*.58}%
+\contentsline {subsection}{\numberline {2.7.8}Distribution du stockage}{37}{subsection.2.7.8}%
+\contentsline {paragraph}{Stockage des disques virtuels}{37}{paragraph*.60}%
+\contentsline {paragraph}{Stockage des volumes Kubernetes}{37}{paragraph*.61}%
+\contentsline {paragraph}{Sauvegarde et archivage}{37}{paragraph*.62}%
+\contentsline {paragraph}{Comparaison des approches de stockage}{38}{paragraph*.63}%
+\contentsline {subsection}{\numberline {2.7.9}Sauvegarde et restauration}{38}{subsection.2.7.9}%
+\contentsline {paragraph}{Objectifs et distinction avec la haute disponibilité}{38}{paragraph*.65}%
+\contentsline {paragraph}{Snapshots vs. sauvegardes}{38}{paragraph*.66}%
+\contentsline {paragraph}{Types de sauvegardes}{39}{paragraph*.67}%
+\contentsline {paragraph}{Sauvegarde des machines virtuelles}{39}{paragraph*.68}%
+\contentsline {paragraph}{Sauvegarde des volumes persistants Kubernetes}{39}{paragraph*.69}%
+\contentsline {paragraph}{Archivage distant}{40}{paragraph*.70}%
+\contentsline {paragraph}{Comparaison des approches}{40}{paragraph*.71}%
+\contentsline {paragraph}{Synthèse}{40}{paragraph*.73}%
+\contentsline {chapter}{\numberline {3}Conception et automatisation de l’infrastructure}{41}{chapter.3}%
 \ttl@stoptoc {chap@2}
 \ttl@starttoc {chap@3}
-\contentsline {section}{\numberline {3.1}Introduction}{36}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Les outils utilisés pour l’infrastructure as code}{36}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Proxmox}{36}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Terraform}{37}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Cloud-init}{37}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Ansible}{38}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Vault}{38}{subsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.2.6}Concepts de base}{38}{subsection.3.2.6}%
-\contentsline {subsection}{\numberline {3.2.7}Design de sécurité}{39}{subsection.3.2.7}%
-\contentsline {subsection}{\numberline {3.2.8}Exemple d’utilisation}{40}{subsection.3.2.8}%
-\contentsline {subsection}{\numberline {3.2.9}Bonnes pratiques de sécurité}{40}{subsection.3.2.9}%
-\contentsline {subsection}{\numberline {3.2.10}Limitations et vigilance}{40}{subsection.3.2.10}%
-\contentsline {subsection}{\numberline {3.2.11}Consul}{40}{subsection.3.2.11}%
-\contentsline {subsection}{\numberline {3.2.12}Principales fonctionnalités}{40}{subsection.3.2.12}%
-\contentsline {subsection}{\numberline {3.2.13}Architecture et composants}{41}{subsection.3.2.13}%
-\contentsline {subsection}{\numberline {3.2.14}Mécanismes et cas d’usage}{41}{subsection.3.2.14}%
-\contentsline {subsection}{\numberline {3.2.15}Bonnes pratiques de sécurité}{42}{subsection.3.2.15}%
-\contentsline {subsection}{\numberline {3.2.16}Limitations et vigilance}{42}{subsection.3.2.16}%
-\contentsline {section}{\numberline {3.3}Mise en place des concepts de l'infrastructure en code}{42}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Préparation des secrets avec Vault}{42}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Création de templates de machines virtuelles}{43}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Création des machines virtuelles à travers Terraform}{43}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Préparation automatique des inventaires}{43}{subsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.3.5}Configuration automatique des machines virtuelles avec Ansible}{44}{subsection.3.3.5}%
-\contentsline {section}{\numberline {3.4}Outils de réseau, exposition des services et sécurité}{44}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Firewall pfSense}{44}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Scénario 1 : pfSense en VM ou LXC dédié sur Proxmox}{45}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Scénario 2 : pfSense sur un serveur physique séparé}{45}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Choix retenu et justification}{46}{subsection.3.4.4}%
-\contentsline {subsection}{\numberline {3.4.5}Réseau de Kubernetes}{46}{subsection.3.4.5}%
-\contentsline {subsection}{\numberline {3.4.6}Modèle de réseau plat}{46}{subsection.3.4.6}%
-\contentsline {subsection}{\numberline {3.4.7}CNI (Container Network Interface)}{47}{subsection.3.4.7}%
-\contentsline {subsection}{\numberline {3.4.8}Services et exposition réseau dans Kubernetes}{47}{subsection.3.4.8}%
-\contentsline {subsection}{\numberline {3.4.9}ClusterIP}{48}{subsection.3.4.9}%
-\contentsline {subsection}{\numberline {3.4.10}NodePort}{48}{subsection.3.4.10}%
-\contentsline {subsection}{\numberline {3.4.11}LoadBalancer}{49}{subsection.3.4.11}%
-\contentsline {subsection}{\numberline {3.4.12}ExternalName}{49}{subsection.3.4.12}%
-\contentsline {subsection}{\numberline {3.4.13}Ingress}{49}{subsection.3.4.13}%
-\contentsline {subsection}{\numberline {3.4.14}Network Policies}{50}{subsection.3.4.14}%
-\contentsline {subsection}{\numberline {3.4.15}DNS interne}{50}{subsection.3.4.15}%
-\contentsline {subsection}{\numberline {3.4.16}MetalLB}{50}{subsection.3.4.16}%
-\contentsline {subsection}{\numberline {3.4.17}Principales fonctionnalités}{50}{subsection.3.4.17}%
-\contentsline {subsection}{\numberline {3.4.18}Mécanisme de haute disponibilité (HA)}{51}{subsection.3.4.18}%
-\contentsline {subsection}{\numberline {3.4.19}Avantages et inconvénients}{51}{subsection.3.4.19}%
-\contentsline {subsection}{\numberline {3.4.20}Remarque sur les performances}{51}{subsection.3.4.20}%
-\contentsline {section}{\numberline {3.5}Mise en place des services de réseau}{52}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Configuration automatique de pfSense avec Ansible}{52}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Configuration de NGINX avec Ansible}{53}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Usage de Vault pour la gestion des secrets}{53}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Synthèse}{53}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Presentation des outils GitOps}{54}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Argo CD}{54}{subsection.3.7.1}%
-\contentsline {subsection}{\numberline {3.7.2}Helm}{55}{subsection.3.7.2}%
-\contentsline {subsection}{\numberline {3.7.3}Kustomize}{55}{subsection.3.7.3}%
-\contentsline {subsection}{\numberline {3.7.4}Intégration avec Argo CD}{56}{subsection.3.7.4}%
-\contentsline {subsection}{\numberline {3.7.5}Bénéfices principaux}{56}{subsection.3.7.5}%
-\contentsline {section}{\numberline {3.8}Mise en œuvre du modèle GitOps}{56}{section.3.8}%
-\contentsline {subsection}{\numberline {3.8.1}Préparation des manifestes des outils internes}{56}{subsection.3.8.1}%
-\contentsline {subsection}{\numberline {3.8.2}Installation d’Argo CD}{57}{subsection.3.8.2}%
-\contentsline {subsection}{\numberline {3.8.3}Configuration de l’authentification}{57}{subsection.3.8.3}%
-\contentsline {subsection}{\numberline {3.8.4}Configuration des synchronisations}{57}{subsection.3.8.4}%
-\contentsline {subsection}{\numberline {3.8.5}Préparation des manifestes des applications développées par Oneex pour des environnements différents}{58}{subsection.3.8.5}%
-\contentsline {chapter}{\numberline {4}Automatisation des déploiements et pilotage opérationnel}{59}{chapter.4}%
+\contentsline {section}{\numberline {3.1}Introduction}{44}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Les outils utilisés pour l’infrastructure as code}{44}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Proxmox}{44}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Terraform}{45}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Cloud-init}{45}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Ansible}{46}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Vault}{46}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Concepts de base}{46}{subsection.3.2.6}%
+\contentsline {subsection}{\numberline {3.2.7}Design de sécurité}{47}{subsection.3.2.7}%
+\contentsline {subsection}{\numberline {3.2.8}Exemple d’utilisation}{48}{subsection.3.2.8}%
+\contentsline {subsection}{\numberline {3.2.9}Bonnes pratiques de sécurité}{48}{subsection.3.2.9}%
+\contentsline {subsection}{\numberline {3.2.10}Limitations et vigilance}{48}{subsection.3.2.10}%
+\contentsline {subsection}{\numberline {3.2.11}Consul}{48}{subsection.3.2.11}%
+\contentsline {subsection}{\numberline {3.2.12}Principales fonctionnalités}{48}{subsection.3.2.12}%
+\contentsline {subsection}{\numberline {3.2.13}Architecture et composants}{49}{subsection.3.2.13}%
+\contentsline {subsection}{\numberline {3.2.14}Mécanismes et cas d’usage}{49}{subsection.3.2.14}%
+\contentsline {subsection}{\numberline {3.2.15}Bonnes pratiques de sécurité}{50}{subsection.3.2.15}%
+\contentsline {subsection}{\numberline {3.2.16}Limitations et vigilance}{50}{subsection.3.2.16}%
+\contentsline {section}{\numberline {3.3}Mise en place des concepts de l'infrastructure en code}{50}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Préparation des secrets avec Vault}{50}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Création de templates de machines virtuelles}{51}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Création des machines virtuelles à travers Terraform}{51}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Préparation automatique des inventaires}{51}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Configuration automatique des machines virtuelles avec Ansible}{52}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}Outils de réseau, exposition des services et sécurité}{52}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Firewall pfSense}{52}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Scénario 1 : pfSense en VM ou LXC dédié sur Proxmox}{53}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Scénario 2 : pfSense sur un serveur physique séparé}{53}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Choix retenu et justification}{54}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Réseau de Kubernetes}{54}{subsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.4.6}Modèle de réseau plat}{54}{subsection.3.4.6}%
+\contentsline {subsection}{\numberline {3.4.7}CNI (Container Network Interface)}{55}{subsection.3.4.7}%
+\contentsline {subsection}{\numberline {3.4.8}Services et exposition réseau dans Kubernetes}{55}{subsection.3.4.8}%
+\contentsline {subsection}{\numberline {3.4.9}ClusterIP}{56}{subsection.3.4.9}%
+\contentsline {subsection}{\numberline {3.4.10}NodePort}{56}{subsection.3.4.10}%
+\contentsline {subsection}{\numberline {3.4.11}LoadBalancer}{57}{subsection.3.4.11}%
+\contentsline {subsection}{\numberline {3.4.12}ExternalName}{57}{subsection.3.4.12}%
+\contentsline {subsection}{\numberline {3.4.13}Ingress}{57}{subsection.3.4.13}%
+\contentsline {subsection}{\numberline {3.4.14}Network Policies}{58}{subsection.3.4.14}%
+\contentsline {subsection}{\numberline {3.4.15}DNS interne}{58}{subsection.3.4.15}%
+\contentsline {subsection}{\numberline {3.4.16}MetalLB}{58}{subsection.3.4.16}%
+\contentsline {subsection}{\numberline {3.4.17}Principales fonctionnalités}{58}{subsection.3.4.17}%
+\contentsline {subsection}{\numberline {3.4.18}Mécanisme de haute disponibilité (HA)}{59}{subsection.3.4.18}%
+\contentsline {subsection}{\numberline {3.4.19}Avantages et inconvénients}{59}{subsection.3.4.19}%
+\contentsline {subsection}{\numberline {3.4.20}Remarque sur les performances}{59}{subsection.3.4.20}%
+\contentsline {section}{\numberline {3.5}Mise en place des services de réseau}{60}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Configuration automatique de pfSense avec Ansible}{60}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Configuration de NGINX avec Ansible}{61}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Usage de Vault pour la gestion des secrets}{61}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Synthèse}{61}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Presentation des outils GitOps}{62}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Argo CD}{62}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Helm}{63}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Kustomize}{63}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.4}Intégration avec Argo CD}{64}{subsection.3.7.4}%
+\contentsline {subsection}{\numberline {3.7.5}Bénéfices principaux}{64}{subsection.3.7.5}%
+\contentsline {section}{\numberline {3.8}Mise en œuvre du modèle GitOps}{64}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Préparation des manifestes des outils internes}{64}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Installation d’Argo CD}{65}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.8.3}Configuration de l’authentification}{65}{subsection.3.8.3}%
+\contentsline {subsection}{\numberline {3.8.4}Configuration des synchronisations}{65}{subsection.3.8.4}%
+\contentsline {subsection}{\numberline {3.8.5}Préparation des manifestes des applications développées par Oneex pour des environnements différents}{66}{subsection.3.8.5}%
+\contentsline {chapter}{\numberline {4}Automatisation des déploiements et pilotage opérationnel}{67}{chapter.4}%
 \ttl@stoptoc {chap@3}
 \ttl@starttoc {chap@4}
-\contentsline {section}{\numberline {4.1}Outils d’intégration et de déploiement}{61}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}GitLab CI}{61}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Commitlint}{62}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Husky}{63}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Semantic Release}{65}{subsection.4.1.4}%
-\contentsline {section}{\numberline {4.2}Les conventions de commits}{66}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Mise en place des pipelines CI/CD}{68}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Conteneurisation des applications}{68}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Tagging des images}{68}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Configuration de l’authentification}{69}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Authentification CI/CD vers Harbor (registre d’images)}{70}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Étapes de configuration}{70}{subsection.4.3.5}%
-\contentsline {subsection}{\numberline {4.3.6}Authentification Argo CD vers GitLab (dépôt GitOps)}{75}{subsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.3.7}Étapes de configuration}{75}{subsection.4.3.7}%
-\contentsline {subsection}{\numberline {4.3.8}Préparation des tâches des pipelines}{75}{subsection.4.3.8}%
-\contentsline {subsection}{\numberline {4.3.9}Préparation des pipelines}{75}{subsection.4.3.9}%
-\contentsline {section}{\numberline {4.4}Introduction à l’observabilité}{76}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Contexte et enjeux de l'observabilité et de l'audit}{76}{subsection.4.4.1}%
-\contentsline {section}{\numberline {4.5}Outils de supervision et tendances}{77}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Grafana}{78}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Prometheus}{79}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Loki}{80}{subsection.4.5.3}%
-\contentsline {subsection}{\numberline {4.5.4}Tempo}{82}{subsection.4.5.4}%
-\contentsline {section}{\numberline {4.6}Mise en place du monitoring continu}{83}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Gestion des alertes et des incidents}{83}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Gestion des logs}{84}{section.4.8}%
-\contentsline {section}{\numberline {4.9}Gestion des traces distribuées}{84}{section.4.9}%
-\contentsline {section}{\numberline {4.10}Automatisation des audits et de la conformité}{85}{section.4.10}%
+\contentsline {section}{\numberline {4.1}Outils d’intégration et de déploiement}{69}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}GitLab CI}{69}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Commitlint}{70}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Husky}{71}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Semantic Release}{73}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.2}Les conventions de commits}{74}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Mise en place des pipelines CI/CD}{76}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Conteneurisation des applications}{76}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Tagging des images}{76}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Configuration de l’authentification}{77}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Authentification CI/CD vers Harbor (registre d’images)}{78}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Étapes de configuration}{78}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Authentification Argo CD vers GitLab (dépôt GitOps)}{83}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Étapes de configuration}{83}{subsection.4.3.7}%
+\contentsline {subsection}{\numberline {4.3.8}Préparation des tâches des pipelines}{83}{subsection.4.3.8}%
+\contentsline {subsection}{\numberline {4.3.9}Préparation des pipelines}{83}{subsection.4.3.9}%
+\contentsline {section}{\numberline {4.4}Introduction à l’observabilité}{84}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Contexte et enjeux de l'observabilité et de l'audit}{84}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}Outils de supervision et tendances}{85}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Grafana}{86}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Prometheus}{87}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Loki}{88}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}Tempo}{90}{subsection.4.5.4}%
+\contentsline {section}{\numberline {4.6}Mise en place du monitoring continu}{91}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Gestion des alertes et des incidents}{91}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Gestion des logs}{92}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Gestion des traces distribuées}{92}{section.4.9}%
+\contentsline {section}{\numberline {4.10}Automatisation des audits et de la conformité}{93}{section.4.10}%
 \ttl@stoptoc {chap@4}
-\contentsline {chapter}{Conclusion générale}{86}{chapter*.42}%
-\contentsline {chapter}{References}{88}{section*.43}%
-\contentsline {chapter}{\numberline {A}Annexes}{89}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Sites officiels}{89}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Dépôts de code}{89}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Autres ressources}{89}{section.A.3}%
+\contentsline {chapter}{Conclusion générale}{94}{chapter*.87}%
+\contentsline {chapter}{References}{96}{section*.88}%
+\contentsline {chapter}{\numberline {A}Annexes}{97}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Sites officiels}{97}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Dépôts de code}{97}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Autres ressources}{97}{section.A.3}%
 \contentsfinish 

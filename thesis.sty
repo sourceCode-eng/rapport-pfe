@@ -1,15 +1,15 @@
 % ========================
 % Thesis Package
 % ========================
-\ProvidesPackage{thesis}
+\ProvidesPackage{thesis}                     % Declares this file as a LaTeX package named "thesis"
 
 
 % ========================
 % Language and Encoding
 % ========================
-\usepackage[french,english]{babel}          % Multilingual support (French and English)
-\usepackage[T1]{fontenc}                    % Use T1 font encoding (better hyphenation, accented characters)
-%\usepackage[utf8]{inputenc}                % UTF-8 input encoding (redundant if using modern engines)
+\usepackage[french]{babel}                   % Multilingual support (here: French as main language)
+\usepackage[T1]{fontenc}                     % Use T1 font encoding (better hyphenation, accented characters)
+%\usepackage[utf8]{inputenc}                 % UTF-8 input encoding (redundant if using modern engines like lualatex, xelatex)
 
 
 % ========================
@@ -20,144 +20,154 @@
             bottom=20mm,
             left=25mm,
             right=20mm,
-            bindingoffset=5mm]{geometry}     % Page size and margins
-\usepackage{setspace}                       % Line spacing commands
-\onehalfspacing                             % 1.5 line spacing
-\setlength{\parindent}{0cm}                 % No paragraph indentation
-\setlength{\parskip}{6pt}                   % Space between paragraphs
-\usepackage{times}                          % Use Times font (classic)
-%\usepackage{newtxtext,newtxmath}           % Modern Times-like font alternative (commented)
-\usepackage{xurl}                           % Allow line breaks inside URLs
+            bindingoffset=5mm]{geometry}     % Page size and margins definition
+\usepackage{setspace}                        % Line spacing commands (\onehalfspacing etc.)
+\onehalfspacing                              % Use 1.5 line spacing throughout the document
+\setlength{\parindent}{0cm}                  % Remove indentation at the start of paragraphs
+\setlength{\parskip}{6pt}                    % Add vertical space between paragraphs
+\usepackage{times}                           % Use Times font for the document body
+%\usepackage{newtxtext,newtxmath}            % Alternative Times-like font (commented out)
+\usepackage{xurl}                            % Allow line breaks within long URLs
 
 
 % ========================
 % Section Headings
 % ========================
-\usepackage{titlesec}                       % Custom formatting for section titles
+\usepackage{titlesec}                        % Customize section/chapter headings
+\usepackage{titletoc}                        % Customize table of contents formatting
+\renewcommand{\chaptername}{Chapitre}        % Replace "Chapter" with "Chapitre" in French
 \titleformat{\chapter}
-  {\normalfont\bfseries\LARGE}{\thechapter.}{1em}{}     % Chapter format
+  {\normalfont\bfseries\LARGE}{\thechapter.}{1em}{}          % Format chapter titles
 \titleformat{\section}
-  {\normalfont\bfseries\Large}{\thesection}{1em}{}      % Section format
+  {\normalfont\bfseries\Large}{\thesection}{1em}{}           % Format section titles
 \titleformat{\subsection}
-  {\normalfont\bfseries\large}{\thesubsection}{1em}{}   % Subsection format
+  {\normalfont\bfseries\large}{\thesubsection}{1em}{}        % Format subsection titles
 \titleformat{\subsubsection}
-  {\normalfont\bfseries\normalsize}{\thesubsubsection}{1em}{}  % Subsubsection format
-\titlespacing*{\chapter}{0pt}{20pt plus 2pt minus 2pt}{10pt}    % Spacing around chapters
-\titlespacing*{\section}{0pt}{12pt plus 2pt minus 2pt}{6pt}     % Spacing around sections
-\titlespacing*{\subsection}{0pt}{10pt plus 2pt minus 2pt}{4pt}  % Spacing around subsections
-\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 2pt}{2pt}% Spacing around subsubsections
+  {\normalfont\bfseries\normalsize}{\thesubsubsection}{1em}{}% Format subsubsection titles
+\titlespacing*{\chapter}{0pt}{20pt plus 2pt minus 2pt}{10pt} % Vertical spacing before/after chapters
+\titlespacing*{\section}{0pt}{12pt plus 2pt minus 2pt}{6pt}  % Vertical spacing before/after sections
+\titlespacing*{\subsection}{0pt}{10pt plus 2pt minus 2pt}{4pt}% Vertical spacing before/after subsections
+\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 2pt}{2pt}% Vertical spacing before/after subsubsections
 
 
 % ========================
 % Table of Contents formatting
 % ========================
-\usepackage{tocloft}                          % Customize TOC, LOF, LOT formatting
-\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}   % Centered TOC title
-\renewcommand{\cftaftertoctitle}{\hfill}                 % Centered TOC title
-\setlength{\cftbeforetoctitleskip}{0em}                 % No extra space before TOC title
+\usepackage{tocloft}                         % Fine-tune TOC, LOF, LOT appearance
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries} % Center TOC title with large bold font
+\renewcommand{\cftaftertoctitle}{\hfill}                 % Center TOC title (closing)
+\setlength{\cftbeforetoctitleskip}{0em}                  % Remove extra vertical space before TOC title
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}   % Dotted leaders for chapters
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}    % Dotted leaders for sections
-%\usepackage{minitoc}                     % Mini table of contents for each chapter , conflicts with almost everything so disabled
-\usepackage{titletoc}
+%\usepackage{minitoc}                      % Mini table of contents (disabled)
+\usepackage{titletoc}                          % Additional TOC customization
 
 
 % ========================
 % Lists
 % ========================
-\usepackage{enumitem}                        % Fine control over list spacing and labels
-\setlist[itemize]{noitemsep, topsep=0pt}     % Compact itemize lists
-\setlist[enumerate]{noitemsep, topsep=0pt}   % Compact enumerate lists
-\usepackage{longtable}                       % Tables spanning multiple pages
-\usepackage{multirow}                        % Cells spanning multiple rows in tables
-\setlength {\marginparwidth }{2cm}          % Margin width for todonotes
+\usepackage{enumitem}                        % Control spacing and labels in lists
+\setlist[itemize]{noitemsep, topsep=0pt}     % Remove space between and around items in itemize
+\setlist[enumerate]{noitemsep, topsep=0pt}   % Remove space between and around items in enumerate
+\usepackage{longtable}                       % Support tables spanning multiple pages
+\usepackage{multirow}                        % Enable multi-row table cells
+\setlength {\marginparwidth }{2cm}           % Set margin width for margin notes
 \usepackage{amssymb}                         % Additional math symbols
-\renewcommand{\labelitemi}{\tiny$\blacksquare$}   % Black square bullets in itemize
+\renewcommand{\labelitemi}{\tiny$\blacksquare$} % Use tiny black square as bullet in itemize
 
 
 % ========================
 % Code
 % ========================
-\usepackage{listings}                        % Code listings
-\usepackage{verbatimbox}                     % Centered verbatim environments
+\usepackage{listings}                        % Display source code listings
+\usepackage{verbatimbox}                     % Center verbatim text blocks
 
 
 % ========================
 % Bibliography
 % ========================
-\usepackage[sorting=none]{biblatex}          % Bibliography management , nyt for name , tear , title
-\usepackage{csquotes}                        % Recommended with biblatex
-\addbibresource{references.bib}              % BibTeX file location
-\emergencystretch=1em                        % Helps avoid overfull lines in bibliography
-\usepackage[final]{microtype}                % Better justification and kerning
+\usepackage[sorting=none]{biblatex}          % Modern bibliography management without sorting
+\usepackage{csquotes}                        % Recommended for biblatex (quote handling)
+\addbibresource{references.bib}              % BibTeX/BibLaTeX bibliography file
+\emergencystretch=1em                        % Allow a little extra line stretch to avoid overfull lines
+\usepackage[final]{microtype}                % Enable micro-typographic enhancements
 
 
 % ========================
 % Hyperlinks
 % ========================
-\usepackage[hidelinks]{hyperref}             % Clickable links without colored boxes
+\usepackage[hidelinks]{hyperref}             % Create hyperlinks without colored boxes
 
 
 % ========================
 % Notes
 % ========================
-\usepackage{todonotes}                       % To-do notes in margin
+\usepackage{todonotes}                       % Add margin notes / TODOs
 \setlength{\marginparwidth}{2cm}             % Margin width for todonotes
 
 
 % ========================
 % Headers and Footers
 % ========================
-\usepackage{fancyhdr}
-% Front matter: minimal footer only
+\usepackage{fancyhdr}                        % Custom headers/footers
+
+% Front matter: minimal footer only (page number centered)
 \fancypagestyle{frontmatter}{
-  \fancyhf{}
-  \fancyfoot[C]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{0pt}
+  \fancyhf{}                                 % Clear header/footer
+  \fancyfoot[C]{\thepage}                    % Page number in center footer
+  \renewcommand{\headrulewidth}{0pt}         % No header line
+  \renewcommand{\footrulewidth}{0pt}         % No footer line
 }
-% Main matter: header + footer + lines
+
+% Main matter: chapter title on top left, page number + faculty name on footer
 \fancypagestyle{mainmatter}{
-  \fancyhf{}
-  \fancyhead[L]{\nouppercase{\leftmark}}
-  \fancyfoot[R]{Page \thepage}
-  \renewcommand{\headrulewidth}{0.4pt}
-  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyhf{}                                 % Clear header/footer
+  \fancyhead[L]{\nouppercase{\leftmark}}     % Left header: chapter title
+  \fancyfoot[R]{Page \thepage}               % Right footer: page number
+  \fancyfoot[L]{Faculté des sciences de Sfax}% Left footer: institution name
+  \renewcommand{\headrulewidth}{0.4pt}       % Thin header line
+  \renewcommand{\footrulewidth}{0.4pt}       % Thin footer line
 }
-% Leave "plain" untouched so chapter first pages remain clean
+
+% Plain pages (e.g., first pages of chapters): clean footer with page number only
 \fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyfoot[C]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{0pt}
+  \fancyhf{}                                 % Clear header/footer
+  \fancyfoot[R]{\thepage}                    % Right footer: page number
+  \renewcommand{\headrulewidth}{0pt}         % No header line
+  \renewcommand{\footrulewidth}{0pt}         % No footer line
 }
 
 
 % ========================
 % Images and Figures
 % ========================
-\usepackage{graphicx}                        % Include images
+\usepackage{graphicx}                        % Include graphics/images
 \usepackage{wrapfig}                         % Wrap text around figures
-\usepackage{caption}                         % Custom caption formatting
-\captionsetup{labelsep=period}              % Use "." after "Figure 1"
-\usepackage{float}                           % Force figure placement (e.g., [H])
+\usepackage{caption}                         % Customize captions
+\captionsetup{labelsep=period}              % Use dot after figure/table numbers
+\usepackage{float}                           % Allow [H] specifier to force figure placement
 
 
 % ========================
 % Miscellaneous
 % ========================
-\usepackage{needspace}                       % Reserve space to prevent page breaks
-\usepackage{hyphenat}                        % Advanced hyphenation options
-\usepackage{blindtext}                       % Filler text for testing
-\usepackage{chngcntr}                        % Change counter behavior
-\counterwithout{table}{chapter}              % Continuous table numbering
-\counterwithout{figure}{chapter}             % Continuous figure numbering
-\usepackage{pdfpages}                        % Include PDFs
-\usepackage{ifthen}                          % Conditional logic
-\usepackage{datetime}                        % Date formatting
-\renewcommand{\dateseparator}{-}             % Use "-" in dates (ISO style)
+\usepackage{needspace}                       % Reserve space to avoid breaks within content
+\usepackage{hyphenat}                        % Advanced hyphenation control
+\usepackage{blindtext}                       % Generate dummy text
+\usepackage{chngcntr}                        % Control counter resetting behavior
+\counterwithout{table}{chapter}              % Continuous table numbering across chapters
+\counterwithout{figure}{chapter}             % Continuous figure numbering across chapters
+\usepackage{pdfpages}                        % Insert external PDFs
+\usepackage{ifthen}                          % Conditional commands
+\usepackage{datetime}                        % Custom date formatting
+\renewcommand{\dateseparator}{-}             % Use "-" as date separator (ISO style)
 
+% Hyphenation and spacing settings to avoid word splitting
+% \hyphenpenalty=10000                         % Forbid hyphenation
+% \exhyphenpenalty=10000                       % Forbid explicit hyphens
+% \tolerance=500                               % Allow moderate badness before overfull boxes
+% \emergencystretch=3em                        % Distribute extra space to avoid large gaps
 
-\sloppy                                      % Allow flexible line breaks to avoid overfull boxes
 % ========================
 % End of thesis package
 % ========================

@@ -2,13 +2,7 @@
 
 \section{Introduction}
 
-Dans un contexte technologique en constante évolution, marqué par une forte concurrence et une accélération des cycles de développement, l’importance des concepts que nous avons mis en œuvre est devenue capitale. L’automatisation, qui était autrefois perçue comme un avantage optionnel, s’impose désormais comme une nécessité incontournable pour garantir la fiabilité, la sécurité et la rapidité des processus.
-
-Selon le rapport State of DevOps 2023 publié par Google Cloud et DORA, les organisations ayant adopté des pratiques d’automatisation avancées déploient leurs applications 208 fois plus rapidement et sont 106 fois plus rapides à corriger les incidents \cite{dora2023}. De plus, 94 \%, des leaders IT estiment que l’automatisation est essentielle pour améliorer la productivité des équipes et réduire les erreurs humaines \cite{redhat2023}.
-
-La sécurité n’est pas en reste : 61 \%, des entreprises ayant mis en œuvre des pipelines CI/CD sécurisés ont constaté une diminution significative des failles en production \cite{gitlab2023}.
-
-Ces chiffres soulignent l’impact direct des pratiques modernes d’automatisation, d’Infrastructure as Code (IaC) et d’observabilité sur la performance globale des systèmes informatiques. Dans ce projet, nous avons choisi d’intégrer ces pratiques pour construire une infrastructure robuste, sécurisée et auto-adaptative, en phase avec les exigences actuelles de l’industrie.
+Dans un contexte technologique en constante évolution, marqué par une forte concurrence et une accélération des cycles de développement, l’importance des concepts que nous avons mis en œuvre est devenue capitale. L’automatisation, qui était autrefois perçue comme un avantage optionnel, s’impose désormais comme une nécessité incontournable pour garantir la fiabilité, la sécurité et la rapidité des processus.Selon le rapport State of DevOps 2023 publié par Google Cloud et DORA, les organisations ayant adopté des pratiques d’automatisation avancées déploient leurs applications 208 fois plus rapidement et sont 106 fois plus rapides à corriger les incidents \cite{dora2023}. De plus, 94 \%, des leaders IT estiment que l’automatisation est essentielle pour améliorer la productivité des équipes et réduire les erreurs humaines \cite{redhat2023}.La sécurité n’est pas en reste : 61 \%, des entreprises ayant mis en œuvre des pipelines CI/CD sécurisés ont constaté une diminution significative des failles en production \cite{gitlab2023}.Ces chiffres soulignent l’impact direct des pratiques modernes d’automatisation, d’Infrastructure as Code (IaC) et d’observabilité sur la performance globale des systèmes informatiques. Dans ce projet, nous avons choisi d’intégrer ces pratiques pour construire une infrastructure robuste, sécurisée et auto-adaptative, en phase avec les exigences actuelles de l’industrie.
 
 \section{Présentation de l'organisme d'accueil}
 
@@ -33,8 +27,6 @@ Oneex est une entreprise française basée à Clermont-Ferrand, avec un établis
 	\item \textbf{Percées technologiques et évolution (2023-2024)}
 	      Oneex a enrichi ses produits de nouvelles fonctionnalités, notamment le monitoring à distance, l’accès à des statistiques détaillées, la gestion autonome du parc matériel et un accompagnement expert en fraude documentaire. Après une levée de fonds importante en 2024, l’entreprise développe de nouveaux produits pour renforcer son positionnement en tant que leader de l’analyse documentaire.
 \end{itemize}
-
-% En 2025, François-Xavier Hauet, mon tuteur de stage, a rejoint l’entreprise en tant que Directeur Général. Fort d’une carrière de haut fonctionnaire et d’une expertise reconnue dans la transformation numérique, notamment à la Présidence de la République, il apporte à Oneex une vision stratégique et opérationnelle précieuse. Sous son impulsion, l’entreprise engage le développement de la nouvelle génération de ses solutions.
 
 \subsection{Domaine d'activité}
 
@@ -121,18 +113,35 @@ Oneex propose une gamme de solutions matérielles et logicielles, parmi lesquell
 	      \end{figure}
 \end{itemize}
 
-\begin{table}[H]
-	\centering
-	\renewcommand{\arraystretch}{1.2}
-	\begin{tabular}{|p{3cm}|p{5cm}|p{4cm}|p{2.5cm}|}
-		\hline
-		\textbf{Produit} & \textbf{Description}                     & \textbf{Dimensions} & \textbf{Poids} \\ \hline
-		Oneex Desktop    & Station de vérification d’identité fixe  & 465 x 365 x 175 mm  & 8 kg           \\ \hline
-		Oneex Suitcase   & Valise mobile de contrôle sur le terrain & 560 x 365 x 230 mm  & 12 kg          \\ \hline
-		Oneex Kiosk      & Kiosque en libre-service autonome        & 1640 x 450 x 460 mm & 65 kg          \\ \hline
-	\end{tabular}
+\begin{longtable}{|p{3cm}|p{5cm}|p{4cm}|p{2.5cm}|}
 	\caption{Caractéristiques physiques principales des solutions matérielles Oneex}
-\end{table}
+	\label{tab:caracteristiques-produits}                                                                  \\
+	\hline
+	\textbf{Produit}                         & \textbf{Description} & \textbf{Dimensions} & \textbf{Poids} \\ \hline
+	\endfirsthead
+	% Titre répété si le tableau continue sur plusieurs pages
+	\hline
+	\textbf{Produit}                         & \textbf{Description} & \textbf{Dimensions} & \textbf{Poids} \\ \hline
+	\endhead
+	% Fin du tableau
+	\hline
+	\endfoot
+	% Corps du tableau
+	Oneex Desktop                            &
+	Station de vérification d’identité fixe  &
+	465 x 365 x 175 mm                       &
+	8 kg                                                                                                   \\ \hline
+	Oneex Suitcase                           &
+	Valise mobile de contrôle sur le terrain &
+	560 x 365 x 230 mm                       &
+	12 kg                                                                                                  \\ \hline
+	Oneex Kiosk                              &
+	Kiosque en libre-service autonome        &
+	1640 x 450 x 460 mm                      &
+	65 kg                                                                                                  \\ \hline
+
+\end{longtable}
+
 Ces produits sont complétés par la suite logicielle Oneex Cloud et ScanApp, garantissant un pilotage centralisé et une intégration fluide dans les environnements clients.
 
 Son application \emph{Oneex Cloud}, une plateforme offre un contrôle centralisé et un suivi avancé des vérifications d’identité.
