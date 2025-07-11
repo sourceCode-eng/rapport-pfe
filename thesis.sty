@@ -109,16 +109,18 @@
 % ========================
 \usepackage{fancyhdr}
 
-% Fancy: front matter , no header or footer
-\fancypagestyle{fancy}{
+\usepackage{fancyhdr}
+
+% Front matter: minimal footer only
+\fancypagestyle{frontmatter}{
   \fancyhf{}
   \fancyfoot[C]{\thepage}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
 
-% Plain: main content style , header with chapter title, footer with page number
-\fancypagestyle{plain}{
+% Main matter: header + footer + lines
+\fancypagestyle{mainmatter}{
   \fancyhf{}
   \fancyhead[L]{\nouppercase{\leftmark}}
   \fancyfoot[R]{Page \thepage}
@@ -126,6 +128,13 @@
   \renewcommand{\footrulewidth}{0.4pt}
 }
 
+% Leave "plain" untouched so chapter first pages remain clean
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
 
 % ========================
 % Images and Figures

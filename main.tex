@@ -21,6 +21,8 @@
 % \dominitoc % Uncomment if you want mini TOC in each chapter
 \includepdf[pages=-]{page de garde.pdf}
 
+% Front matter
+\pagestyle{frontmatter}
 % misc
 \input{misc/misc_main}
 
@@ -29,7 +31,7 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 \setcounter{chapter}{0}
-\pagestyle{plain}
+\pagestyle{mainmatter}
 % chapters
 \input{chapters/chapters_main.tex}
 
