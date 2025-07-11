@@ -1,6 +1,6 @@
 \thispagestyle{mainmatter}
 
-\section{Introduction}
+\section{Contexte et enjeux du projet}
 
 Dans un environnement où les systèmes d'information deviennent de plus en plus complexes et interconnectés, la gestion manuelle des infrastructures techniques pose de nombreux défis. Les entreprises doivent faire face à des exigences croissantes en matière de sécurité, de disponibilité et de performance, tout en cherchant à optimiser leurs coûts et à réduire les délais de mise en production. Cette évolution rend la gestion des infrastructures non seulement complexe, mais parfois inefficace, voire impossible à grande échelle.
 
@@ -613,11 +613,14 @@ Cette approche offre une séparation claire entre le plan de gestion (Proxmox) e
 
 Cette configuration permet de garantir que tout le trafic réseau transite par pfSense, offrant un contrôle périmétrique complet et la possibilité d’appliquer des politiques de sécurité avancées.
 
-\subsection{Replication et résilience}
+\subsection{Réplication et résilience}
 
-ici je parle sur la replication des
-sites , et ha des machines virtuelles dedans un cluster Proxmox
+La réplication et la résilience constituent des aspects essentiels de l’infrastructure mise en place, afin de garantir la haute disponibilité des services et la continuité des opérations en cas d’incident.
 
-les backups sont faits avec Proxmox Backup Server, et les snapshots sont faits avec Longhorn
+Au niveau de la virtualisation, le cluster Proxmox est configuré pour assurer la réplication des machines virtuelles critiques entre plusieurs hôtes. Cette réplication permet de restaurer rapidement un environnement en cas de défaillance matérielle d’un nœud, limitant ainsi l’impact sur les utilisateurs finaux.
 
-les applications sont redondées dans le cluster Kubernetes, et les services critiques sont répliqués sur plusieurs nœuds pour assurer la continuité de service en cas de panne matérielle ou logicielle.
+La sauvegarde des données est assurée par Proxmox Backup Server, qui permet d’effectuer des sauvegardes incrémentielles planifiées et chiffrées des machines virtuelles et des conteneurs. Ces sauvegardes sont stockées de façon sécurisée et peuvent être restaurées à tout moment. En complément, le stockage des volumes persistants dans l’environnement Kubernetes repose sur Longhorn, qui offre des fonctionnalités avancées de snapshots et de réplication synchrone des volumes. Ces mécanismes garantissent la protection des données applicatives et facilitent leur restauration granulaire.
+
+Concernant les applications elles-mêmes, le cluster Kubernetes est configuré pour exécuter plusieurs réplicas des pods assurant les services critiques. Les déploiements sont définis avec un nombre minimal de réplicas distribués sur des nœuds distincts, afin de supporter la perte d’un ou plusieurs hôtes sans interruption de service. De plus, l’auto-scaling et les probes de santé permettent de redémarrer automatiquement les instances en cas de défaillance logicielle.
+
+L’ensemble de ces mesures contribue à renforcer la tolérance aux pannes de l’infrastructure, en combinant la redondance au niveau des ressources physiques, la réplication des données et la résilience des applications.

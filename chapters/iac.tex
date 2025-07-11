@@ -271,7 +271,7 @@ Cette approche cohérente assure une exposition minimale des services au public 
 
 Pour renforcer la sécurité réseau, plusieurs architectures avec \textbf{pfSense} (distribution libre spécialisée dans les fonctions de pare-feu et de routage) ont été considérées. Voici les options analysées :
 
-\subparagraph{Scénario 1 : pfSense en VM ou LXC dédié sur Proxmox}
+\subsection{Scénario 1 : pfSense en VM ou LXC dédié sur Proxmox}
 
 \begin{itemize}
 	\item pfSense est déployé comme une VM avec deux interfaces réseau (WAN et LAN).
@@ -280,7 +280,7 @@ Pour renforcer la sécurité réseau, plusieurs architectures avec \textbf{pfSen
 	\item Limite : dépendance à Proxmox (si le nœud tombe, le firewall aussi).
 \end{itemize}
 
-\subparagraph{Scénario 2 : pfSense sur un serveur physique séparé}
+\subsection{Scénario 2 : pfSense sur un serveur physique séparé}
 
 \begin{itemize}
 	\item pfSense fonctionne comme appliance physique devant le cluster.
@@ -365,19 +365,19 @@ Kubernetes introduit l’objet \texttt{Service}, utilisé pour exposer un ensemb
 	\caption{Types de services Kubernetes}
 \end{figure}
 
-\subparagraph{ClusterIP}
+\subsection{ClusterIP}
 Il s’agit du type de service par défaut. Il crée une IP virtuelle interne au cluster, accessible uniquement depuis les autres composants Kubernetes. Le routage est effectué via le composant \texttt{kube-proxy}, qui configure des règles \texttt{iptables} ou \texttt{IPVS} selon la configuration du cluster.
 
-\subparagraph{NodePort}
+\subsection{NodePort}
 Ce type expose le service sur un port statique (généralement entre 30000 et 32767) sur toutes les interfaces réseau de chaque nœud. Le trafic externe accède alors aux pods via l’adresse IP d’un nœud et le port attribué.
 
-\subparagraph{LoadBalancer}
+\subsection{LoadBalancer}
 Ce type s’appuie sur l’intégration avec un fournisseur de cloud pour provisionner automatiquement un équilibreur de charge (load balancer) et attribuer une IP publique. Il est idéal pour l’exposer à Internet, mais dépend de l’environnement cloud.
 
-\subparagraph{ExternalName}
+\subsection{ExternalName}
 Ce type ne crée pas réellement de proxy mais agit comme une redirection DNS. Il permet d’exposer un service interne vers une ressource externe en mappant son nom à un domaine DNS externe, sans gestion de pods ou endpoints.
 
-\subparagraph{Ingress}
+\subsection{Ingress}
 En complément des services, l’objet \texttt{Ingress} permet de définir des règles de routage HTTP(S) avancées :
 \begin{itemize}
 	\item Routage basé sur les hôtes ou les chemins.
@@ -388,10 +388,10 @@ Un contrôleur d’Ingress (comme NGINX ou Traefik) est requis pour appliquer ce
 
 \bigskip
 
-\subparagraph{Tableau récapitulatif des types de services Kubernetes}
+Tableau récapitulatif des types de services Kubernetes
 
 \begin{longtable}{|p{4cm}|p{5cm}|p{6cm}|}
-	\caption{\it{Comparatif des types de services Kubernetes}}
+	\caption{Comparatif des types de services Kubernetes}
 	\label{tab:services_k8s}                                                                                                                      \\ \hline
 	\textbf{Type de service} & \textbf{Accessibilité}                  & \textbf{Utilisation typique}                                             \\ \hline
 	\endfirsthead
